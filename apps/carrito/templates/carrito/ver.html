@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+    <style>
+        .carrito-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .carrito-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .carrito-item-info {
+            flex: 1;
+        }
+        .carrito-item-info h3 {
+            margin-bottom: 5px;
+        }
+        .carrito-item-info .precio {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        .carrito-item-cantidad {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .carrito-item-cantidad input {
+            width: 60px;
+            padding: 6px;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            text-align: center;
+        }
+        .carrito-total {
+            text-align: right;
+            padding: 20px 0;
+            border-top: 2px solid var(--gray-300);
+        }
+        .carrito-total .total {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        .carrito-vacio {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .carrito-vacio .icono {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h1 style="border-bottom: none; margin-bottom: 0;">🛒 Mi Carrito</h1>
+            <div style="display: flex; gap: 10px;">
+                <a href="{% url 'home' %}" class="btn btn-primary">🏠 Inicio</a>
+                <a href="{{ request.META.HTTP_REFERER|default:'home' }}" class="btn btn-secondary">← Volver</a>
+            </div>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if carrito.items.all %}
+            <div style="margin-bottom: 20px;">
+                <a href="{% url 'carrito:vaciar' %}" class="btn btn-danger" onclick="return confirm('¿Vaciar todo el carrito?')">🗑️ Vaciar Carrito</a>
+            </div>
+
+            {% for item in carrito.items.all %}
+                <div class="carrito-item">
+                    <div>
+                        {% if item.contenido.imagenes.all %}
+                            <img src="{{ item.contenido.imagenes.first.imagen.url }}" alt="{{ item.contenido }}">
+                        {% else %}
+                            <img src="{% static 'img/logo.jpg' %}" alt="Sin imagen">
+                        {% endif %}
+                    </div>
+                    <div class="carrito-item-info">
+                        <h3>{{ item.contenido }}</h3>
+                        <p class="precio">${{ item.precio_unitario }} c/u</p>
+                    </div>
+                    <form action="{% url 'carrito:actualizar' item.id %}" method="post" class="carrito-item-cantidad">
+                        {% csrf_token %}
+                        <input type="number" name="cantidad" value="{{ item.cantidad }}" min="0">
+                        <button type="submit" class="btn btn-primary" style="padding: 6px 14px;">Actualizar</button>
+                    </form>
+                    <div style="font-weight: 700; min-width: 80px; text-align: right;">
+                        ${{ item.subtotal|floatformat:2 }}
+                    </div>
+                    <form action="{% url 'carrito:eliminar' item.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" style="padding: 6px 14px;">✕</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            <div class="carrito-total">
+                <p>Total items: <strong>{{ carrito.total_items }}</strong></p>
+                <p>Total: <span class="total">${{ carrito.total_precio|floatformat:2 }}</span></p>
+                <button class="btn btn-success" style="margin-top: 15px; padding: 14px 40px; font-size: 1.2rem;">
+                    💳 Proceder al pago
+                </button>
+            </div>
+        {% else %}
+            <div class="carrito-vacio">
+                <span class="icono">🛒</span>
+                <h2>Tu carrito está vacío</h2>
+                <p style="color: var(--gray-600);">Explora nuestros productos y libros para agregar items.</p>
+                <a href="{% url 'home' %}" class="btn btn-primary" style="margin-top: 20px;">Ir al inicio</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

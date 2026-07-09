@@ -1,0 +1,115 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+
+
+{% block title %}{{ libro.nombreLibro }}{% endblock %}
+
+
+{% block content %}
+<section id="detalle-libro">
+
+    <article class="libro-detalle">
+
+      {% if libro.nombreLibro == "Veinte poemas de amor" %}
+                <img src="{% static 'img/20poemas.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Como agua para chocolate" %}
+                <img src="{% static 'img/aguachocolate.jpeg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Aura" %}
+                <img src="{% static 'img/aura.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Bestiario" %}
+                <img src="{% static 'img/bestiario.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "La casa de los espíritus" %}
+                <img src="{% static 'img/casaespiritus.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Cien años de soledad" %}
+                <img src="{% static 'img/cien-anos-de-soledad.png' %}" alt="{{ libro.nombreLibro }}">
+
+              {% elif libro.nombreLibro == "Conversación en La Catedral" %}
+            <img src="{% static 'img/conversacatedral.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "El Aleph" %}
+                <img src="{% static 'img/el-aleph.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Ficciones" %}
+            <img src="{% static 'img/ficciones.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "La ciudad y los perros" %}
+                <img src="{% static 'img/la-ciudad-y-los-perros.png' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "El laberinto de la soledad" %}
+                <img src="{% static 'img/laberintosoledad.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "El llano en llamas" %}
+                <img src="{% static 'img/llanoenllamas.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Malinche" %}
+                <img src="{% static 'img/malinche.webp' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "La muerte de Artemio Cruz" %}
+                <img src="{% static 'img/muerteartemio.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "El otoño del patriarca" %}
+                <img src="{% static 'img/otoñopatriarca.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Paula" %}
+                <img src="{% static 'img/paula.jpeg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Pedro Páramo" %}
+                <img src="{% static 'img/pedroparamo.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Piedra de sol" %}
+                <img src="{% static 'img/piedrasol.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Rayuela" %}
+                <img src="{% static 'img/rayuela.png' %}" alt="{{ libro.nombreLibro }}">
+
+            {% elif libro.nombreLibro == "Residencia en la tierra" %}
+                <img src="{% static 'img/residenciatierra.jpg' %}" alt="{{ libro.nombreLibro }}">
+
+           {% else %}
+    <img src="{% static 'img/logo.jpg' %}" alt="Portada no disponible">
+{% endif %}
+
+        <div class="titulo-detalle">
+            <div class="titulo">
+                 <h2>{{ libro.nombreLibro }}</h2>
+            </div>
+                <div class="autor">
+                      <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
+                </div>
+                   
+                <p class="genero-libro">
+                <strong>Genero:</strong>{{ libro.genero.tipoGenero}}
+            </p>
+            
+            <div class="precio-detalle">
+            <p><strong>Precio:</strong> $ {{ libro.precio }}</p>
+                </div>
+<div class="fechadetalle">
+            <p><strong>Fecha de publicación:</strong> {{ libro.fechaPublicacion }}</p>
+                </div>
+
+     </div>
+
+        <hr>
+            <h3>Sinopsis</h3>
+            <p class="sinopsis-texto">
+                {{ libro.sinopsis }}
+            </p>
+            <hr>
+           <button class="btn-añadir-carrito">
+                    Añadir al carrito
+                </button>
+        <a href="{% url 'listalibros' %}" class="link-volver">
+                ← Volver al catálogo
+            </a>
+
+
+    </article>
+
+</section>
+{% endblock %}

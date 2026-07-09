@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ usuario.username }} - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+<body>
+    <div class="contenedor">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h1 style="border-bottom: none; margin-bottom: 0;">👤 {{ usuario.username }}</h1>
+            <div style="display: flex; gap: 10px;">
+                <a href="{% url 'usuarios:editar' usuario.id %}" class="btn btn-primary" style="padding: 8px 20px;">✏️ Editar</a>
+                <a href="{% url 'usuarios:lista' %}" class="btn btn-volver" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">← Volver</a>
+            </div>
+        </div>
+
+        <div style="background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow);">
+            <table class="detalle-tabla">
+                <tr>
+                    <th>ID</th>
+                    <td>{{ usuario.id }}</td>
+                </tr>
+                <tr>
+                    <th>Usuario</th>
+                    <td>{{ usuario.username }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ usuario.email|default:'—' }}</td>
+                </tr>
+                <tr>
+                    <th>Grado</th>
+                    <td><span class="badge badge-info">{{ usuario.profile.grado }}</span> {{ usuario.profile.get_grado_display }}</td>
+                </tr>
+                <tr>
+                    <th>Staff</th>
+                    <td>{% if usuario.is_staff %}✅ Sí{% else %}❌ No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Activo</th>
+                    <td>{% if usuario.is_active %}✅ Sí{% else %}❌ No{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Último acceso</th>
+                    <td>{{ usuario.last_login|date:'d/m/Y H:i'|default:'Nunca' }}</td>
+                </tr>
+                <tr>
+                    <th>Fecha de registro</th>
+                    <td>{{ usuario.date_joined|date:'d/m/Y H:i' }}</td>
+                </tr>
+            </table>
+        </div>
+
+        {% if puede_gestionar_usuarios %}
+            <div style="margin-top: 20px; text-align: right;">
+                <a href="{% url 'usuarios:eliminar' usuario.id %}" class="btn btn-danger" style="background: var(--danger); color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;" onclick="return confirm('¿Estás seguro de eliminar a {{ usuario.username }}? Esta acción no se puede deshacer.')">🗑️ Eliminar Usuario</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

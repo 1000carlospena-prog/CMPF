@@ -1,0 +1,149 @@
+{% extends 'catalogo/base.html' %}
+{% load static %}
+{% load carrito_tags %}
+
+{% block title %}Catálogo de Libros - CMPF{% endblock %}
+
+{% block content %}
+<section id="catalogo">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 25px;">
+        <h2 style="margin-bottom: 0;">📚 Libros disponibles</h2>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            {% if puede_editar_productos %}
+                <a href="{% url 'crearLibro' %}" class="btn btn-success">📝 Agregar Libro</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- BÚSQUEDA Y FILTROS -->
+    <div style="background: var(--gray-100); padding: 20px; border-radius: var(--radius); margin-bottom: 30px;">
+        <form method="get" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: end;">
+            <div style="flex: 2; min-width: 200px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">🔍 Buscar</label>
+                <input type="text" name="q" value="{{ query }}" placeholder="Buscar por título o autor..." style="width: 100%; padding: 10px 14px; border: 2px solid var(--gray-300); border-radius: 8px; font-size: 1rem;">
+            </div>
+            
+            <div style="flex: 1; min-width: 150px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem;">📂 Género</label>
+                <select name="genero" style="width: 100%; padding: 10px 14px; border: 2px solid var(--gray-300); border-radius: 8px; font-size: 1rem; background: white;">
+                    <option value="">Todos</option>
+                    {% for genero in generos %}
+                        <option value="{{ genero.id }}" {% if genero_seleccionado == genero.id|stringformat:"s" %}selected{% endif %}>
+                            {{ genero.tipoGenero }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div style="flex: 0 0 auto; display: flex; gap: 10px;">
+                <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">🔍 Buscar</button>
+                <a href="{% url 'listalibros' %}" class="btn btn-secondary" style="padding: 10px 24px;">↻ Limpiar</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- GRID DE LIBROS -->
+    <div class="grid-libros">
+        {% for libro in libros %}
+        <article class="libro-card">
+            {% if libro.nombreLibro == "Veinte poemas de amor" %}
+                <img src="{% static 'img/20poemas.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Como agua para chocolate" %}
+                <img src="{% static 'img/aguachocolate.jpeg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Aura" %}
+                <img src="{% static 'img/aura.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Bestiario" %}
+                <img src="{% static 'img/bestiario.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "La casa de los espíritus" %}
+                <img src="{% static 'img/casaespiritus.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Cien años de soledad" %}
+                <img src="{% static 'img/cien-anos-de-soledad.png' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Conversación en La Catedral" %}
+                <img src="{% static 'img/conversacatedral.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "El Aleph" %}
+                <img src="{% static 'img/el-aleph.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Ficciones" %}
+                <img src="{% static 'img/ficciones.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "La ciudad y los perros" %}
+                <img src="{% static 'img/la-ciudad-y-los-perros.png' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "El laberinto de la soledad" %}
+                <img src="{% static 'img/laberintosoledad.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "El llano en llamas" %}
+                <img src="{% static 'img/llanoenllamas.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Malinche" %}
+                <img src="{% static 'img/malinche.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "La muerte de Artemio Cruz" %}
+                <img src="{% static 'img/muerteartemio.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "El otoño del patriarca" %}
+                <img src="{% static 'img/otoñopatriarca.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Paula" %}
+                <img src="{% static 'img/paula.jpeg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Pedro Páramo" %}
+                <img src="{% static 'img/pedroparamo.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Piedra de sol" %}
+                <img src="{% static 'img/piedrasol.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Rayuela" %}
+                <img src="{% static 'img/rayuela.png' %}" alt="{{ libro.nombreLibro }}">
+            {% elif libro.nombreLibro == "Residencia en la tierra" %}
+                <img src="{% static 'img/residenciatierra.jpg' %}" alt="{{ libro.nombreLibro }}">
+            {% else %}
+                <img src="{% static 'img/logo.jpg' %}" alt="Portada no disponible">
+            {% endif %}
+
+            <h3 class="titulo-libro">{{ libro.nombreLibro }}</h3>
+
+            <p class="autor-libro">
+                {{ libro.autor.nombre }} {{ libro.autor.apellido }}
+            </p>
+            <p class="genero-libro">
+                <strong>Género:</strong> {{ libro.genero.tipoGenero }}
+            </p>
+            <p class="precio-libro">
+                <strong>Precio:</strong> $ {{ libro.precio }}
+            </p>
+
+            <div class="acciones">
+                <!-- ✅ BOTÓN AÑADIR AL CARRITO -->
+                <form action="{% url 'carrito:agregar' libro|content_type_id libro.id %}" method="post" style="display: block; width: 100%;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-carrito" style="width: 100%; background-color: var(--verde-menu); color: #000; border: none; border-radius: 10px; padding: 0.65rem; font-size: 0.95rem; font-weight: bold; cursor: pointer; transition: all 0.25s ease;">
+                        🛒 Añadir al carrito
+                    </button>
+                </form>
+                <a href="{% url 'detalle_libro' libro.id %}" class="btn-detalle">
+                    Ver detalle
+                </a>
+            </div>
+        </article>
+        {% empty %}
+            <p style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--gray-600); font-size: 1.2rem;">
+                📭 No hay libros que coincidan con tu búsqueda.
+            </p>
+        {% endfor %}
+    </div>
+
+    <!-- PAGINACIÓN -->
+    {% if libros.has_other_pages %}
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 30px; padding-top: 15px; border-top: 1px solid var(--gray-200);">
+            <div style="color: var(--gray-600); font-size: 0.9rem;">
+                Mostrando {{ libros.start_index }} - {{ libros.end_index }} de {{ libros.paginator.count }} libros
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                {% if libros.has_previous %}
+                    <a href="?page=1{% if query %}&q={{ query }}{% endif %}{% if genero_seleccionado %}&genero={{ genero_seleccionado }}{% endif %}" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">«</a>
+                    <a href="?page={{ libros.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if genero_seleccionado %}&genero={{ genero_seleccionado }}{% endif %}" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">‹</a>
+                {% endif %}
+
+                <span style="padding: 6px 14px; background: var(--primary); color: white; border-radius: 6px; font-weight: 600; font-size: 0.9rem;">
+                    {{ libros.number }} / {{ libros.paginator.num_pages }}
+                </span>
+
+                {% if libros.has_next %}
+                    <a href="?page={{ libros.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if genero_seleccionado %}&genero={{ genero_seleccionado }}{% endif %}" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">›</a>
+                    <a href="?page={{ libros.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if genero_seleccionado %}&genero={{ genero_seleccionado }}{% endif %}" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">»</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

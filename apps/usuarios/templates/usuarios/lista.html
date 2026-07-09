@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+<body>
+    <div class="contenedor">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h1 style="border-bottom: none; margin-bottom: 0;">👥 Gestión de Usuarios</h1>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="{% url 'usuarios:crear' %}" class="btn btn-agregar">➕ Nuevo Usuario</a>
+                <a href="{% url 'home' %}" class="btn btn-volver" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">🏠 Inicio</a>
+            </div>
+        </div>
+
+        {% if usuarios %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Grado</th>
+                            <th>Staff</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in usuarios %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><strong>{{ u.username }}</strong></td>
+                                <td>{{ u.email|default:'—' }}</td>
+                                <td>
+                                    <span class="badge {% if u.profile.grado == 'v00' %}badge-danger{% elif u.profile.grado == 'v1' %}badge-warning{% elif u.profile.grado == 'v2' %}badge-primary{% elif u.profile.grado == 'v3' %}badge-info{% else %}badge-secondary{% endif %}">
+                                        {{ u.profile.grado }}
+                                    </span>
+                                </td>
+                                <td>{% if u.is_staff %}✅{% else %}❌{% endif %}</td>
+                                <td>{% if u.is_active %}✅{% else %}❌{% endif %}</td>
+                                <td>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                                        <a href="{% url 'usuarios:detalle' u.id %}" class="btn-accion btn-ver">👁️ Ver</a>
+                                        <a href="{% url 'usuarios:editar' u.id %}" class="btn-accion btn-editar-sm">✏️ Editar</a>
+                                        {% if puede_gestionar_usuarios %}
+                                            <a href="{% url 'usuarios:eliminar' u.id %}" class="btn-accion btn-eliminar-sm" onclick="return confirm('¿Eliminar usuario {{ u.username }}?')">🗑️ Eliminar</a>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <span class="icono">📭</span>
+                <p>No hay usuarios registrados.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

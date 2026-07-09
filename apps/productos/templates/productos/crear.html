@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Producto - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+<body>
+    <div class="contenedor contenedor-small">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h1 style="border-bottom: none; margin-bottom: 0;">➕ Crear Producto</h1>
+            <a href="{% url 'home' %}" class="btn btn-volver" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition);">
+                🏠 Inicio
+            </a>
+        </div>
+
+        <!-- ERRORES -->
+        {% if form.errors %}
+            <div class="alert alert-error">
+                <strong>❌ Por favor corrige los siguientes errores:</strong>
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field }}:</strong> {{ errors|striptags }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- CAMPOS DEL PRODUCTO -->
+            {% for field in form %}
+                {% if field.name != "imagen1" and field.name != "imagen2" and field.name != "imagen3" and field.name != "imagen4" %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="help-text">{{ field.help_text }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="error-text">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- IMÁGENES -->
+            <div class="imagenes-section">
+                <h3>🖼️ Imágenes (1-4)</h3>
+                <p class="help-text">Formatos: JPG, PNG, GIF, WEBP.</p>
+
+                <div class="imagen-input-wrapper">
+                    <label for="{{ form.imagen1.id_for_label }}">Imagen 1</label>
+                    {{ form.imagen1 }}
+                    <small class="help-text">(Opcional)</small>
+                </div>
+
+                <div class="imagen-input-wrapper">
+                    <label for="{{ form.imagen2.id_for_label }}">Imagen 2</label>
+                    {{ form.imagen2 }}
+                    <small class="help-text">(Opcional)</small>
+                </div>
+
+                <div class="imagen-input-wrapper">
+                    <label for="{{ form.imagen3.id_for_label }}">Imagen 3</label>
+                    {{ form.imagen3 }}
+                    <small class="help-text">(Opcional)</small>
+                </div>
+
+                <div class="imagen-input-wrapper">
+                    <label for="{{ form.imagen4.id_for_label }}">Imagen 4</label>
+                    {{ form.imagen4 }}
+                    <small class="help-text">(Opcional)</small>
+                </div>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="btn-group">
+                <button type="submit" class="btn btn-guardar">💾 Guardar Producto</button>
+                <a href="{% url 'productos:lista_productos' %}" class="btn btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

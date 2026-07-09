@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de {{ producto.nombre }} - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+</head>
+<body>
+    <div class="contenedor contenedor-medium">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h1 style="border-bottom: none; margin-bottom: 0;">📄 {{ producto.nombre }}</h1>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="{% url 'carrito:ver' %}" class="btn btn-primary" style="background: var(--secondary);">
+                    🛒 Carrito 
+                    {% if total_items_carrito > 0 %}
+                        <span style="background: white; color: var(--secondary); padding: 2px 10px; border-radius: 50px; font-size: 0.8rem; margin-left: 5px;">{{ total_items_carrito }}</span>
+                    {% endif %}
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-volver" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition);">
+                    🏠 Inicio
+                </a>
+            </div>
+        </div>
+
+        <!-- IMÁGENES -->
+        {% if producto.imagenes.all %}
+            <div class="imagenes-section">
+                <h4>🖼️ Imágenes ({{ producto.imagenes.all|length }})</h4>
+                <div class="imagenes-grid">
+                    {% for img in producto.imagenes.all %}
+                        <div class="imagen-preview">
+                            <img src="{{ img.imagen.url }}" alt="{{ producto.nombre }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- DATOS -->
+        <div class="detalle-item">
+            <div class="detalle-label">Nombre</div>
+            <div class="detalle-value">{{ producto.nombre }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <div class="detalle-label">Descripción</div>
+            <div class="detalle-value">{{ producto.descripcion }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <div class="detalle-label">Precio</div>
+            <div class="detalle-value detalle-price">${{ producto.precio }}</div>
+        </div>
+
+        <div class="detalle-item">
+            <div class="detalle-label">Existencia</div>
+            <div class="detalle-value">
+                {% if producto.existencia == 0 %}
+                    <span class="badge badge-danger">0 (Agotado)</span>
+                {% elif producto.existencia < 5 %}
+                    <span class="badge badge-warning">{{ producto.existencia }} (Poca)</span>
+                {% else %}
+                    <span class="badge badge-success">{{ producto.existencia }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="detalle-item">
+            <div class="detalle-label">Disponible</div>
+            <div class="detalle-value">
+                {% if producto.disponible %}
+                    <span class="badge badge-success">✅ Sí</span>
+                {% else %}
+                    <span class="badge badge-danger">❌ No</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="detalle-item">
+            <div class="detalle-label">ID</div>
+            <div class="detalle-value" style="color: var(--gray-600); font-size: 0.9rem;">#{{ producto.id }}</div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="btn-group" style="margin-top: 25px;">
+            <!-- ✅ BOTÓN AÑADIR AL CARRITO (DESTACADO) -->
+            {% load carrito_tags %}
+            <form action="{% url 'carrito:agregar' producto|content_type_id producto.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success" style="background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1.1rem; transition: var(--transition);">
+                    🛒 Añadir al carrito
+                </button>
+            </form>
+            <a href="{% url 'productos:actualizar_producto' producto.pk %}" class="btn btn-editar">✏️ Editar</a>
+            <a href="{% url 'productos:eliminar_producto' producto.pk %}" class="btn btn-eliminar">🗑️ Eliminar</a>
+            <a href="{% url 'productos:lista_productos' %}" class="btn btn-volver">← Volver a lista</a>
+        </div>
+    </div>
+</body>
+</html>

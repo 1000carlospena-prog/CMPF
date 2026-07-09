@@ -1,0 +1,404 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <style>
+        /* ============================================
+           DASHBOARD - ESTILOS
+           ============================================ */
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-header h1 {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        
+        .stat-card .icon {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card.warning {
+            border-top-color: var(--warning);
+        }
+        .stat-card.warning .number {
+            color: var(--warning);
+        }
+        
+        .stat-card.danger {
+            border-top-color: var(--danger);
+        }
+        .stat-card.danger .number {
+            color: var(--danger);
+        }
+        
+        .stat-card.success {
+            border-top-color: var(--success);
+        }
+        .stat-card.success .number {
+            color: var(--success);
+        }
+        
+        .stat-card.secondary {
+            border-top-color: var(--secondary);
+        }
+        .stat-card.secondary .number {
+            color: var(--secondary);
+        }
+        
+        .stat-card.info {
+            border-top-color: var(--info);
+        }
+        .stat-card.info .number {
+            color: var(--info);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+        
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .card-dashboard {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .card-dashboard h3 {
+            margin-bottom: 15px;
+            color: var(--gray-700);
+        }
+        
+        .card-dashboard ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .card-dashboard ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-dashboard ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .badge-count {
+            background: var(--primary);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-count.warning {
+            background: var(--warning);
+        }
+        
+        .badge-count.danger {
+            background: var(--danger);
+        }
+        
+        .badge-count.success {
+            background: var(--success);
+        }
+        
+        .badge-count.secondary {
+            background: var(--gray-500);
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .btn-dashboard {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-dashboard:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+        
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 992px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .stat-card .number {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <!-- HEADER -->
+        <div class="dashboard-header">
+            <h1>📊 Dashboard</h1>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="{% url 'home' %}" class="btn btn-primary">🏠 Inicio</a>
+                <a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary">📦 Productos</a>
+                <a href="{% url 'listalibros' %}" class="btn btn-secondary">📚 Librería</a>
+            </div>
+        </div>
+
+        <!-- ============================================
+        MÉTRICAS PRINCIPALES
+        ============================================ -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="icon">📦</span>
+                <span class="number">{{ total_productos }}</span>
+                <span class="label">Total Productos</span>
+            </div>
+            <div class="stat-card success">
+                <span class="icon">✅</span>
+                <span class="number">{{ productos_disponibles }}</span>
+                <span class="label">Productos Disponibles</span>
+            </div>
+            <div class="stat-card warning">
+                <span class="icon">⚠️</span>
+                <span class="number">{{ productos_stock_bajo }}</span>
+                <span class="label">Stock Bajo (&lt;5)</span>
+            </div>
+            <div class="stat-card danger">
+                <span class="icon">🚫</span>
+                <span class="number">{{ productos_agotados }}</span>
+                <span class="label">Agotados</span>
+            </div>
+            <div class="stat-card secondary">
+                <span class="icon">📚</span>
+                <span class="number">{{ total_libros }}</span>
+                <span class="label">Total Libros</span>
+            </div>
+            <div class="stat-card info">
+                <span class="icon">✍️</span>
+                <span class="number">{{ total_autores }}</span>
+                <span class="label">Autores</span>
+            </div>
+        </div>
+
+        <!-- ============================================
+        PRODUCTOS - DETALLE
+        ============================================ -->
+        <h2 class="section-title">📦 Detalle de Productos</h2>
+        <div class="row">
+            <div class="card-dashboard">
+                <h3>📈 Más Stock</h3>
+                <ul>
+                    {% for p in productos_mas_stock %}
+                        <li>
+                            <span>{{ p.nombre }}</span>
+                            <span class="badge-count success">{{ p.existencia }}</span>
+                        </li>
+                    {% empty %}
+                        <li>No hay productos.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-dashboard">
+                <h3>📉 Menos Stock</h3>
+                <ul>
+                    {% for p in productos_menos_stock %}
+                        <li>
+                            <span>{{ p.nombre }}</span>
+                            <span class="badge-count {% if p.existencia == 0 %}danger{% elif p.existencia < 5 %}warning{% else %}success{% endif %}">
+                                {{ p.existencia }}
+                            </span>
+                        </li>
+                    {% empty %}
+                        <li>No hay productos.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================
+        LIBROS - DETALLE
+        ============================================ -->
+        <h2 class="section-title">📚 Detalle de Libros</h2>
+        <div class="grid-3">
+            <div class="card-dashboard">
+                <h3>📂 Por Género</h3>
+                <ul>
+                    {% for genero in libros_por_genero %}
+                        <li>
+                            <span>{{ genero.tipoGenero }}</span>
+                            <span class="badge-count secondary">{{ genero.total }}</span>
+                        </li>
+                    {% empty %}
+                        <li>No hay géneros con libros.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-dashboard">
+                <h3>✍️ Por Autor</h3>
+                <ul>
+                    {% for autor in libros_por_autor %}
+                        <li>
+                            <span>{{ autor.nombre }} {{ autor.apellido }}</span>
+                            <span class="badge-count secondary">{{ autor.total }}</span>
+                        </li>
+                    {% empty %}
+                        <li>No hay autores.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-dashboard">
+                <h3>🆕 Últimos Libros</h3>
+                <ul>
+                    {% for libro in ultimos_libros %}
+                        <li>
+                            <span>{{ libro.nombreLibro }}</span>
+                            <span class="badge-count secondary">#{{ libro.id }}</span>
+                        </li>
+                    {% empty %}
+                        <li>No hay libros.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================
+        CARRITO - ESTADÍSTICAS
+        ============================================ -->
+        <h2 class="section-title">🛒 Actividad del Carrito</h2>
+        <div class="row">
+            <div class="card-dashboard">
+                <h3>🛒 Items en Carritos</h3>
+                <ul>
+                    <li>
+                        <span>Total de items agregados</span>
+                        <span class="badge-count">{{ total_items_carrito }}</span>
+                    </li>
+                    {% for item in items_mas_vendidos %}
+                        <li>
+                            <span>{{ item.content_type__app_label|title }} - {{ item.content_type__model|title }}</span>
+                            <span class="badge-count secondary">{{ item.total }}</span>
+                        </li>
+                    {% empty %}
+                        <li>No hay items en carritos.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-dashboard" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 15px;">📊</div>
+                <h3 style="margin-bottom: 10px;">Resumen General</h3>
+                <p style="color: var(--gray-600);">
+                    <strong>{{ total_productos }}</strong> productos · 
+                    <strong>{{ total_libros }}</strong> libros · 
+                    <strong>{{ total_autores }}</strong> autores
+                </p>
+                <p style="color: var(--gray-600);">
+                    Precio promedio producto: <strong>${{ precio_promedio|floatformat:2 }}</strong>
+                </p>
+                <a href="{% url 'carrito:ver' %}" class="btn-dashboard" style="margin-top: 15px;">
+                    🛒 Ir al Carrito
+                </a>
+            </div>
+        </div>
+
+        <!-- ============================================
+        FOOTER
+        ============================================ -->
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--gray-200); color: var(--gray-500); font-size: 0.9rem;">
+            <p>📊 Dashboard CMPF · Actualizado en tiempo real</p>
+        </div>
+    </div>
+</body>
+</html>

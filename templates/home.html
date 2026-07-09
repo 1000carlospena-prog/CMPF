@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMPF - Sistema Integrado</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        .header h1 span {
+            color: #e94560;
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.1);
+            border-color: #e94560;
+            box-shadow: 0 20px 60px rgba(233, 69, 96, 0.2);
+        }
+        .card .icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .card p {
+            opacity: 0.7;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .card .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            background: #e94560;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .card .btn:hover {
+            background: #c73652;
+            transform: scale(1.05);
+        }
+        .card .btn-blue {
+            background: #0f3460;
+        }
+        .card .btn-blue:hover {
+            background: #1a4a7a;
+        }
+        .card .btn-green {
+            background: #2d6a4f;
+        }
+        .card .btn-green:hover {
+            background: #409f7a;
+        }
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+        .user-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .user-section a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .user-section a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .user-section .user-name {
+            color: white;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .user-section .logout {
+            background: rgba(233, 69, 96, 0.3);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .user-section .logout:hover {
+            background: rgba(233, 69, 96, 0.5);
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-carrito-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--secondary, #e94560);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-carrito-header:hover {
+            transform: translateY(-2px);
+            background: #c73652;
+            text-decoration: none;
+        }
+        .btn-dashboard-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--info, #17a2b8);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-dashboard-header:hover {
+            transform: translateY(-2px);
+            background: #138496;
+            text-decoration: none;
+        }
+        .badge-carrito {
+            background: white;
+            color: #e94560;
+            padding: 2px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .header-actions { flex-direction: column; }
+            .btn-carrito-header, .btn-dashboard-header { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CMPF <span>·</span> Sistema Integrado</h1>
+            <p>Selecciona una aplicación para comenzar</p>
+        </div>
+
+        <!-- ✅ ENLACES RÁPIDOS -->
+            <div class="header-actions">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard:index' %}" class="btn-dashboard-header">
+                        📊 Dashboard
+                    </a>
+                {% endif %}
+                <a href="{% url 'carrito:ver' %}" class="btn-carrito-header">
+                    🛒 Carrito
+                    {% if total_items_carrito > 0 %}
+                        <span class="badge-carrito">{{ total_items_carrito }}</span>
+                    {% endif %}
+                </a>
+            </div>
+
+        <div class="grid">
+            <a href="{% url 'productos:lista_productos' %}" class="card">
+                <span class="icon">📦</span>
+                <h2>Productos</h2>
+                <p>Gestión de inventario, precios, existencias y más.</p>
+                <span class="btn btn-blue">Acceder</span>
+            </a>
+
+            <a href="{% url 'listalibros' %}" class="card">
+                <span class="icon">📚</span>
+                <h2>Librería</h2>
+                <p>Catálogo de libros, autores, géneros y editoriales.</p>
+                <span class="btn btn-green">Acceder</span>
+            </a>
+        </div>
+
+        <div class="user-section">
+            {% if user.is_authenticated %}
+                <span class="user-name">👋 Hola, {{ user.username }}
+                    <span class="badge-carrito" style="background: #e94560; color: white; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; margin-left: 5px;">{{ user_grado }}</span>
+                    {% if es_v4 %}
+                        <a href="{% url 'upgrade' %}" class="badge-carrito" style="background: #28a745; color: white; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; margin-left: 3px; text-decoration: none;">⬆ Mejorar</a>
+                    {% endif %}
+                </span>
+                {% if puede_gestionar_usuarios %}
+                    <a href="{% url 'usuarios:lista' %}" style="background: #17a2b8; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin: 0 5px;">👥 Usuarios</a>
+                {% endif %}
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout">Cerrar Sesión</button>
+                </form>
+            {% else %}
+                <span class="user-name">
+                    👋 Visitante
+                    <span class="badge-carrito" style="background: #6c757d; color: white; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; margin-left: 5px;">v4</span>
+                    <a href="{% url 'upgrade' %}" class="badge-carrito" style="background: #28a745; color: white; padding: 2px 10px; border-radius: 50px; font-size: 0.75rem; margin-left: 3px; text-decoration: none;">⬆ Mejorar a v3</a>
+                </span>
+                <a href="{% url 'login' %}">Iniciar Sesión</a>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            &copy; 2026 CMPF - Todos los derechos reservados.
+        </div>
+    </div>
+</body>
+</html>
