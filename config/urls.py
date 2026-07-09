@@ -26,6 +26,12 @@ urlpatterns = [
 
     # App: Usuarios
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
+
+    # Verificación de email
+    path('verificar-codigo/', views.verificar_codigo, name='verificar_codigo'),
+    path('reenviar-codigo/', views.reenviar_codigo, name='reenviar_codigo'),
+    path('recuperar-contrasenia/', views.recuperar_contrasenia, name='recuperar_contrasenia'),
+    path('verificar-codigo-reset/', views.verificar_codigo_reset, name='verificar_codigo_reset'),
     
     # App: Carrito
     path('carrito/', include('apps.carrito.urls', namespace='carrito')),

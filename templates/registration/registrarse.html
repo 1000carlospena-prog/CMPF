@@ -139,6 +139,10 @@
             color: #155724;
             border-left: 4px solid #28a745;
         }
+        .requirements {
+            background: #f8f9fa; border-radius: 8px; padding: 12px; margin-bottom: 18px; font-size: 0.8rem; color: #6c757d;
+        }
+        .requirements li { margin-bottom: 4px; }
         .footer-text {
             text-align: center;
             margin-top: 20px;
@@ -188,6 +192,17 @@
             <div class="form-group">
                 <label for="password2">Confirmar Contraseña</label>
                 <input type="password" id="password2" name="password2" placeholder="••••••••" required>
+            </div>
+
+            <div class="requirements">
+                <strong>Requisitos de contraseña:</strong>
+                <ul>
+                    <li>Mínimo 8 caracteres</li>
+                    <li>Al menos una mayúscula</li>
+                    <li>Al menos una minúscula</li>
+                    <li>Al menos un número</li>
+                    <li>Al menos un carácter especial (!@#$%^&*, etc.)</li>
+                </ul>
             </div>
 
             <div class="form-group">

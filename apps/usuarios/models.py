@@ -1,5 +1,8 @@
+import random
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
 
 GRADO_CHOICES = [
     ('v00', 'v00 - Desarrollador'),
@@ -32,3 +35,41 @@ class Profile(models.Model):
 
     def tiene_acceso(self, grado_minimo):
         return self.nivel <= GRADO_NIVEL.get(grado_minimo, 4)
+
+
+class VerificationCode(models.Model):
+    PROPOSITOS = [
+        ('register', 'Registro'),
+        ('reset', 'Restablecer contraseña'),
+    ]
+
+    email = models.EmailField()
+    code = models.CharField(max_length=6)
+    proposito = models.CharField(max_length=10, choices=PROPOSITOS)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    is_used = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.email} - {self.code} ({self.proposito})'
+
+    @staticmethod
+    def generar_codigo():
+        return f'{random.randint(100000, 999999)}'
+
+    def is_valid(self):
+        return not self.is_used and timezone.now() <= self.expires_at
+
+    @staticmethod
+    def crear_codigo(email, proposito):
+        codigo = VerificationCode.generar_codigo()
+        VerificationCode.objects.filter(email=email, proposito=proposito, is_used=False).update(is_used=True)
+        return VerificationCode.objects.create(
+            email=email,
+            code=codigo,
+            proposito=proposito,
+            expires_at=timezone.now() + timedelta(minutes=10)
+        )

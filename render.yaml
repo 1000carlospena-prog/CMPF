@@ -27,3 +27,7 @@ services:
         value: "3.14.6"
       - key: WEB_CONCURRENCY
         value: "4"
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
