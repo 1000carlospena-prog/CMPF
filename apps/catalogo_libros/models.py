@@ -31,7 +31,7 @@ class Libros(models.Model):
     editora = models.ForeignKey(Editora, on_delete=models.CASCADE, null=False)
     precio = models.DecimalField(max_digits=5, decimal_places=2)
     fechaPublicacion = models.DateField()
-    imagen = models.ImageField(upload_to='media/', blank=True, null=True)
+    imagen = models.ImageField(upload_to='libros/', blank=True, null=True)
     sinopsis = models.TextField(null=False)
     disponible = models.BooleanField(default=True)
 

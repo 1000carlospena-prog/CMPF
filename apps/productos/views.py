@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 from .models import Producto, ProductoImagen, Categoria, Resena, ListaDeseos
 from .forms import ProductoConImagenesForm, ResenaForm
 from .serializers import ProductoSerializer
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from apps.usuarios.mixins import GradoRequiredMixin, PublicadorRequiredMixin
 from apps.usuarios.decorators import grado_required
 from apps.usuarios.models import Profile
@@ -197,11 +197,6 @@ def eliminar_imagen(request, imagen_id):
     imagen.delete()
     messages.success(request, 'Imagen eliminada.')
     return redirect('productos:actualizar_producto', pk=pid)
-
-
-class ProductoListaApi(generics.ListCreateAPIView):
-    queryset = Producto.objects.all()
-    serializer_class = ProductoSerializer
 
 
 class ProductoViewset(viewsets.ModelViewSet):

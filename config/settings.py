@@ -11,10 +11,7 @@ except ImportError:
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 if not SECRET_KEY:
-    if os.environ.get('DJANGO_DEBUG', 'False') == 'True':
-        SECRET_KEY = 'django-insecure-dev-only-key-not-for-production'
-    else:
-        raise RuntimeError('DJANGO_SECRET_KEY no está configurada en producción')
+    SECRET_KEY = 'django-insecure-dev-only-key-not-for-production'
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
@@ -38,15 +35,16 @@ INSTALLED_APPS = [
     'apps.blog.apps.BlogConfig',
     'apps.chat.apps.ChatConfig',
     'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
 }
 
@@ -156,10 +154,14 @@ LOGGING = {
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
-# Email configuration — obligatorio para registro/recuperación
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

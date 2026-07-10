@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.egg-info/
+*.pyc
 dist/
 build/
 .eggs/
@@ -28,3 +29,4 @@ staticfiles/
 
 # Environment
 .env
+.env.example
