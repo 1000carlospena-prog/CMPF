@@ -146,7 +146,7 @@
                     <a href="{% url 'carrito:ver' %}">Carrito{% if total_items_carrito > 0 %} ({{ total_items_carrito }}){% endif %}</a>
                     <a href="{% url 'ordenes:historial' %}">Mis Órdenes</a>
                     <a href="{% url 'productos:lista_deseos' %}">Favoritos</a>
-                    <a href="{% url 'logout' %}" class="btn-nav">Salir</a>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline">{% csrf_token %}<button type="submit" class="btn-nav" style="background:none;border:none;cursor:pointer;color:inherit;font:inherit;padding:0">Salir</button></form>
                 {% else %}
                     <a href="{% url 'login' %}">Iniciar Sesión</a>
                     <a href="{% url 'registrarse' %}" class="btn-nav">Registrarse</a>
