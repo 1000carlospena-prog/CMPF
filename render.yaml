@@ -10,7 +10,7 @@ services:
     runtime: python
     region: ohio
     plan: free
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py flush --noinput && python manage.py migrate
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
     startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 4 --timeout 120
     envVars:
       - key: DJANGO_SECRET_KEY
@@ -23,8 +23,6 @@ services:
         fromDatabase:
           name: cmpf-db
           property: connectionString
-      - key: PYTHON_VERSION
-        value: "3.13"
       - key: WEB_CONCURRENCY
         value: "4"
       - key: EMAIL_HOST_USER
