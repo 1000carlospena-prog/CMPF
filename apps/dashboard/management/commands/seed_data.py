@@ -1,8 +1,13 @@
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from apps.productos.models import Categoria, Producto
+from django.conf import settings
+from apps.productos.models import Categoria, Producto, ProductoImagen
 from apps.catalogo_libros.models import Autor, Editora, Generos, Libros
 from datetime import date
+from PIL import Image, ImageDraw, ImageFont
+import io
+import os
+import hashlib
 
 
 class Command(BaseCommand):
@@ -13,6 +18,51 @@ class Command(BaseCommand):
         self._seed_productos()
         self._seed_libros()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully'))
+
+    def _generate_image(self, label, filename, w=400, h=400):
+        colors = [
+            (52, 152, 219), (231, 76, 60), (46, 204, 113), (155, 89, 182),
+            (241, 196, 15), (230, 126, 34), (26, 188, 156), (149, 165, 166),
+            (44, 62, 80), (243, 156, 18), (192, 57, 43), (41, 128, 185),
+            (39, 174, 96), (142, 68, 173), (22, 160, 133), (127, 140, 141),
+            (211, 84, 0), (84, 153, 199), (125, 60, 152), (46, 139, 87),
+        ]
+        idx = int(hashlib.md5(label.encode()).hexdigest(), 16) % len(colors)
+        bg = colors[idx]
+
+        img = Image.new('RGB', (w, h), bg)
+        draw = ImageDraw.Draw(img)
+
+        try:
+            font = ImageFont.truetype('arial.ttf', 28)
+        except Exception:
+            font = ImageFont.load_default()
+
+        lines = []
+        words = label.split()
+        line = ''
+        for word in words:
+            test = f'{line} {word}'.strip()
+            bbox = draw.textbbox((0, 0), test, font=font)
+            if bbox[2] - bbox[0] > w - 40:
+                lines.append(line)
+                line = word
+            else:
+                line = test
+        lines.append(line)
+
+        total_h = len(lines) * 36
+        y_start = (h - total_h) // 2
+        for i, l in enumerate(lines):
+            bbox = draw.textbbox((0, 0), l, font=font)
+            tw = bbox[2] - bbox[0]
+            x = (w - tw) // 2
+            draw.text((x, y_start + i * 36), l, fill='white', font=font)
+
+        os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
+        filepath = os.path.join(settings.MEDIA_ROOT, filename)
+        img.save(filepath)
+        return filename
 
     def _seed_categorias(self):
         categorias = [
@@ -52,7 +102,7 @@ class Command(BaseCommand):
         for nombre, cat_nombre, precio, oferta, existencia, destacado in productos_data:
             cat = Categoria.objects.get(nombre=cat_nombre)
             slug = slugify(nombre)
-            Producto.objects.get_or_create(
+            prod, created = Producto.objects.get_or_create(
                 slug=slug,
                 defaults=dict(
                     categoria=cat,
@@ -64,6 +114,10 @@ class Command(BaseCommand):
                     destacado=destacado,
                 ),
             )
+            if created:
+                filename = f'producto_{slug}.jpg'
+                self._generate_image(nombre, filename)
+                ProductoImagen.objects.create(producto=prod, imagen=filename, orden=0)
         self.stdout.write(f'{len(productos_data)} productos creados')
 
     def _seed_libros(self):
@@ -113,7 +167,8 @@ class Command(BaseCommand):
             ('Piedra de sol', autor10, generos['Poesía'], editora5, 10.99, date(1957, 1, 1), 'Poema extenso y emblemático.'),
         ]
         for nombre, autor, genero, editora, precio, fecha, sinopsis in libros_data:
-            Libros.objects.get_or_create(
+            slug = slugify(nombre)
+            libro, created = Libros.objects.get_or_create(
                 nombreLibro=nombre,
                 defaults=dict(
                     autor=autor,
@@ -124,4 +179,9 @@ class Command(BaseCommand):
                     sinopsis=sinopsis,
                 ),
             )
+            if created:
+                filename = f'libro_{slug}.jpg'
+                self._generate_image(nombre, filename, w=200, h=300)
+                libro.imagen = filename
+                libro.save()
         self.stdout.write(f'{len(libros_data)} libros creados')
