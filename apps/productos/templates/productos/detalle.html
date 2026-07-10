@@ -4,100 +4,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de {{ producto.nombre }} - CMPF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/productos.css' %}">
+    <title>{{ producto.nombre }} - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .back-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
+        .back-link:hover { color: white; }
+        .product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; }
+        .gallery { border-radius: 20px; overflow: hidden; background: rgba(255,255,255,0.03); min-height: 400px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+        .gallery img { width: 100%; height: 100%; object-fit: cover; }
+        .gallery-thumbs { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .gallery-thumbs img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .gallery-thumbs img:hover { border-color: #e94560; }
+        .info h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
+        .info .price { font-size: 2rem; font-weight: 800; color: #e94560; margin-bottom: 5px; }
+        .info .price .old { font-size: 1.2rem; color: rgba(255,255,255,0.4); text-decoration: line-through; font-weight: 400; margin-left: 10px; }
+        .info .stock { font-size: 0.9rem; margin-bottom: 15px; }
+        .info .stock.in-stock { color: #2d6a4f; }
+        .info .stock.out-of-stock { color: #e94560; }
+        .info .description { color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 20px; }
+        .info .category { display: inline-block; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 15px; }
+        .info .rating { font-size: 1.2rem; margin-bottom: 15px; }
+        .info .actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px; }
+        .info .actions a, .info .actions button {
+            padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem;
+            text-decoration: none; border: none; cursor: pointer; transition: all 0.3s; font-family: inherit;
+        }
+        .btn-add-cart { background: #e94560; color: white; }
+        .btn-add-cart:hover { background: #c73652; transform: translateY(-2px); }
+        .btn-wishlist { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-wishlist:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        .btn-wishlist.in-wishlist { background: rgba(233,69,96,0.2); border-color: #e94560; color: #e94560; }
+
+        .section-title { font-size: 1.3rem; font-weight: 700; margin: 40px 0 20px; }
+
+        .resenas-section { margin-top: 30px; }
+        .resena-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px; padding: 16px; margin-bottom: 12px;
+        }
+        .resena-card .header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .resena-card .user { font-weight: 600; font-size: 0.9rem; }
+        .resena-card .date { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+        .resena-card .stars { color: #ffc107; font-size: 1rem; }
+        .resena-card .comment { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.5; }
+
+        .review-form { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 25px; margin-top: 20px; }
+        .review-form h3 { margin-bottom: 15px; }
+        .review-form input, .review-form textarea, .review-form select {
+            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05); color: white; font-size: 0.95rem; font-family: inherit; margin-bottom: 12px;
+        }
+        .review-form button { background: #e94560; color: white; border: none; padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .review-form button:hover { background: #c73652; }
+
+        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .related-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; overflow: hidden; text-decoration: none; color: white; transition: 0.3s;
+        }
+        .related-card:hover { border-color: #e94560; transform: translateY(-3px); }
+        .related-card .img-wrap { height: 160px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .related-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .related-card .info { padding: 14px; }
+        .related-card .info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 5px; }
+        .related-card .info .price { font-size: 1.1rem; font-weight: 700; color: #e94560; }
+
+        .messages { max-width: 1200px; margin: 10px auto; padding: 0 20px; }
+        .message { padding: 12px 20px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
+        .message.success { background: rgba(45,106,79,0.3); border: 1px solid #2d6a4f; }
+        .message.error { background: rgba(233,69,96,0.3); border: 1px solid #e94560; }
+        .message.info { background: rgba(23,162,184,0.3); border: 1px solid #17a2b8; }
+
+        @media (max-width: 768px) {
+            .product-detail { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <div class="contenedor contenedor-medium">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-            <h1 style="border-bottom: none; margin-bottom: 0;">📄 {{ producto.nombre }}</h1>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="{% url 'carrito:ver' %}" class="btn btn-primary" style="background: var(--secondary);">
-                    🛒 Carrito 
-                    {% if total_items_carrito > 0 %}
-                        <span style="background: white; color: var(--secondary); padding: 2px 10px; border-radius: 50px; font-size: 0.8rem; margin-left: 5px;">{{ total_items_carrito }}</span>
-                    {% endif %}
-                </a>
-                <a href="{% url 'home' %}" class="btn btn-volver" style="background: var(--primary); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition);">
-                    🏠 Inicio
-                </a>
-            </div>
-        </div>
+    <div class="container">
+        <a href="{% url 'productos:lista_productos' %}" class="back-link">← Volver a productos</a>
 
-        <!-- IMÁGENES -->
-        {% if producto.imagenes.all %}
-            <div class="imagenes-section">
-                <h4>🖼️ Imágenes ({{ producto.imagenes.all|length }})</h4>
-                <div class="imagenes-grid">
-                    {% for img in producto.imagenes.all %}
-                        <div class="imagen-preview">
-                            <img src="{{ img.imagen.url }}" alt="{{ producto.nombre }}">
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+        {% if messages %}
+        <div class="messages">
+            {% for msg in messages %}
+            <div class="message {{ msg.tags }}">{{ msg }}</div>
+            {% endfor %}
+        </div>
         {% endif %}
 
-        <!-- DATOS -->
-        <div class="detalle-item">
-            <div class="detalle-label">Nombre</div>
-            <div class="detalle-value">{{ producto.nombre }}</div>
-        </div>
-
-        <div class="detalle-item">
-            <div class="detalle-label">Descripción</div>
-            <div class="detalle-value">{{ producto.descripcion }}</div>
-        </div>
-
-        <div class="detalle-item">
-            <div class="detalle-label">Precio</div>
-            <div class="detalle-value detalle-price">${{ producto.precio }}</div>
-        </div>
-
-        <div class="detalle-item">
-            <div class="detalle-label">Existencia</div>
-            <div class="detalle-value">
-                {% if producto.existencia == 0 %}
-                    <span class="badge badge-danger">0 (Agotado)</span>
-                {% elif producto.existencia < 5 %}
-                    <span class="badge badge-warning">{{ producto.existencia }} (Poca)</span>
-                {% else %}
-                    <span class="badge badge-success">{{ producto.existencia }}</span>
+        <div class="product-detail">
+            <div>
+                <div class="gallery">
+                    {% with primera=producto.imagenes.first %}
+                        {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ producto.nombre }}" id="mainImage">{% else %}📦{% endif %}
+                    {% endwith %}
+                </div>
+                {% with num_imagenes=producto.imagenes.count %}
+                {% if num_imagenes > 1 %}
+                <div class="gallery-thumbs">
+                    {% for img in producto.imagenes.all %}
+                    <img src="{{ img.imagen.url }}" onclick="document.getElementById('mainImage').src=this.src">
+                    {% endfor %}
+                </div>
                 {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="info">
+                {% if producto.categoria %}
+                <span class="category">{{ producto.categoria.nombre }}</span>
+                {% endif %}
+                <h1>{{ producto.nombre }}</h1>
+                <div class="rating">
+                    {% if producto.total_resenas > 0 %}
+                        {% with avg=producto.rating_promedio %}
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= avg|floatformat:"0" %}⭐{% else %}☆{% endif %}
+                            {% endfor %}
+                        {% endwith %}
+                        <span style="font-size: 0.85rem; color: rgba(255,255,255,0.4); margin-left: 5px;">({{ producto.total_resenas }})</span>
+                    {% else %}
+                        <span style="font-size: 0.85rem; color: rgba(255,255,255,0.4);">Sin reseñas</span>
+                    {% endif %}
+                </div>
+                <div class="price">
+                    ${{ producto.precio_actual }}
+                    {% if producto.en_oferta %}<span class="old">${{ producto.precio }}</span>{% endif %}
+                </div>
+                <div class="stock {% if producto.existencia > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+                    {% if producto.existencia > 0 %}✅ {{ producto.existencia }} unidades disponibles{% else %}❌ Agotado{% endif %}
+                </div>
+                <div class="description">{{ producto.descripcion }}</div>
+
+                <div class="actions">
+                    {% if producto.existencia > 0 %}
+                    <form action="{% url 'carrito:agregar_producto' producto.id %}" method="post" style="display:inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-add-cart">🛒 Añadir al Carrito</button>
+                    </form>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'productos:toggle_deseo' producto.id %}" class="btn-wishlist{% if en_deseos %} in-wishlist{% endif %}">
+                        {% if en_deseos %}❤️ En Favoritos{% else %}🤍 Añadir a Favoritos{% endif %}
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="resenas-section">
+                    <h3 class="section-title">Reseñas ({{ producto.total_resenas }})</h3>
+                    {% for resena in resenas %}
+                    <div class="resena-card">
+                        <div class="header">
+                            <span class="user">{{ resena.usuario.username }}</span>
+                            <span class="date">{{ resena.creado|date:"d/m/Y" }}</span>
+                        </div>
+                        <div class="stars">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= resena.puntuacion %}⭐{% else %}☆{% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="comment">{{ resena.comentario }}</div>
+                    </div>
+                    {% empty %}
+                    <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">Este producto aún no tiene reseñas. Sé el primero en opinar.</p>
+                    {% endfor %}
+
+                    {% if user.is_authenticated and not mi_resena %}
+                    <div class="review-form">
+                        <h3>Escribe tu reseña</h3>
+                        <form method="post" action="{% url 'productos:agregar_resena' producto.id %}">
+                            {% csrf_token %}
+                            <select name="puntuacion" required>
+                                <option value="">Puntuación</option>
+                                <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+                                <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+                                <option value="3">⭐⭐⭐ Bueno</option>
+                                <option value="2">⭐⭐ Regular</option>
+                                <option value="1">⭐ Malo</option>
+                            </select>
+                            <textarea name="comentario" maxlength="500" placeholder="Comparte tu opinión sobre este producto..." required></textarea>
+                            <button type="submit">Publicar Reseña</button>
+                        </form>
+                    </div>
+                    {% elif mi_resena %}
+                    <p style="color: rgba(255,255,255,0.4); font-size: 0.9rem; margin-top: 10px;">Ya has reseñado este producto. Gracias por tu opinión.</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
-        <div class="detalle-item">
-            <div class="detalle-label">Disponible</div>
-            <div class="detalle-value">
-                {% if producto.disponible %}
-                    <span class="badge badge-success">✅ Sí</span>
-                {% else %}
-                    <span class="badge badge-danger">❌ No</span>
-                {% endif %}
-            </div>
+        {% if productos_relacionados %}
+        <h3 class="section-title">Productos Relacionados</h3>
+        <div class="related-grid">
+            {% for p in productos_relacionados %}
+            <a href="{% url 'productos:detalle_producto' p.id %}" class="related-card">
+                <div class="img-wrap">
+                    {% with primera=p.imagenes.first %}
+                        {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
+                    {% endwith %}
+                </div>
+                <div class="info">
+                    <h4>{{ p.nombre }}</h4>
+                    <div class="price">${{ p.precio_actual }}</div>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-
-        <div class="detalle-item">
-            <div class="detalle-label">ID</div>
-            <div class="detalle-value" style="color: var(--gray-600); font-size: 0.9rem;">#{{ producto.id }}</div>
-        </div>
-
-        <!-- BOTONES -->
-        <div class="btn-group" style="margin-top: 25px;">
-            <!-- ✅ BOTÓN AÑADIR AL CARRITO (DESTACADO) -->
-            {% load carrito_tags %}
-            <form action="{% url 'carrito:agregar' producto|content_type_id producto.id %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success" style="background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1.1rem; transition: var(--transition);">
-                    🛒 Añadir al carrito
-                </button>
-            </form>
-            <a href="{% url 'productos:actualizar_producto' producto.pk %}" class="btn btn-editar">✏️ Editar</a>
-            <a href="{% url 'productos:eliminar_producto' producto.pk %}" class="btn btn-eliminar">🗑️ Eliminar</a>
-            <a href="{% url 'productos:lista_productos' %}" class="btn btn-volver">← Volver a lista</a>
-        </div>
+        {% endif %}
     </div>
 </body>
 </html>

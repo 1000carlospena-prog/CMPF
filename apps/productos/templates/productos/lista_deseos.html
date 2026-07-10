@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Deseos - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        h1 { font-size: 1.8rem; margin-bottom: 25px; }
+        .back-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
+        .back-link:hover { color: white; }
+        .wishlist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .product-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; overflow: hidden; transition: all 0.3s; text-decoration: none; color: white;
+        }
+        .product-card:hover { transform: translateY(-5px); border-color: #e94560; }
+        .product-card .img-wrap { height: 180px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 3rem; overflow: hidden; }
+        .product-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        .product-card .info { padding: 16px; }
+        .product-card .info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 5px; }
+        .product-card .info .price { font-size: 1.1rem; font-weight: 700; color: #e94560; }
+        .product-card .remove { display: block; text-align: center; padding: 10px; background: rgba(233,69,96,0.1); color: #e94560; text-decoration: none; font-size: 0.85rem; font-weight: 500; border-top: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .product-card .remove:hover { background: rgba(233,69,96,0.2); }
+        .empty { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.3); }
+        .empty .icon { font-size: 4rem; margin-bottom: 15px; }
+        .empty p { font-size: 1.1rem; }
+        .empty a { color: #e94560; text-decoration: none; display: inline-block; margin-top: 15px; padding: 12px 28px; border: 1px solid #e94560; border-radius: 50px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Inicio</a>
+        <h1>❤️ Lista de Deseos</h1>
+
+        {% if items %}
+        <div class="wishlist-grid">
+            {% for item in items %}
+            <div class="product-card">
+                <a href="{% url 'productos:detalle_producto' item.producto.id %}" style="text-decoration:none;color:white;">
+                    <div class="img-wrap">
+                        {% with primera=item.producto.imagenes.first %}
+                            {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ item.producto.nombre }}">{% else %}📦{% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="info">
+                        <h3>{{ item.producto.nombre }}</h3>
+                        <div class="price">${{ item.producto.precio_actual }}</div>
+                    </div>
+                </a>
+                <a href="{% url 'productos:toggle_deseo' item.producto.id %}" class="remove">Eliminar</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+            <div class="icon">💔</div>
+            <p>Tu lista de deseos está vacía</p>
+            <a href="{% url 'productos:lista_productos' %}">Explorar Productos</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

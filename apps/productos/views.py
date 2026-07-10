@@ -3,10 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, UpdateView, DetailView, CreateView
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q, Avg
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
-from .models import Producto, ProductoImagen
-from .forms import ProductoConImagenesForm
+from .models import Producto, ProductoImagen, Categoria, Resena, ListaDeseos
+from .forms import ProductoConImagenesForm, ResenaForm
 from .serializers import ProductoSerializer
 from rest_framework import generics, viewsets
 from apps.usuarios.mixins import GradoRequiredMixin, PublicadorRequiredMixin
@@ -21,13 +24,17 @@ class ProductoVista(ListView):
     paginate_by = 12
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Producto.objects.all()
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(nombre__icontains=query) | 
-                Q(descripcion__icontains=query)
+                Q(nombre__icontains=query) | Q(descripcion__icontains=query)
             )
+        categoria_slug = self.request.GET.get('categoria')
+        if categoria_slug:
+            cat = get_object_or_404(Categoria, slug=categoria_slug)
+            hijas = cat.hijas.values_list('id', flat=True)
+            queryset = queryset.filter(categoria_id__in=[cat.id] + list(hijas))
         disponible = self.request.GET.get('disponible')
         if disponible == 'si':
             queryset = queryset.filter(disponible=True)
@@ -38,6 +45,15 @@ class ProductoVista(ListView):
             queryset = queryset.filter(existencia__lt=5, existencia__gt=0)
         elif stock == 'agotado':
             queryset = queryset.filter(existencia=0)
+        orden = self.request.GET.get('orden')
+        if orden == 'precio':
+            queryset = queryset.order_by('precio')
+        elif orden == '-precio':
+            queryset = queryset.order_by('-precio')
+        elif orden == 'nombre':
+            queryset = queryset.order_by('nombre')
+        else:
+            queryset = queryset.order_by('-creado')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -45,6 +61,9 @@ class ProductoVista(ListView):
         context['query'] = self.request.GET.get('q', '')
         context['filtro_disponible'] = self.request.GET.get('disponible', '')
         context['filtro_stock'] = self.request.GET.get('stock', '')
+        context['categoria_actual'] = self.request.GET.get('categoria', '')
+        context['orden_actual'] = self.request.GET.get('orden', '')
+        context['categorias'] = Categoria.objects.filter(activa=True, padre__isnull=True)
         return context
 
 
@@ -52,6 +71,60 @@ class ProductoDetalle(DetailView):
     model = Producto
     template_name = 'productos/detalle.html'
     context_object_name = 'producto'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        producto = self.object
+        context['resenas'] = producto.resenas.select_related('usuario').all()
+        context['productos_relacionados'] = Producto.objects.filter(
+            categoria=producto.categoria
+        ).exclude(id=producto.id)[:4]
+        if self.request.user.is_authenticated:
+            context['en_deseos'] = ListaDeseos.objects.filter(
+                usuario=self.request.user, producto=producto
+            ).exists()
+            usuario_resena = producto.resenas.filter(usuario=self.request.user).first()
+            if usuario_resena:
+                context['mi_resena'] = usuario_resena
+            context['review_form'] = ResenaForm()
+        return context
+
+
+@login_required
+def agregar_resena(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    if producto.resenas.filter(usuario=request.user).exists():
+        messages.error(request, 'Ya has reseñado este producto.')
+        return redirect('productos:detalle_producto', pk=producto_id)
+    if request.method == 'POST':
+        form = ResenaForm(request.POST)
+        if form.is_valid():
+            resena = form.save(commit=False)
+            resena.producto = producto
+            resena.usuario = request.user
+            resena.save()
+            messages.success(request, 'Reseña publicada.')
+    return redirect('productos:detalle_producto', pk=producto_id)
+
+
+@login_required
+def toggle_deseo(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    item, created = ListaDeseos.objects.get_or_create(
+        usuario=request.user, producto=producto
+    )
+    if not created:
+        item.delete()
+        messages.info(request, f'"{producto.nombre}" eliminado de tu lista de deseos.')
+    else:
+        messages.success(request, f'"{producto.nombre}" añadido a tu lista de deseos.')
+    return redirect('productos:detalle_producto', pk=producto_id)
+
+
+@login_required
+def lista_deseos(request):
+    items = ListaDeseos.objects.filter(usuario=request.user).select_related('producto')
+    return render(request, 'productos/lista_deseos.html', {'items': items})
 
 
 class ProductoCrear(PublicadorRequiredMixin, CreateView):
@@ -63,32 +136,20 @@ class ProductoCrear(PublicadorRequiredMixin, CreateView):
 
     def form_valid(self, form):
         producto = form.save()
-
         imagenes = [
-            form.cleaned_data.get('imagen1'),
-            form.cleaned_data.get('imagen2'),
-            form.cleaned_data.get('imagen3'),
-            form.cleaned_data.get('imagen4'),
+            form.cleaned_data.get(f'imagen{i}')
+            for i in range(1, 5)
         ]
-
-        imagenes_guardadas = 0
-        for i, imagen in enumerate(imagenes):
-            if imagen:
-                ProductoImagen.objects.create(
-                    producto=producto,
-                    imagen=imagen,
-                    orden=i
-                )
-                imagenes_guardadas += 1
-
-        messages.success(
-            self.request,
-            f'✅ Producto "{producto.nombre}" creado con {imagenes_guardadas} imágenes.'
-        )
+        guardadas = 0
+        for i, img in enumerate(imagenes):
+            if img:
+                ProductoImagen.objects.create(producto=producto, imagen=img, orden=i)
+                guardadas += 1
+        messages.success(self.request, f'Producto "{producto.nombre}" creado con {guardadas} imágenes.')
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        messages.error(self.request, '❌ Error al crear el producto. Revisa los campos.')
+        messages.error(self.request, 'Error al crear el producto. Revisa los campos.')
         return super().form_invalid(form)
 
 
@@ -106,37 +167,12 @@ class ProductoActualizar(PublicadorRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         producto = form.save()
-
-        imagenes = [
-            form.cleaned_data.get('imagen1'),
-            form.cleaned_data.get('imagen2'),
-            form.cleaned_data.get('imagen3'),
-            form.cleaned_data.get('imagen4'),
-        ]
-
-        imagenes_guardadas = 0
-        for i, imagen in enumerate(imagenes):
-            if imagen:
-                ProductoImagen.objects.create(
-                    producto=producto,
-                    imagen=imagen,
-                    orden=i
-                )
-                imagenes_guardadas += 1
-
-        if imagenes_guardadas > 0:
-            messages.success(
-                self.request,
-                f'✅ Producto "{producto.nombre}" actualizado con {imagenes_guardadas} imágenes nuevas.'
-            )
-        else:
-            messages.success(self.request, f'✅ Producto "{producto.nombre}" actualizado correctamente.')
-
+        for i in range(1, 5):
+            img = form.cleaned_data.get(f'imagen{i}')
+            if img:
+                ProductoImagen.objects.create(producto=producto, imagen=img, orden=i - 1)
+        messages.success(self.request, f'Producto "{producto.nombre}" actualizado.')
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, '❌ Error al actualizar el producto. Revisa los campos.')
-        return super().form_invalid(form)
 
 
 class ProductosEliminar(PublicadorRequiredMixin, DeleteView):
@@ -147,7 +183,7 @@ class ProductosEliminar(PublicadorRequiredMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         producto = self.get_object()
-        messages.success(self.request, f'✅ Producto "{producto.nombre}" eliminado correctamente.')
+        messages.success(self.request, f'Producto "{producto.nombre}" eliminado.')
         return super().delete(request, *args, **kwargs)
 
 
@@ -157,13 +193,12 @@ def eliminar_imagen(request, imagen_id):
         messages.error(request, 'Tu suscripción como proveedor no está activa.')
         return redirect('upgrade')
     imagen = get_object_or_404(ProductoImagen, id=imagen_id)
-    producto_id = imagen.producto.id
+    pid = imagen.producto.id
     imagen.delete()
-    messages.success(request, '🗑️ Imagen eliminada correctamente.')
-    return redirect('productos:actualizar_producto', pk=producto_id)
+    messages.success(request, 'Imagen eliminada.')
+    return redirect('productos:actualizar_producto', pk=pid)
 
 
-# API Views
 class ProductoListaApi(generics.ListCreateAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer

@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes - CMPF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .back-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
+        .back-link:hover { color: white; }
+        h1 { font-size: 2rem; margin-bottom: 30px; }
+        .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+        .faq-question { padding: 18px 22px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+        .faq-question:hover { background: rgba(255,255,255,0.02); }
+        .faq-question .arrow { transition: 0.3s; font-size: 0.85rem; color: rgba(255,255,255,0.4); }
+        .faq-answer { padding: 0 22px 18px; color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.7; display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .arrow { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Inicio</a>
+        <h1>❓ Preguntas Frecuentes</h1>
+
+        <div class="faq-item open">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Qué es CMPF? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">CMPF (Centro de Gestión Comercial) es una plataforma todo-en-uno para gestionar productos, libros, inventario, ventas y más. Está diseñada para pequeños y medianos comercios.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Cómo me registro? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">Ve a la página de Registro, completa tus datos y verifica tu correo electrónico con el código de 6 dígitos que te enviaremos. Una vez verificado, podrás acceder a todas las funcionalidades de tu nivel.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Cuáles son los niveles de usuario? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">Actualmente hay dos niveles principales: <strong>v4 (Lector)</strong> — puede navegar, comprar y reseñar productos; y <strong>v3 (Proveedor)</strong> — puede crear y gestionar productos en el sistema.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Cómo puedo convertirme en proveedor (v3)? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">Desde tu perfil, selecciona la opción "Mejorar a v3". Completando el proceso de suscripción obtendrás acceso para publicar y gestionar tus productos.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Cómo funciona el carrito de compras? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">Puedes añadir productos al carrito desde la página de detalle de cada producto. Luego ve al carrito para revisar tus artículos y proceder al checkout, donde ingresarás tus datos de envío.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Puedo dejar reseñas de productos? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">Sí. Los usuarios registrados pueden dejar una reseña por producto, con una puntuación de 1 a 5 estrellas y un comentario.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ¿Cómo restablezco mi contraseña? <span class="arrow">▼</span>
+            </div>
+            <div class="faq-answer">En la página de inicio de sesión, selecciona "¿Olvidaste tu contraseña?". Ingresa tu correo y recibirás un código de verificación para crear una nueva contraseña.</div>
+        </div>
+    </div>
+</body>
+</html>

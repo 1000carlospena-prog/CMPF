@@ -1,8 +1,12 @@
 import os
 from pathlib import Path
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
@@ -30,6 +34,8 @@ INSTALLED_APPS = [
     'apps.carrito.apps.CarritoConfig',
     'apps.dashboard.apps.DashboardConfig',
     'apps.usuarios.apps.UsuariosConfig',
+    'apps.ordenes.apps.OrdenesConfig',
+    'apps.blog.apps.BlogConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -71,6 +77,7 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'apps.carrito.context_processors.carrito',
                 'apps.usuarios.context_processors.usuario_grado',
+                'apps.productos.context_processors.categorias',
             ],
         },
     },
@@ -79,13 +86,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+if dj_database_url:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},

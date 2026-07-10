@@ -53,9 +53,9 @@ def crearLibro(request):
         return redirect('upgrade')
     if request.method == 'POST':
         action = request.POST.get('action')
-            if action == 'logout':
-                auth_logout(request)
-                return redirect('login')
+        if action == 'logout':
+            auth_logout(request)
+            return redirect('login')
         elif action == 'guardarLibro' or action == 'guardar':
             form = LibrosForm(request.POST, request.FILES)
             if form.is_valid():

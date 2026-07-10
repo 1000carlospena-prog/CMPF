@@ -47,6 +47,18 @@ urlpatterns = [
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('api-token-refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+
+    # Órdenes
+    path('ordenes/', include('apps.ordenes.urls', namespace='ordenes')),
+
+    # Blog
+    path('blog/', include('apps.blog.urls', namespace='blog')),
+
+    # Páginas estáticas
+    path('acerca-de/', views.acerca_de, name='acerca_de'),
+    path('contacto/', views.contacto, name='contacto'),
+    path('faq/', views.faq, name='faq'),
+    path('terminos/', views.terminos, name='terminos'),
 ]
 
 if settings.DEBUG:

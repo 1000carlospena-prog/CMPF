@@ -6,32 +6,35 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 from datetime import timedelta
+from django.core.mail import send_mail
+from django.conf import settings
 
 from apps.usuarios.models import VerificationCode, LoginAttempt
 from apps.usuarios.utils import validar_contrasenia, enviar_codigo_email
+from apps.productos.models import Producto, Categoria
+from apps.blog.models import Post
 
 logger = logging.getLogger('cmpf.security')
 
 
 def home(request):
+    productos_destacados = Producto.objects.filter(destacado=True, disponible=True)[:8]
+    productos_oferta = Producto.objects.exclude(precio_oferta__isnull=True)[:4]
+    categorias = Categoria.objects.filter(activa=True, padre__isnull=True)[:6]
+    posts_recientes = Post.objects.filter(publicado=True)[:3]
+    ultimos_productos = Producto.objects.filter(disponible=True).order_by('-creado')[:4]
+
+    from apps.catalogo_libros.models import Libros
+
     context = {
-        'title': 'CMPF - Sistema Integrado',
-        'apps': [
-            {
-                'name': 'Productos',
-                'description': 'Gestión de inventario de productos',
-                'url': 'productos:lista_productos',
-                'icon': '📦',
-                'color': 'blue',
-            },
-            {
-                'name': 'Librería',
-                'description': 'Catálogo de libros y gestión literaria',
-                'url': 'listalibros',
-                'icon': '📚',
-                'color': 'green',
-            }
-        ]
+        'productos_destacados': productos_destacados,
+        'productos_oferta': productos_oferta,
+        'categorias_home': categorias,
+        'posts_recientes': posts_recientes,
+        'ultimos_productos': ultimos_productos,
+        'total_productos': Producto.objects.count(),
+        'total_libros': Libros.objects.count(),
+        'total_categorias': Categoria.objects.filter(activa=True).count(),
     }
     return render(request, 'home.html', context)
 
@@ -312,3 +315,35 @@ def login_con_rate_limit(request):
     from django.contrib.auth.forms import AuthenticationForm
     form = AuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
+
+
+def acerca_de(request):
+    return render(request, 'pages/acerca_de.html')
+
+
+def contacto(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre', '')
+        email = request.POST.get('email', '')
+        mensaje = request.POST.get('mensaje', '')
+        try:
+            send_mail(
+                f'Contacto CMPF - {nombre}',
+                f'De: {nombre} ({email})\n\n{mensaje}',
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.DEFAULT_FROM_EMAIL],
+                fail_silently=False,
+            )
+            messages.success(request, 'Mensaje enviado. Te responderemos pronto.')
+        except Exception:
+            messages.error(request, 'Error al enviar el mensaje. Intenta de nuevo.')
+        return redirect('contacto')
+    return render(request, 'pages/contacto.html')
+
+
+def faq(request):
+    return render(request, 'pages/faq.html')
+
+
+def terminos(request):
+    return render(request, 'pages/terminos.html')

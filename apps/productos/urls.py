@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     ProductoDetalle, ProductoActualizar, ProductoVista,
-    ProductosEliminar, ProductoCrear, eliminar_imagen
+    ProductosEliminar, ProductoCrear, eliminar_imagen,
+    agregar_resena, toggle_deseo, lista_deseos
 )
 
 app_name = 'productos'
@@ -12,6 +13,8 @@ urlpatterns = [
     path('crear/', ProductoCrear.as_view(), name='crear_producto'),
     path('actualizar/<int:pk>/', ProductoActualizar.as_view(), name='actualizar_producto'),
     path('eliminar/<int:pk>/', ProductosEliminar.as_view(), name='eliminar_producto'),
-    # ✅ Nueva URL para eliminar imagen
     path('eliminar-imagen/<int:imagen_id>/', eliminar_imagen, name='eliminar_imagen'),
+    path('<int:producto_id>/resena/', agregar_resena, name='agregar_resena'),
+    path('<int:producto_id>/deseo/', toggle_deseo, name='toggle_deseo'),
+    path('lista-deseos/', lista_deseos, name='lista_deseos'),
 ]

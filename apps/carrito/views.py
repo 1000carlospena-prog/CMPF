@@ -26,19 +26,16 @@ def agregar_al_carrito(request, content_type_id, object_id):
     """Agrega un item al carrito (requiere autenticación)"""
     carrito = obtener_carrito(request)
     
-    # Obtener el modelo
     content_type = get_object_or_404(ContentType, id=content_type_id)
     model_class = content_type.model_class()
     item = get_object_or_404(model_class, id=object_id)
     
-    # Obtener precio
     if hasattr(item, 'precio'):
         precio = item.precio
     else:
         messages.error(request, 'Este item no tiene precio')
         return redirect('home')
     
-    # Obtener o crear item en carrito
     carrito_item, created = CarritoItem.objects.get_or_create(
         carrito=carrito,
         content_type=content_type,
@@ -52,10 +49,34 @@ def agregar_al_carrito(request, content_type_id, object_id):
     if not created:
         carrito_item.cantidad += 1
         carrito_item.save()
-        messages.success(request, f'✅ "{item.nombre}" agregado al carrito.')
-    else:
-        messages.success(request, f'✅ "{item.nombre}" agregado al carrito.')
     
+    messages.success(request, f'✅ "{getattr(item, "nombre", "Item")}" agregado al carrito.')
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+@require_POST
+@login_required
+def agregar_producto(request, producto_id):
+    """Agrega un producto al carrito usando solo el ID del producto"""
+    carrito = obtener_carrito(request)
+    producto = get_object_or_404(Producto, id=producto_id)
+    ct = ContentType.objects.get_for_model(Producto)
+    
+    carrito_item, created = CarritoItem.objects.get_or_create(
+        carrito=carrito,
+        content_type=ct,
+        object_id=producto_id,
+        defaults={
+            'precio_unitario': producto.precio_actual,
+            'cantidad': 1
+        }
+    )
+    
+    if not created:
+        carrito_item.cantidad += 1
+        carrito_item.save()
+    
+    messages.success(request, f'✅ "{producto.nombre}" agregado al carrito.')
     return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
