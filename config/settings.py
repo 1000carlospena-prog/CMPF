@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'apps.usuarios.apps.UsuariosConfig',
     'apps.ordenes.apps.OrdenesConfig',
     'apps.blog.apps.BlogConfig',
+    'apps.chat.apps.ChatConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]

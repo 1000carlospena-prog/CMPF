@@ -46,6 +46,7 @@ def upgrade(request):
 def registrarse(request):
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
+        nombre_real = request.POST.get('nombre_real', '').strip()
         email = request.POST.get('email', '').strip()
         password = request.POST.get('password', '')
         password2 = request.POST.get('password2', '')
@@ -92,6 +93,7 @@ def registrarse(request):
         hashed = make_password(password)
         request.session['registro_temp'] = {
             'username': username,
+            'nombre_real': nombre_real,
             'email': email,
             'password_hash': hashed,
             'tipo': tipo,
@@ -141,6 +143,7 @@ def verificar_codigo(request):
         user.password = temp['password_hash']
         user.save()
         user.profile.grado = temp['tipo']
+        user.profile.nombre_real = temp.get('nombre_real', '')
         user.profile.save()
 
         LoginAttempt.registrar(request.META.get('REMOTE_ADDR', ''), user.username, successful=True)

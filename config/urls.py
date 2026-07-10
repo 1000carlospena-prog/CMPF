@@ -7,6 +7,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from . import views
+from apps.usuarios.views import perfil_usuario
 
 urlpatterns = [
     # Admin
@@ -26,6 +27,12 @@ urlpatterns = [
 
     # App: Usuarios
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
+
+    # Perfiles públicos
+    path('perfil/<int:user_id>/', perfil_usuario, name='perfil_usuario'),
+
+    # Chat / Mensajería
+    path('chat/', include('apps.chat.urls', namespace='chat')),
 
     # Verificación de email
     path('verificar-codigo/', views.verificar_codigo, name='verificar_codigo'),

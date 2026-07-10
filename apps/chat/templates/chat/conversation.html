@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ other.profile.nombre_real|default:other.username }} - Chat{% endblock %}
+{% block content %}
+<div class="chat-layout">
+  <aside class="chat-sidebar">
+    <div class="chat-sidebar-header">
+      <h3>Mensajes</h3>
+      <a href="{% url 'chat:search' %}" class="btn btn-sm btn-primary" style="padding: 6px 12px;">+ Nuevo</a>
+    </div>
+    <div class="chat-conversations">
+      {% for item in user.conversations.all %}
+        {% with other_user=item.participants.exclude(id=user.id).first %}
+          <a href="{% url 'chat:conversation' item.id %}" class="chat-conv-item {% if item.id == conversation.id %}active{% endif %}">
+            <div class="chat-conv-avatar">
+              {% if other_user.profile.avatar %}
+                <img src="{{ other_user.profile.avatar.url }}" alt="">
+              {% else %}
+                <span class="avatar-letter">{{ other_user.username|first|upper }}</span>
+              {% endif %}
+            </div>
+            <div class="chat-conv-info">
+              <div class="chat-conv-name">
+                {{ other_user.profile.nombre_real|default:other_user.username }}
+                <span class="badge {{ other_user.profile.grado }}" style="font-size:0.6rem;">{{ other_user.profile.grado }}</span>
+              </div>
+              <div class="chat-conv-preview">
+                {% with last=item.messages.last %}
+                  {% if last %}{{ last.content|truncatechars:40 }}{% endif %}
+                {% endwith %}
+              </div>
+            </div>
+          </a>
+        {% endwith %}
+      {% endfor %}
+    </div>
+  </aside>
+
+  <main class="chat-main" style="flex-direction:column;">
+    <div class="chat-conv-header">
+      <div class="chat-conv-avatar">
+        {% if other.profile.avatar %}
+          <img src="{{ other.profile.avatar.url }}" alt="">
+        {% else %}
+          <span class="avatar-letter">{{ other.username|first|upper }}</span>
+        {% endif %}
+      </div>
+      <div>
+        <div style="font-weight:600;">{{ other.profile.nombre_real|default:other.username }}</div>
+        <div style="font-size:0.8rem; color:#64748b;">@{{ other.username }} <span class="badge {{ other.profile.grado }}">{{ other.profile.grado }}</span></div>
+      </div>
+      <a href="{% url 'perfil_usuario' other.id %}" class="btn btn-sm btn-secondary" style="margin-left:auto;">Ver perfil</a>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      {% for msg in messages %}
+        <div class="chat-msg {% if msg.sender == user %}chat-msg-self{% else %}chat-msg-other{% endif %}">
+          <div class="chat-msg-bubble">
+            {{ msg.content|linebreaksbr }}
+          </div>
+          <div class="chat-msg-time">
+            {{ msg.created|date:"H:i" }}
+          </div>
+        </div>
+      {% empty %}
+        <div style="text-align:center;padding:40px;color:#94a3b8;">No hay mensajes. Envía el primero.</div>
+      {% endfor %}
+    </div>
+
+    <form method="post" class="chat-input-area">
+      {% csrf_token %}
+      <input type="text" name="content" placeholder="Escribe un mensaje..." required autofocus>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </main>
+</div>
+
+<style>
+.chat-layout { display: flex; height: calc(100vh - 220px); min-height: 500px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+.chat-sidebar { width: 320px; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+.chat-sidebar-header { padding: 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+.chat-sidebar-header h3 { font-size: 1.1rem; font-weight: 700; }
+.chat-conversations { flex: 1; overflow-y: auto; }
+.chat-conv-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; text-decoration: none; color: inherit; border-bottom: 1px solid #f1f5f9; transition: background 0.15s; }
+.chat-conv-item:hover { background: #f8fafc; }
+.chat-conv-item.active { background: #eff6ff; border-left: 3px solid #2563eb; }
+.chat-conv-avatar { flex-shrink: 0; }
+.chat-conv-avatar img, .avatar-letter { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.avatar-letter { display: flex; align-items: center; justify-content: center; background: #2563eb; color: white; font-weight: 700; font-size: 1rem; }
+.chat-conv-info { flex: 1; min-width: 0; }
+.chat-conv-name { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+.chat-conv-preview { font-size: 0.8rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-main { flex: 1; display: flex; flex-direction: column; }
+.chat-conv-header { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid #e2e8f0; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+.chat-msg { display: flex; flex-direction: column; max-width: 70%; }
+.chat-msg-self { align-self: flex-end; align-items: flex-end; }
+.chat-msg-other { align-self: flex-start; align-items: flex-start; }
+.chat-msg-bubble { padding: 10px 16px; border-radius: 16px; font-size: 0.9rem; line-height: 1.4; word-wrap: break-word; }
+.chat-msg-self .chat-msg-bubble { background: #2563eb; color: white; border-bottom-right-radius: 4px; }
+.chat-msg-other .chat-msg-bubble { background: #f1f5f9; color: #1e293b; border-bottom-left-radius: 4px; }
+.chat-msg-time { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
+.chat-input-area { display: flex; gap: 8px; padding: 12px 20px; border-top: 1px solid #e2e8f0; }
+.chat-input-area input { flex: 1; }
+@media (max-width: 768px) { .chat-layout { flex-direction: column; height: auto; } .chat-sidebar { width: 100%; } }
+</style>
+<script>
+  var el = document.getElementById('chat-messages');
+  if (el) el.scrollTop = el.scrollHeight;
+</script>
+{% endblock %}

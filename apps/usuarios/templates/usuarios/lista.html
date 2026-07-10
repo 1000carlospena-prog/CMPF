@@ -13,6 +13,7 @@
             <tr>
                 <th>#</th>
                 <th>Usuario</th>
+                <th>Nombre real</th>
                 <th>Email</th>
                 <th>Grado</th>
                 <th>Staff</th>
@@ -25,6 +26,7 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td><strong>{{ u.username }}</strong></td>
+                    <td>{{ u.profile.nombre_real|default:'—' }}</td>
                     <td>{{ u.email|default:'—' }}</td>
                     <td><span class="badge {% if u.profile.grado == 'v00' %}badge-danger{% elif u.profile.grado == 'v1' %}badge-warning{% elif u.profile.grado == 'v2' %}badge-primary{% elif u.profile.grado == 'v3' %}badge-info{% else %}badge-secondary{% endif %}">{{ u.profile.grado }}</span></td>
                     <td>{% if u.is_staff %}✅{% else %}❌{% endif %}</td>

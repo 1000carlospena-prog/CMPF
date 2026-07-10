@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Mensajes - CMPF{% endblock %}
+{% block content %}
+<div class="chat-layout">
+  <aside class="chat-sidebar">
+    <div class="chat-sidebar-header">
+      <h3>Mensajes</h3>
+      <a href="{% url 'chat:search' %}" class="btn btn-sm btn-primary" style="padding: 6px 12px;">+ Nuevo</a>
+    </div>
+    <div class="chat-conversations">
+      {% for item in conversations %}
+        <a href="{% url 'chat:conversation' item.conversation.id %}" class="chat-conv-item">
+          <div class="chat-conv-avatar">
+            {% if item.other.profile.avatar %}
+              <img src="{{ item.other.profile.avatar.url }}" alt="">
+            {% else %}
+              <span class="avatar-letter">{{ item.other.username|first|upper }}</span>
+            {% endif %}
+          </div>
+          <div class="chat-conv-info">
+            <div class="chat-conv-name">
+              {{ item.other.profile.nombre_real|default:item.other.username }}
+              <span class="badge {{ item.other.profile.grado }}" style="font-size:0.6rem;">{{ item.other.profile.grado }}</span>
+            </div>
+            <div class="chat-conv-preview">
+              {% if item.last_message %}
+                {% if item.last_message.sender == user %}: {% endif %}{{ item.last_message.content|truncatechars:40 }}
+              {% else %}
+                <span style="color:#94a3b8;">Sin mensajes</span>
+              {% endif %}
+            </div>
+          </div>
+          {% if item.unread > 0 %}
+            <span class="chat-unread-badge">{{ item.unread }}</span>
+          {% endif %}
+        </a>
+      {% empty %}
+        <div style="padding: 30px 16px; text-align: center; color: #94a3b8; font-size: 0.9rem;">
+          No tienes conversaciones aún.
+        </div>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <main class="chat-main">
+    <div class="chat-placeholder">
+      <div style="font-size: 3rem; margin-bottom: 12px;">💬</div>
+      <h3>Tus mensajes</h3>
+      <p style="color: #64748b;">Selecciona una conversación o inicia una nueva.</p>
+      <a href="{% url 'chat:search' %}" class="btn btn-primary" style="margin-top: 12px;">Buscar usuarios</a>
+    </div>
+  </main>
+</div>
+
+<style>
+.chat-layout { display: flex; height: calc(100vh - 220px); min-height: 500px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+.chat-sidebar { width: 320px; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+.chat-sidebar-header { padding: 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+.chat-sidebar-header h3 { font-size: 1.1rem; font-weight: 700; }
+.chat-conversations { flex: 1; overflow-y: auto; }
+.chat-conv-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; text-decoration: none; color: inherit; border-bottom: 1px solid #f1f5f9; transition: background 0.15s; }
+.chat-conv-item:hover { background: #f8fafc; }
+.chat-conv-avatar { flex-shrink: 0; }
+.chat-conv-avatar img, .avatar-letter { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.avatar-letter { display: flex; align-items: center; justify-content: center; background: #2563eb; color: white; font-weight: 700; font-size: 1rem; }
+.chat-conv-info { flex: 1; min-width: 0; }
+.chat-conv-name { font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+.chat-conv-preview { font-size: 0.8rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-unread-badge { background: #2563eb; color: white; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 50px; flex-shrink: 0; }
+.chat-main { flex: 1; display: flex; align-items: center; justify-content: center; }
+.chat-placeholder { text-align: center; padding: 40px; }
+@media (max-width: 768px) { .chat-layout { flex-direction: column; height: auto; } .chat-sidebar { width: 100%; } }
+</style>
+{% endblock %}

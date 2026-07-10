@@ -7,7 +7,7 @@ from datetime import timedelta
 GRADO_CHOICES = [
     ('v00', 'v00 - Desarrollador'),
     ('v1', 'v1 - Super Admin'),
-    ('v2', 'v2 - Administrador'),
+    ('v2', 'v2 - Moderador'),
     ('v3', 'v3 - Proveedor'),
     ('v4', 'v4 - Comprador'),
 ]
@@ -17,6 +17,8 @@ GRADO_NIVEL = {'v00': 0, 'v1': 1, 'v2': 2, 'v3': 3, 'v4': 4}
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     grado = models.CharField(max_length=3, choices=GRADO_CHOICES, default='v4')
+    nombre_real = models.CharField(max_length=150, blank=True, default='')
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     subscription_active = models.BooleanField(default=False)
     subscription_end = models.DateTimeField(null=True, blank=True)
     creado = models.DateTimeField(auto_now_add=True)

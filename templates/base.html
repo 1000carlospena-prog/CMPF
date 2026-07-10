@@ -136,6 +136,7 @@
                     <a href="{% url 'dashboard:index' %}">Dashboard</a>
                     <a href="{% url 'carrito:ver' %}">Carrito{% if total_items_carrito > 0 %} ({{ total_items_carrito }}){% endif %}</a>
                     <a href="{% url 'productos:lista_deseos' %}">Favoritos</a>
+                    <a href="{% url 'chat:inbox' %}">Mensajes</a>
                     <form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit">Salir</button></form>
                 {% else %}
                     <a href="{% url 'login' %}">Iniciar Sesión</a>
@@ -149,8 +150,14 @@
         <div class="main-container">
             <div class="user-bar">
                 {% if user.is_authenticated %}
-                    Hola, <strong>{{ user.username }}</strong>
+                    <a href="{% url 'perfil_usuario' user.id %}" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:inherit;">
+                        {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+                        {% endif %}
+                        <strong>{{ user.username }}</strong>
+                    </a>
                     <span class="badge {{ user_grado }}">{{ user_grado }}</span>
+                    <a href="{% url 'usuarios:editar_mi_perfil' %}">Editar perfil</a>
                     {% if es_v4 %}
                         <a href="{% url 'upgrade' %}">Mejorar a v3</a>
                     {% endif %}

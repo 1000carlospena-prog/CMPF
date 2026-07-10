@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 
 from .decorators import grado_required
@@ -65,6 +66,7 @@ def editar_usuario(request, user_id):
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         email = request.POST.get('email', '').strip()
+        nombre_real = request.POST.get('nombre_real', '').strip()
         password = request.POST.get('password', '').strip()
         grado = request.POST.get('grado')
 
@@ -91,6 +93,8 @@ def editar_usuario(request, user_id):
             usuario.profile.grado = grado
             usuario.profile.save()
 
+        usuario.profile.nombre_real = nombre_real
+        usuario.profile.save()
         usuario.username = username
         usuario.email = email
         if password:
@@ -113,6 +117,7 @@ def crear_usuario(request):
     if request.method == 'POST':
         username = request.POST.get('username', '').strip()
         email = request.POST.get('email', '').strip()
+        nombre_real = request.POST.get('nombre_real', '').strip()
         password = request.POST.get('password', '')
         password2 = request.POST.get('password2', '')
         grado = request.POST.get('grado', 'v4')
@@ -143,11 +148,32 @@ def crear_usuario(request):
 
         user = User.objects.create_user(username=username, email=email, password=password)
         user.profile.grado = grado
+        user.profile.nombre_real = nombre_real
         user.profile.save()
         messages.success(request, f'✅ Usuario "{username}" creado con grado {grado}.')
         return redirect('usuarios:lista')
 
     return render(request, 'usuarios/crear.html', {'grados': grados_ok})
+
+
+def perfil_usuario(request, user_id):
+    usuario = get_object_or_404(User, id=user_id)
+    return render(request, 'usuarios/perfil.html', {'profile_user': usuario})
+
+
+@login_required
+def editar_mi_perfil(request):
+    if request.method == 'POST':
+        nombre_real = request.POST.get('nombre_real', '').strip()
+        avatar = request.FILES.get('avatar')
+        profile = request.user.profile
+        profile.nombre_real = nombre_real
+        if avatar:
+            profile.avatar = avatar
+        profile.save()
+        messages.success(request, 'Perfil actualizado.')
+        return redirect('perfil_usuario', user_id=request.user.id)
+    return render(request, 'usuarios/editar_mi_perfil.html')
 
 
 @grado_required('v2')

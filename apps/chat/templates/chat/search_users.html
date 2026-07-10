@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Buscar usuarios - CMPF{% endblock %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <div class="card">
+    <div class="card-header" style="padding-bottom: 16px; border-bottom: 1px solid #e2e8f0; margin-bottom: 20px;">
+      <h2 style="margin:0;">Buscar usuarios</h2>
+    </div>
+    <form method="get" class="search-form" style="display: flex; gap: 12px; align-items: end; flex-wrap: wrap;">
+      <div style="flex:2; min-width: 200px;">
+        <label>Buscar por nombre de usuario o nombre real</label>
+        <input type="text" name="q" value="{{ q }}" placeholder="Buscar...">
+      </div>
+      <div style="flex:1; min-width: 120px;">
+        <label>Filtrar por tipo</label>
+        <select name="grado">
+          <option value="">Todos</option>
+          <option value="v2" {% if grado == 'v2' %}selected{% endif %}>v2 - Moderador</option>
+          <option value="v3" {% if grado == 'v3' %}selected{% endif %}>v3 - Proveedor</option>
+          <option value="v4" {% if grado == 'v4' %}selected{% endif %}>v4 - Comprador</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+  </div>
+
+  <div style="margin-top: 20px;">
+    {% for u in users %}
+      <div class="card" style="display: flex; align-items: center; gap: 16px; margin-bottom: 8px;">
+        <div class="chat-conv-avatar">
+          {% if u.profile.avatar %}
+            <img src="{{ u.profile.avatar.url }}" alt="" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+          {% else %}
+            <span class="avatar-letter" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:#2563eb;color:white;font-weight:700;border-radius:50%;">{{ u.username|first|upper }}</span>
+          {% endif %}
+        </div>
+        <div style="flex:1;">
+          <div style="font-weight:600;">{{ u.profile.nombre_real|default:u.username }}</div>
+          <div style="font-size:0.85rem; color:#64748b;">
+            @{{ u.username }} <span class="badge {{ u.profile.grado }}">{{ u.profile.grado }}</span>
+          </div>
+        </div>
+        <a href="{% url 'chat:start' u.id %}" class="btn btn-primary btn-sm">💬 Chatear</a>
+        <a href="{% url 'perfil_usuario' u.id %}" class="btn btn-secondary btn-sm">Ver perfil</a>
+      </div>
+    {% empty %}
+      <div class="card" style="text-align:center; color:#94a3b8; padding: 40px;">
+        {% if q or grado %}
+          No se encontraron usuarios con esos filtros.
+        {% else %}
+          Escribe un nombre o selecciona un tipo para buscar.
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.chat-conv-avatar { flex-shrink:0; }
+</style>
+{% endblock %}
