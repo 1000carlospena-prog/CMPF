@@ -85,6 +85,9 @@ def editar_usuario(request, user_id):
             if not any(g[0] == grado for g in grados_ok):
                 messages.error(request, 'No tienes permiso para asignar ese grado.')
                 return redirect('usuarios:editar', user_id=usuario.id)
+            if grado == 'v00' and usuario.profile.grado != 'v00' and User.objects.filter(profile__grado='v00').exists():
+                messages.error(request, 'Ya existe un usuario Desarrollador (v00). Solo puede haber uno.')
+                return redirect('usuarios:editar', user_id=usuario.id)
             usuario.profile.grado = grado
             usuario.profile.save()
 
@@ -124,6 +127,14 @@ def crear_usuario(request):
 
         if User.objects.filter(username=username).exists():
             messages.error(request, 'El usuario ya existe.')
+            return redirect('usuarios:crear')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'El email ya está registrado.')
+            return redirect('usuarios:crear')
+
+        if grado == 'v00' and User.objects.filter(profile__grado='v00').exists():
+            messages.error(request, 'Ya existe un usuario Desarrollador (v00). Solo puede haber uno.')
             return redirect('usuarios:crear')
 
         if not any(g[0] == grado for g in grados_ok):

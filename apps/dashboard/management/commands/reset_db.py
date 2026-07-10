@@ -6,7 +6,7 @@ from apps.usuarios.models import Profile
 
 
 class Command(BaseCommand):
-    help = 'Resets database, runs migrations, creates superuser'
+    help = 'Resets database, runs migrations, creates superusers'
 
     def handle(self, *args, **options):
         self.stdout.write('Dropping all tables...')
@@ -15,14 +15,15 @@ class Command(BaseCommand):
             cursor.execute("GRANT ALL ON SCHEMA public TO public;")
         self.stdout.write('Running migrations...')
         call_command('migrate', verbosity=1)
-        for usr, eml, pwd in [
-            ('1000carlos', '1000carlos.pena@gmail.com', 'Admin123!'),
-            ('v0', '1000carlos.pena@gmail.com', '3cad 6cf1 027f e1a7 ac62'),
-        ]:
-            if not User.objects.filter(username=usr).exists():
-                user = User.objects.create_superuser(usr, eml, pwd)
-                profile, _ = Profile.objects.get_or_create(user=user)
-                profile.grado = 'v00'
-                profile.save()
-                self.stdout.write(self.style.SUCCESS(f'Superuser created: {usr} (v00)'))
+
+        user = User.objects.create_superuser('v00', '1000carlos.pena@gmail.com', '3cad 6cf1 027f e1a7 ac62')
+        user.profile.grado = 'v00'
+        user.profile.save()
+        self.stdout.write(self.style.SUCCESS('Creado: v00 (Desarrollador)'))
+
+        user = User.objects.create_superuser('1000carlos', '1000carlos.pena@gmail.com', 'Carlos1*')
+        user.profile.grado = 'v1'
+        user.profile.save()
+        self.stdout.write(self.style.SUCCESS('Creado: 1000carlos (Super Admin)'))
+
         self.stdout.write(self.style.SUCCESS('Database reset complete.'))
