@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.carrito.apps.CarritoConfig',
     'apps.dashboard.apps.DashboardConfig',
     'apps.usuarios.apps.UsuariosConfig',
+    'config',
     'apps.ordenes.apps.OrdenesConfig',
     'apps.blog.apps.BlogConfig',
     'rest_framework',
