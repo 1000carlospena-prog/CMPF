@@ -33,7 +33,7 @@ def enviar_codigo_email(email, codigo, proposito):
     send_mail(
         asunto,
         mensaje,
-        settings.EMAIL_HOST_USER,
+        settings.DEFAULT_FROM_EMAIL,
         [email],
         html_message=html,
         fail_silently=False,
