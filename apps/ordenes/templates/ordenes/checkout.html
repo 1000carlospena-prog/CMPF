@@ -1,110 +1,72 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - CMPF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        h1 { font-size: 1.8rem; margin-bottom: 25px; }
-        .checkout-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; }
-        .form-section { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 25px; }
-        .form-section h2 { font-size: 1.2rem; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 5px; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05); color: white; font-size: 0.95rem; font-family: inherit;
-        }
-        .form-group textarea { resize: vertical; min-height: 80px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .btn-submit {
-            width: 100%; padding: 16px; border: none; border-radius: 12px; background: #e94560;
-            color: white; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; font-family: inherit;
-        }
-        .btn-submit:hover { background: #c73652; transform: translateY(-2px); }
-        .btn-back { display: inline-block; margin-bottom: 20px; color: rgba(255,255,255,0.5); text-decoration: none; }
-        .btn-back:hover { color: white; }
-        .sidebar { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 25px; height: fit-content; }
-        .sidebar h2 { font-size: 1.2rem; margin-bottom: 20px; }
-        .sidebar-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
-        .sidebar-item:last-child { border-bottom: none; }
-        .sidebar-total { display: flex; justify-content: space-between; padding-top: 15px; font-size: 1.2rem; font-weight: 700; color: #e94560; }
-        .message { padding: 12px 20px; border-radius: 10px; margin-bottom: 15px; font-size: 0.9rem; }
-        .message.success { background: rgba(45,106,79,0.3); border: 1px solid #2d6a4f; }
-        .message.error { background: rgba(233,69,96,0.3); border: 1px solid #e94560; }
-        .message.warning { background: rgba(255,193,7,0.2); border: 1px solid #ffc107; color: #ffc107; }
-        @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="{% url 'carrito:ver' %}" class="btn-back">← Volver al Carrito</a>
-        <h1>Finalizar Compra</h1>
+{% extends "base.html" %}
+{% block title %}Checkout - CMPF{% endblock %}
+{% block extra_css %}
+<style>
+    .checkout-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sidebar-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; height: fit-content; }
+    .sidebar-card h2 { font-size: 1.1rem; margin-bottom: 16px; }
+    .sidebar-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
+    .sidebar-item:last-child { border-bottom: none; }
+    .sidebar-total { display: flex; justify-content: space-between; padding-top: 12px; font-size: 1.1rem; font-weight: 700; color: #2563eb; }
+    @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+{% block content %}
+<a href="{% url 'carrito:ver' %}" class="btn btn-secondary btn-sm" style="margin-bottom:20px;">← Volver al Carrito</a>
+<h1>Finalizar Compra</h1>
 
-        {% if messages %}
-            {% for msg in messages %}
-            <div class="message {{ msg.tags }}">{{ msg }}</div>
-            {% endfor %}
-        {% endif %}
-
-        <div class="checkout-grid">
-            <form method="post" class="form-section">
-                {% csrf_token %}
-                <h2>Información de Envío</h2>
-                <div class="form-group">
-                    <label>Nombre Completo *</label>
-                    <input type="text" name="nombre_completo" required value="{{ request.user.get_full_name }}">
-                </div>
-                <div class="form-group">
-                    <label>Dirección *</label>
-                    <textarea name="direccion" required></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Ciudad *</label>
-                        <input type="text" name="ciudad" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Provincia *</label>
-                        <input type="text" name="provincia" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Código Postal</label>
-                        <input type="text" name="codigo_postal">
-                    </div>
-                    <div class="form-group">
-                        <label>Teléfono *</label>
-                        <input type="text" name="telefono" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Notas (opcional)</label>
-                    <textarea name="notas"></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Confirmar y Pagar — ${{ total|floatformat:2 }}</button>
-            </form>
-
-            <div class="sidebar">
-                <h2>Resumen del Pedido</h2>
-                {% for item in items %}
-                <div class="sidebar-item">
-                    <span>{{ item.producto.nombre }} × {{ item.cantidad }}</span>
-                    <span>${{ item.subtotal|floatformat:2 }}</span>
-                </div>
-                {% endfor %}
-                <div class="sidebar-total">
-                    <span>Total</span>
-                    <span>${{ total|floatformat:2 }}</span>
-                </div>
+<div class="checkout-grid">
+    <form method="post" class="card">
+        {% csrf_token %}
+        <h2 style="font-size:1.1rem;margin-bottom:20px;">Información de Envío</h2>
+        <div class="form-group">
+            <label>Nombre Completo *</label>
+            <input type="text" name="nombre_completo" required value="{{ request.user.get_full_name }}">
+        </div>
+        <div class="form-group">
+            <label>Dirección *</label>
+            <textarea name="direccion" required style="min-height:80px;"></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Ciudad *</label>
+                <input type="text" name="ciudad" required>
+            </div>
+            <div class="form-group">
+                <label>Provincia *</label>
+                <input type="text" name="provincia" required>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Código Postal</label>
+                <input type="text" name="codigo_postal">
+            </div>
+            <div class="form-group">
+                <label>Teléfono *</label>
+                <input type="text" name="telefono" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Notas (opcional)</label>
+            <textarea name="notas"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Confirmar y Pagar — ${{ total|floatformat:2 }}</button>
+    </form>
+
+    <div class="sidebar-card">
+        <h2>Resumen del Pedido</h2>
+        {% for item in items %}
+        <div class="sidebar-item">
+            <span>{{ item.producto.nombre }} × {{ item.cantidad }}</span>
+            <span>${{ item.subtotal|floatformat:2 }}</span>
+        </div>
+        {% endfor %}
+        <div class="sidebar-total">
+            <span>Total</span>
+            <span>${{ total|floatformat:2 }}</span>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

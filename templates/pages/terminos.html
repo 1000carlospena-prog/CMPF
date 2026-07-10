@@ -1,53 +1,32 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Términos y Condiciones - CMPF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; line-height: 1.8; }
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        .back-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
-        .back-link:hover { color: white; }
-        h1 { font-size: 2rem; margin-bottom: 20px; }
-        h2 { font-size: 1.3rem; margin: 25px 0 10px; color: #e94560; }
-        p { color: rgba(255,255,255,0.8); margin-bottom: 12px; }
-        ul { color: rgba(255,255,255,0.8); padding-left: 25px; margin-bottom: 12px; }
-        li { margin-bottom: 6px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="/" class="back-link">← Inicio</a>
-        <h1>Términos y Condiciones</h1>
-        <p>Última actualización: 2026</p>
+{% extends "base.html" %}
+{% block title %}Términos y Condiciones - CMPF{% endblock %}
+{% block content %}
+<div style="max-width:800px;">
+    <h1>Términos y Condiciones</h1>
+    <p style="color:#64748b;margin-bottom:24px;">Última actualización: 2026</p>
 
-        <h2>1. Aceptación de los Términos</h2>
-        <p>Al acceder y usar CMPF, aceptas cumplir con estos términos y condiciones. Si no estás de acuerdo con alguna parte, no debes usar el servicio.</p>
+    <h2>1. Aceptación de los Términos</h2>
+    <p style="color:#475569;margin-bottom:12px;">Al acceder y usar CMPF, aceptas cumplir con estos términos y condiciones. Si no estás de acuerdo con alguna parte, no debes usar el servicio.</p>
 
-        <h2>2. Cuentas de Usuario</h2>
-        <p>Eres responsable de mantener la confidencialidad de tu cuenta y contraseña. Debes notificarnos inmediatamente sobre cualquier uso no autorizado.</p>
+    <h2>2. Cuentas de Usuario</h2>
+    <p style="color:#475569;margin-bottom:12px;">Eres responsable de mantener la confidencialidad de tu cuenta y contraseña. Debes notificarnos inmediatamente sobre cualquier uso no autorizado.</p>
 
-        <h2>3. Niveles de Acceso</h2>
-        <p>El acceso a ciertas funcionalidades está determinado por el nivel de grado del usuario (v0-v4). El sistema se reserva el derecho de modificar estos niveles y sus privilegios asociados.</p>
+    <h2>3. Niveles de Acceso</h2>
+    <p style="color:#475569;margin-bottom:12px;">El acceso a ciertas funcionalidades está determinado por el nivel de grado del usuario (v0-v4). El sistema se reserva el derecho de modificar estos niveles y sus privilegios asociados.</p>
 
-        <h2>4. Productos y Contenido</h2>
-        <p>Los proveedores (v3) son responsables del contenido y la precisión de la información de sus productos. CMPF no se hace responsable por inexactitudes en los listados de productos.</p>
+    <h2>4. Productos y Contenido</h2>
+    <p style="color:#475569;margin-bottom:12px;">Los proveedores (v3) son responsables del contenido y la precisión de la información de sus productos. CMPF no se hace responsable por inexactitudes en los listados de productos.</p>
 
-        <h2>5. Privacidad</h2>
-        <p>Tu privacidad es importante para nosotros. Los datos personales se manejan de acuerdo con nuestra política de privacidad y solo se utilizan para el funcionamiento del servicio.</p>
+    <h2>5. Privacidad</h2>
+    <p style="color:#475569;margin-bottom:12px;">Tu privacidad es importante para nosotros. Los datos personales se manejan de acuerdo con nuestra política de privacidad y solo se utilizan para el funcionamiento del servicio.</p>
 
-        <h2>6. Limitación de Responsabilidad</h2>
-        <p>CMPF se proporciona "tal cual". No garantizamos que el servicio sea ininterrumpido o libre de errores. No somos responsables por daños directos o indirectos derivados del uso del servicio.</p>
+    <h2>6. Limitación de Responsabilidad</h2>
+    <p style="color:#475569;margin-bottom:12px;">CMPF se proporciona "tal cual". No garantizamos que el servicio sea ininterrumpido o libre de errores. No somos responsables por daños directos o indirectos derivados del uso del servicio.</p>
 
-        <h2>7. Modificaciones</h2>
-        <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación.</p>
+    <h2>7. Modificaciones</h2>
+    <p style="color:#475569;margin-bottom:12px;">Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación.</p>
 
-        <h2>8. Contacto</h2>
-        <p>Para cualquier pregunta sobre estos términos, contáctanos a través de nuestra página de contacto.</p>
-    </div>
-</body>
-</html>
+    <h2>8. Contacto</h2>
+    <p style="color:#475569;margin-bottom:12px;">Para cualquier pregunta sobre estos términos, contáctanos a través de nuestra página de contacto.</p>
+</div>
+{% endblock %}

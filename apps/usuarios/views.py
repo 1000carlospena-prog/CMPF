@@ -13,7 +13,7 @@ def _usuarios_visibles(request):
     if grado == 'v2':
         usuarios = usuarios.filter(profile__grado__in=['v3', 'v4'])
     elif grado == 'v1':
-        usuarios = usuarios.exclude(profile__grado__in=['v00', 'v1'])
+        usuarios = usuarios.exclude(profile__grado__in=['v00'])
     return usuarios
 
 
@@ -22,7 +22,7 @@ def _puede_modificar(request, usuario):
     grado_target = usuario.profile.grado
     if grado_actual == 'v00':
         return True
-    if grado_actual == 'v1' and grado_target in ('v2', 'v3', 'v4'):
+    if grado_actual == 'v1' and grado_target in ('v1', 'v2', 'v3', 'v4'):
         return True
     if grado_actual == 'v2' and grado_target in ('v3', 'v4'):
         return True
@@ -34,7 +34,7 @@ def _grados_permitidos(request):
     if grado == 'v00':
         return GRADO_CHOICES
     if grado == 'v1':
-        return [g for g in GRADO_CHOICES if g[0] in ('v2', 'v3', 'v4')]
+        return [g for g in GRADO_CHOICES if g[0] in ('v1', 'v2', 'v3', 'v4')]
     if grado == 'v2':
         return [g for g in GRADO_CHOICES if g[0] in ('v3', 'v4')]
     return []

@@ -1,101 +1,43 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ producto.nombre }} - CMPF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a1a; color: white; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .back-link { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.9rem; margin-bottom: 20px; display: inline-block; }
-        .back-link:hover { color: white; }
-        .product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; }
-        .gallery { border-radius: 20px; overflow: hidden; background: rgba(255,255,255,0.03); min-height: 400px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
-        .gallery img { width: 100%; height: 100%; object-fit: cover; }
-        .gallery-thumbs { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        .gallery-thumbs img { width: 80px; height: 80px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
-        .gallery-thumbs img:hover { border-color: #e94560; }
-        .info h1 { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
-        .info .price { font-size: 2rem; font-weight: 800; color: #e94560; margin-bottom: 5px; }
-        .info .price .old { font-size: 1.2rem; color: rgba(255,255,255,0.4); text-decoration: line-through; font-weight: 400; margin-left: 10px; }
-        .info .stock { font-size: 0.9rem; margin-bottom: 15px; }
-        .info .stock.in-stock { color: #2d6a4f; }
-        .info .stock.out-of-stock { color: #e94560; }
-        .info .description { color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 20px; }
-        .info .category { display: inline-block; background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 15px; }
-        .info .rating { font-size: 1.2rem; margin-bottom: 15px; }
-        .info .actions { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 25px; }
-        .info .actions a, .info .actions button {
-            padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 1rem;
-            text-decoration: none; border: none; cursor: pointer; transition: all 0.3s; font-family: inherit;
-        }
-        .btn-add-cart { background: #e94560; color: white; }
-        .btn-add-cart:hover { background: #c73652; transform: translateY(-2px); }
-        .btn-wishlist { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
-        .btn-wishlist:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-        .btn-wishlist.in-wishlist { background: rgba(233,69,96,0.2); border-color: #e94560; color: #e94560; }
+{% extends "base.html" %}
+{% block title %}{{ producto.nombre }} - CMPF{% endblock %}
+{% block extra_css %}
+<style>
+    .product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .gallery { border-radius: 12px; overflow: hidden; background: #f8fafc; min-height: 360px; display: flex; align-items: center; justify-content: center; font-size: 4rem; border: 1px solid #e2e8f0; }
+    .gallery img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-thumbs { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .gallery-thumbs img { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+    .gallery-thumbs img:hover { border-color: #2563eb; }
+    .product-info .price { font-size: 1.6rem; font-weight: 800; color: #2563eb; margin-bottom: 4px; }
+    .product-info .price .old { font-size: 1rem; color: #94a3b8; text-decoration: line-through; font-weight: 400; margin-left: 8px; }
+    .product-info .stock { font-size: 0.85rem; margin-bottom: 12px; }
+    .product-info .stock.in-stock { color: #16a34a; }
+    .product-info .stock.out-of-stock { color: #ef4444; }
+    .product-info .description { color: #475569; line-height: 1.7; margin-bottom: 16px; font-size: 0.95rem; }
+    .product-info .category { display: inline-block; background: #f1f5f9; padding: 4px 14px; border-radius: 50px; font-size: 0.8rem; color: #64748b; margin-bottom: 12px; }
+    .product-info .rating { font-size: 1.1rem; margin-bottom: 12px; }
+    .resena-card { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+    .resena-card .header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .resena-card .user { font-weight: 600; font-size: 0.85rem; }
+    .resena-card .date { font-size: 0.78rem; color: #94a3b8; }
+    .resena-card .stars { color: #f59e0b; font-size: 0.95rem; }
+    .resena-card .comment { color: #64748b; font-size: 0.85rem; line-height: 1.5; }
+    .review-form-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-top: 16px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .related-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; text-decoration: none; color: #1e293b; transition: 0.2s; }
+    .related-card:hover { border-color: #2563eb; transform: translateY(-2px); }
+    .related-card .img-wrap { height: 140px; background: #f8fafc; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .related-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .related-card .info { padding: 12px; }
+    .related-card .info h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+    .related-card .info .price { font-size: 1rem; font-weight: 700; color: #2563eb; }
+    @media (max-width: 768px) { .product-detail { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
+{% block content %}
+<a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary btn-sm" style="margin-bottom:16px;">← Volver a productos</a>
 
-        .section-title { font-size: 1.3rem; font-weight: 700; margin: 40px 0 20px; }
-
-        .resenas-section { margin-top: 30px; }
-        .resena-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px; padding: 16px; margin-bottom: 12px;
-        }
-        .resena-card .header { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .resena-card .user { font-weight: 600; font-size: 0.9rem; }
-        .resena-card .date { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
-        .resena-card .stars { color: #ffc107; font-size: 1rem; }
-        .resena-card .comment { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.5; }
-
-        .review-form { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 25px; margin-top: 20px; }
-        .review-form h3 { margin-bottom: 15px; }
-        .review-form input, .review-form textarea, .review-form select {
-            width: 100%; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05); color: white; font-size: 0.95rem; font-family: inherit; margin-bottom: 12px;
-        }
-        .review-form button { background: #e94560; color: white; border: none; padding: 12px 28px; border-radius: 50px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .review-form button:hover { background: #c73652; }
-
-        .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .related-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px; overflow: hidden; text-decoration: none; color: white; transition: 0.3s;
-        }
-        .related-card:hover { border-color: #e94560; transform: translateY(-3px); }
-        .related-card .img-wrap { height: 160px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .related-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        .related-card .info { padding: 14px; }
-        .related-card .info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 5px; }
-        .related-card .info .price { font-size: 1.1rem; font-weight: 700; color: #e94560; }
-
-        .messages { max-width: 1200px; margin: 10px auto; padding: 0 20px; }
-        .message { padding: 12px 20px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
-        .message.success { background: rgba(45,106,79,0.3); border: 1px solid #2d6a4f; }
-        .message.error { background: rgba(233,69,96,0.3); border: 1px solid #e94560; }
-        .message.info { background: rgba(23,162,184,0.3); border: 1px solid #17a2b8; }
-
-        @media (max-width: 768px) {
-            .product-detail { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="{% url 'productos:lista_productos' %}" class="back-link">← Volver a productos</a>
-
-        {% if messages %}
-        <div class="messages">
-            {% for msg in messages %}
-            <div class="message {{ msg.tags }}">{{ msg }}</div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        <div class="product-detail">
+<div class="product-detail">
             <div>
                 <div class="gallery">
                     {% with primera=producto.imagenes.first %}
@@ -113,7 +55,7 @@
                 {% endwith %}
             </div>
 
-            <div class="info">
+            <div class="product-info">
                 {% if producto.categoria %}
                 <span class="category">{{ producto.categoria.nombre }}</span>
                 {% endif %}
@@ -139,15 +81,15 @@
                 </div>
                 <div class="description">{{ producto.descripcion }}</div>
 
-                <div class="actions">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
                     {% if producto.existencia > 0 %}
                     <form action="{% url 'carrito:agregar_producto' producto.id %}" method="post" style="display:inline">
                         {% csrf_token %}
-                        <button type="submit" class="btn-add-cart">🛒 Añadir al Carrito</button>
+                        <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
                     </form>
                     {% endif %}
                     {% if user.is_authenticated %}
-                    <a href="{% url 'productos:toggle_deseo' producto.id %}" class="btn-wishlist{% if en_deseos %} in-wishlist{% endif %}">
+                    <a href="{% url 'productos:toggle_deseo' producto.id %}" class="btn btn-secondary">
                         {% if en_deseos %}❤️ En Favoritos{% else %}🤍 Añadir a Favoritos{% endif %}
                     </a>
                     {% endif %}
@@ -173,20 +115,24 @@
                     {% endfor %}
 
                     {% if user.is_authenticated and not mi_resena %}
-                    <div class="review-form">
-                        <h3>Escribe tu reseña</h3>
+                    <div class="review-form-card">
+                        <h3 style="margin-bottom:12px;">Escribe tu reseña</h3>
                         <form method="post" action="{% url 'productos:agregar_resena' producto.id %}">
                             {% csrf_token %}
-                            <select name="puntuacion" required>
-                                <option value="">Puntuación</option>
-                                <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
-                                <option value="4">⭐⭐⭐⭐ Muy bueno</option>
-                                <option value="3">⭐⭐⭐ Bueno</option>
-                                <option value="2">⭐⭐ Regular</option>
-                                <option value="1">⭐ Malo</option>
-                            </select>
-                            <textarea name="comentario" maxlength="500" placeholder="Comparte tu opinión sobre este producto..." required></textarea>
-                            <button type="submit">Publicar Reseña</button>
+                            <div class="form-group">
+                                <select name="puntuacion" required>
+                                    <option value="">Puntuación</option>
+                                    <option value="5">⭐⭐⭐⭐⭐ Excelente</option>
+                                    <option value="4">⭐⭐⭐⭐ Muy bueno</option>
+                                    <option value="3">⭐⭐⭐ Bueno</option>
+                                    <option value="2">⭐⭐ Regular</option>
+                                    <option value="1">⭐ Malo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="comentario" maxlength="500" placeholder="Comparte tu opinión sobre este producto..." required style="min-height:100px;"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Publicar Reseña</button>
                         </form>
                     </div>
                     {% elif mi_resena %}
@@ -214,6 +160,4 @@
             {% endfor %}
         </div>
         {% endif %}
-    </div>
-</body>
-</html>
+{% endblock %}
