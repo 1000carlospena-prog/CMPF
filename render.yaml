@@ -24,7 +24,7 @@ services:
           name: cmpf-db
           property: connectionString
       - key: PYTHON_VERSION
-        value: "3.14.6"
+        value: "3.13"
       - key: WEB_CONCURRENCY
         value: "4"
       - key: EMAIL_HOST_USER
