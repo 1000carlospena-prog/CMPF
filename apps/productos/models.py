@@ -31,8 +31,8 @@ class Producto(models.Model):
     existencia = models.IntegerField()
     disponible = models.BooleanField(default=True)
     destacado = models.BooleanField(default=False)
-    creado = models.DateTimeField(auto_now_add=True)
-    actualizado = models.DateTimeField(auto_now=True)
+    creado = models.DateTimeField(auto_now_add=True, null=True)
+    actualizado = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.nombre

@@ -1,1439 +1,1439 @@
-[
-{
-  "model": "auth.user",
-  "pk": 1,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$vK1uphH9z6EICbrHLNHyQ5$p1H3f5UA7f2j06rJico/PeEKrB7mXivfu1x/zcAv7M4=",
-    "last_login": "2026-07-09T17:50:36.096Z",
-    "is_superuser": true,
-    "username": "1000carlos",
-    "first_name": "",
-    "last_name": "",
-    "email": "1000carlos.pena@gmail.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2026-07-04T10:47:46.590Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 2,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$fWGtRD68uLpZ6vMn9ED9uU$lAJER8GZmuVAC/lcATFP/Mu9CFJ3bKlalz2L+Vdsyd8=",
-    "last_login": "2026-07-09T17:30:27.831Z",
-    "is_superuser": false,
-    "username": "v1111111",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-07-09T17:29:36.840Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 3,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$QsUh9LK7QI1j2JCJWik8VE$g/BrceeTK0FUN+hDZLtNAzrkf1MqZSUVnuVLW6fjtXI=",
-    "last_login": "2026-07-09T17:32:05.314Z",
-    "is_superuser": false,
-    "username": "v2222222",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-07-09T17:31:08.435Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "auth.user",
-  "pk": 4,
-  "fields": {
-    "password": "pbkdf2_sha256$1200000$mOmYzSqhOOlYE1rWS8OG47$3wqhtjX/EYurdJyYkYqLCkgYm6d/fvB7cziQ0qD8faA=",
-    "last_login": "2026-07-09T17:52:26.579Z",
-    "is_superuser": false,
-    "username": "v3333333",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2026-07-09T17:52:25.525Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "usuarios.profile",
-  "pk": 1,
-  "fields": {
-    "user": 1,
-    "grado": "v00",
-    "subscription_active": false,
-    "subscription_end": null,
-    "creado": "2026-07-09T17:11:23.997Z",
-    "actualizado": "2026-07-09T17:11:31.218Z"
-  }
-},
-{
-  "model": "usuarios.profile",
-  "pk": 2,
-  "fields": {
-    "user": 2,
-    "grado": "v1",
-    "subscription_active": false,
-    "subscription_end": null,
-    "creado": "2026-07-09T17:29:38.277Z",
-    "actualizado": "2026-07-09T17:29:38.336Z"
-  }
-},
-{
-  "model": "usuarios.profile",
-  "pk": 3,
-  "fields": {
-    "user": 3,
-    "grado": "v2",
-    "subscription_active": false,
-    "subscription_end": null,
-    "creado": "2026-07-09T17:31:09.173Z",
-    "actualizado": "2026-07-09T17:31:09.220Z"
-  }
-},
-{
-  "model": "usuarios.profile",
-  "pk": 4,
-  "fields": {
-    "user": 4,
-    "grado": "v3",
-    "subscription_active": true,
-    "subscription_end": "2026-08-08T17:53:07.225Z",
-    "creado": "2026-07-09T17:52:26.346Z",
-    "actualizado": "2026-07-09T17:53:07.226Z"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 1,
-  "fields": {
-    "nombre": "Gabriel",
-    "apellido": "Garcia"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 2,
-  "fields": {
-    "nombre": "Mario",
-    "apellido": "Vargas"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 3,
-  "fields": {
-    "nombre": "Julio",
-    "apellido": "Cortazar"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 4,
-  "fields": {
-    "nombre": "Isabel",
-    "apellido": "Allende"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 5,
-  "fields": {
-    "nombre": "Jorge",
-    "apellido": "Borges"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 6,
-  "fields": {
-    "nombre": "Carlos",
-    "apellido": "Fuentes"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 7,
-  "fields": {
-    "nombre": "Juan",
-    "apellido": "Rulfo"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 8,
-  "fields": {
-    "nombre": "Pablo",
-    "apellido": "Neruda"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 9,
-  "fields": {
-    "nombre": "Laura",
-    "apellido": "Esquivel"
-  }
-},
-{
-  "model": "catalogo_libros.autor",
-  "pk": 10,
-  "fields": {
-    "nombre": "Octavio",
-    "apellido": "Paz"
-  }
-},
-{
-  "model": "catalogo_libros.editora",
-  "pk": 1,
-  "fields": {
-    "nombreEditora": "Sudamericana",
-    "ciudad": "Buenos Aires"
-  }
-},
-{
-  "model": "catalogo_libros.editora",
-  "pk": 2,
-  "fields": {
-    "nombreEditora": "Planeta",
-    "ciudad": "Barcelona"
-  }
-},
-{
-  "model": "catalogo_libros.editora",
-  "pk": 3,
-  "fields": {
-    "nombreEditora": "Alfaguara",
-    "ciudad": "Madrid"
-  }
-},
-{
-  "model": "catalogo_libros.editora",
-  "pk": 4,
-  "fields": {
-    "nombreEditora": "Anagrama",
-    "ciudad": "Barcelona"
-  }
-},
-{
-  "model": "catalogo_libros.editora",
-  "pk": 5,
-  "fields": {
-    "nombreEditora": "Seix Barral",
-    "ciudad": "Barcelona"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 1,
-  "fields": {
-    "tipoGenero": "Realismo m·gico"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 2,
-  "fields": {
-    "tipoGenero": "Novela"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 3,
-  "fields": {
-    "tipoGenero": "Novela polÌtica"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 4,
-  "fields": {
-    "tipoGenero": "Cuento"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 5,
-  "fields": {
-    "tipoGenero": "Ensayo"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 6,
-  "fields": {
-    "tipoGenero": "PoesÌa"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 7,
-  "fields": {
-    "tipoGenero": "Novela autobiogr·fica"
-  }
-},
-{
-  "model": "catalogo_libros.generos",
-  "pk": 8,
-  "fields": {
-    "tipoGenero": "Novela psicolÛgica"
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 1,
-  "fields": {
-    "nombreLibro": "Cien aÒos de soledad",
-    "autor": 1,
-    "genero": 1,
-    "editora": 1,
-    "precio": "25.50",
-    "fechaPublicacion": "1967-05-30",
-    "imagen": "",
-    "sinopsis": "Cien aÒos de soledad narra la historia de la familia BuendÌa a lo largo de varias generaciones en el mÌtico pueblo de Macondo. Desde su fundaciÛn por JosÈ Arcadio BuendÌa y ⁄rsula Iguar·n, el relato muestra un ciclo constante de repeticiones, errores y destinos marcados por la soledad. El tiempo no avanza de forma lineal, sino circular, haciendo que los nombres, las pasiones y las tragedias se repitan una y otra vez. La novela mezcla hechos extraordinarios con la vida cotidiana mediante el realismo m·gico, presentando fenÛmenos sobrenaturales como algo natural. M·s all· de la historia familiar, la obra retrata la historia de AmÈrica Latina, sus guerras, su violencia polÌtica y su incapacidad para aprender del pasado. GarcÌa M·rquez construye una reflexiÛn profunda sobre la memoria, el olvido, el poder y la condiciÛn humana.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 2,
-  "fields": {
-    "nombreLibro": "La ciudad y los perros",
-    "autor": 2,
-    "genero": 2,
-    "editora": 2,
-    "precio": "22.00",
-    "fechaPublicacion": "1963-01-01",
-    "imagen": "",
-    "sinopsis": "La ciudad y los perros se desarrolla en el Colegio Militar Leoncio Prado, donde un grupo de adolescentes es sometido a una educaciÛn violenta y autoritaria. A travÈs de varios personajes, la novela muestra cÛmo el sistema militar fomenta la brutalidad, la corrupciÛn y el silencio cÛmplice. El robo de un examen y la muerte de un cadete revelan la hipocresÌa de las autoridades y la degradaciÛn moral de la instituciÛn. Vargas Llosa utiliza m˙ltiples voces narrativas para profundizar en la psicologÌa de los personajes y denunciar un modelo educativo que reproduce la violencia social. La obra es una crÌtica directa al autoritarismo y al machismo presentes en la sociedad peruana.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 3,
-  "fields": {
-    "nombreLibro": "Rayuela",
-    "autor": 3,
-    "genero": 8,
-    "editora": 4,
-    "precio": "24.00",
-    "fechaPublicacion": "1963-06-28",
-    "imagen": "",
-    "sinopsis": "Rayuela es una novela experimental que rompe con la narrativa tradicional y propone distintas formas de lectura. La historia sigue a Horacio Oliveira, un intelectual que busca el sentido de la vida entre ParÌs y Buenos Aires. Su relaciÛn con la Maga refleja el conflicto entre razÛn e intuiciÛn. La obra invita al lector a participar activamente, cuestionando el lenguaje, el amor y la existencia. M·s que una trama lineal, Rayuela es una reflexiÛn filosÛfica sobre la alienaciÛn del hombre moderno y la necesidad de trascendencia.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 4,
-  "fields": {
-    "nombreLibro": "La casa de los espÌritus",
-    "autor": 4,
-    "genero": 1,
-    "editora": 1,
-    "precio": "23.00",
-    "fechaPublicacion": "1982-01-01",
-    "imagen": "",
-    "sinopsis": "La casa de los espÌritus relata la historia de la familia Trueba a lo largo de varias generaciones, combinando realismo m·gico con hechos histÛricos y polÌticos. Clara, dotada de habilidades sobrenaturales, representa la memoria y la espiritualidad, mientras Esteban Trueba encarna el poder y la represiÛn. La novela aborda temas como la injusticia social, la violencia polÌtica y la resistencia femenina. Isabel Allende construye una obra emotiva donde la memoria y la escritura se convierten en herramientas contra el olvido.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 5,
-  "fields": {
-    "nombreLibro": "Ficciones",
-    "autor": 5,
-    "genero": 4,
-    "editora": 3,
-    "precio": "20.00",
-    "fechaPublicacion": "1944-01-01",
-    "imagen": "",
-    "sinopsis": "Ficciones es una colecciÛn de relatos donde Borges explora el tiempo, el infinito, la identidad y el conocimiento. A travÈs de bibliotecas imposibles, laberintos y universos alternativos, el autor desafÌa la percepciÛn de la realidad. Los cuentos combinan erudiciÛn y fantasÌa, borrando los lÌmites entre lo real y lo imaginario. La obra invita al lector a reflexionar sobre el lenguaje y el acto mismo de leer.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 6,
-  "fields": {
-    "nombreLibro": "Aura",
-    "autor": 6,
-    "genero": 8,
-    "editora": 5,
-    "precio": "18.50",
-    "fechaPublicacion": "1962-01-01",
-    "imagen": "",
-    "sinopsis": "Aura es una novela breve y envolvente que sigue a un joven historiador contratado para ordenar los escritos de un general fallecido. En una casa oscura y misteriosa, el protagonista se ve envuelto en una atmÛsfera inquietante dominada por la enigm·tica Aura y su tÌa Consuelo. A travÈs de un lenguaje hipnÛtico, Carlos Fuentes explora la identidad, el deseo y la dualidad del tiempo.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 7,
-  "fields": {
-    "nombreLibro": "Pedro P·ramo",
-    "autor": 7,
-    "genero": 1,
-    "editora": 4,
-    "precio": "19.00",
-    "fechaPublicacion": "1955-01-01",
-    "imagen": "",
-    "sinopsis": "Pedro P·ramo narra el viaje de Juan Preciado al pueblo de Comala en busca de su padre. AllÌ descubre un lugar habitado por voces del pasado y almas en pena. La novela rompe la linealidad temporal y mezcla vivos y muertos para retratar la culpa, la soledad y la decadencia rural. Juan Rulfo construye una obra poÈtica y profunda sobre la memoria y el abandono.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 8,
-  "fields": {
-    "nombreLibro": "Veinte poemas de amor",
-    "autor": 8,
-    "genero": 6,
-    "editora": 2,
-    "precio": "17.00",
-    "fechaPublicacion": "1924-01-01",
-    "imagen": "",
-    "sinopsis": "Veinte poemas de amor y una canciÛn desesperada es una colecciÛn de poemas que exploran el amor, el deseo, la pÈrdida y la nostalgia. Pablo Neruda utiliza un lenguaje intenso y sensorial para expresar emociones profundas y universales. La obra captura la pasiÛn juvenil y el dolor del desamor, convirtiÈndose en uno de los libros de poesÌa m·s influyentes en lengua espaÒola.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 9,
-  "fields": {
-    "nombreLibro": "Como agua para chocolate",
-    "autor": 9,
-    "genero": 1,
-    "editora": 1,
-    "precio": "21.50",
-    "fechaPublicacion": "1989-01-01",
-    "imagen": "",
-    "sinopsis": "Como agua para chocolate cuenta la historia de Tita, una mujer condenada a reprimir su amor debido a las tradiciones familiares. A travÈs de recetas culinarias, la novela mezcla realismo m·gico y romance para mostrar cÛmo las emociones influyen en la vida cotidiana. Laura Esquivel utiliza la cocina como met·fora de la pasiÛn, la rebeldÌa y la liberaciÛn personal.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 10,
-  "fields": {
-    "nombreLibro": "El laberinto de la soledad",
-    "autor": 10,
-    "genero": 5,
-    "editora": 3,
-    "precio": "20.00",
-    "fechaPublicacion": "1950-01-01",
-    "imagen": "",
-    "sinopsis": "El laberinto de la soledad es un ensayo fundamental donde Octavio Paz analiza la identidad del mexicano. A travÈs de reflexiones histÛricas, culturales y psicolÛgicas, el autor explora el sentimiento de soledad, el machismo y las contradicciones sociales. La obra ofrece una profunda interpretaciÛn de la cultura mexicana y su relaciÛn con la historia y el mundo moderno.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 11,
-  "fields": {
-    "nombreLibro": "El otoÒo del patriarca",
-    "autor": 1,
-    "genero": 3,
-    "editora": 2,
-    "precio": "26.00",
-    "fechaPublicacion": "1975-01-01",
-    "imagen": "",
-    "sinopsis": "Novela polÌtica.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 12,
-  "fields": {
-    "nombreLibro": "ConversaciÛn en La Catedral",
-    "autor": 2,
-    "genero": 3,
-    "editora": 5,
-    "precio": "28.00",
-    "fechaPublicacion": "1969-01-01",
-    "imagen": "",
-    "sinopsis": "Novela polÌtica peruana.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 13,
-  "fields": {
-    "nombreLibro": "Bestiario",
-    "autor": 3,
-    "genero": 4,
-    "editora": 4,
-    "precio": "19.50",
-    "fechaPublicacion": "1951-01-01",
-    "imagen": "",
-    "sinopsis": "Cuentos surrealistas.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 14,
-  "fields": {
-    "nombreLibro": "Paula",
-    "autor": 4,
-    "genero": 7,
-    "editora": 3,
-    "precio": "22.00",
-    "fechaPublicacion": "1994-01-01",
-    "imagen": "",
-    "sinopsis": "Memorias personales.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 15,
-  "fields": {
-    "nombreLibro": "El Aleph",
-    "autor": 5,
-    "genero": 4,
-    "editora": 3,
-    "precio": "21.00",
-    "fechaPublicacion": "1949-01-01",
-    "imagen": "",
-    "sinopsis": "Relatos metafÌsicos.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 16,
-  "fields": {
-    "nombreLibro": "La muerte de Artemio Cruz",
-    "autor": 6,
-    "genero": 2,
-    "editora": 2,
-    "precio": "24.50",
-    "fechaPublicacion": "1962-01-01",
-    "imagen": "",
-    "sinopsis": "Novela histÛrica.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 17,
-  "fields": {
-    "nombreLibro": "El llano en llamas",
-    "autor": 7,
-    "genero": 4,
-    "editora": 4,
-    "precio": "18.00",
-    "fechaPublicacion": "1953-01-01",
-    "imagen": "",
-    "sinopsis": "Cuentos rurales.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 18,
-  "fields": {
-    "nombreLibro": "Residencia en la tierra",
-    "autor": 8,
-    "genero": 6,
-    "editora": 5,
-    "precio": "20.50",
-    "fechaPublicacion": "1933-01-01",
-    "imagen": "",
-    "sinopsis": "PoesÌa existencial.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 19,
-  "fields": {
-    "nombreLibro": "Malinche",
-    "autor": 9,
-    "genero": 2,
-    "editora": 1,
-    "precio": "23.00",
-    "fechaPublicacion": "2006-01-01",
-    "imagen": "",
-    "sinopsis": "Novela histÛrica.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 20,
-  "fields": {
-    "nombreLibro": "Piedra de sol",
-    "autor": 10,
-    "genero": 6,
-    "editora": 2,
-    "precio": "19.00",
-    "fechaPublicacion": "1957-01-01",
-    "imagen": "",
-    "sinopsis": "Poema largo.",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 21,
-  "fields": {
-    "nombreLibro": "dddd",
-    "autor": 1,
-    "genero": 1,
-    "editora": 1,
-    "precio": "23.00",
-    "fechaPublicacion": "2023-03-09",
-    "imagen": "media/IMG-20230114-WA0036.jpg",
-    "sinopsis": "sdsdsdsdsd",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 22,
-  "fields": {
-    "nombreLibro": "ddddd",
-    "autor": 1,
-    "genero": 1,
-    "editora": 1,
-    "precio": "22.99",
-    "fechaPublicacion": "2025-03-04",
-    "imagen": "media/IMG-20230114-WA0036_hyY3f0b.jpg",
-    "sinopsis": "sdsdsd",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 23,
-  "fields": {
-    "nombreLibro": "Carlosyyy",
-    "autor": 10,
-    "genero": 1,
-    "editora": 2,
-    "precio": "23.00",
-    "fechaPublicacion": "2023-04-03",
-    "imagen": "media/IMG-20230114-WA0036_EbLfqST.jpg",
-    "sinopsis": "muy bueno",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 24,
-  "fields": {
-    "nombreLibro": "canserbero",
-    "autor": 1,
-    "genero": 1,
-    "editora": 1,
-    "precio": "34.00",
-    "fechaPublicacion": "2020-03-04",
-    "imagen": "media/canserbero.jpg",
-    "sinopsis": "jjjjjjj",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 25,
-  "fields": {
-    "nombreLibro": "s",
-    "autor": 1,
-    "genero": 2,
-    "editora": 2,
-    "precio": "2.00",
-    "fechaPublicacion": "2022-02-03",
-    "imagen": "",
-    "sinopsis": "sssss",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 26,
-  "fields": {
-    "nombreLibro": "sssss",
-    "autor": 2,
-    "genero": 3,
-    "editora": 2,
-    "precio": "23.00",
-    "fechaPublicacion": "2022-03-04",
-    "imagen": "media/cien-anos-de-soledad.png",
-    "sinopsis": "dddd",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 27,
-  "fields": {
-    "nombreLibro": "gfh",
-    "autor": 2,
-    "genero": 2,
-    "editora": 3,
-    "precio": "0.01",
-    "fechaPublicacion": "2023-03-03",
-    "imagen": "",
-    "sinopsis": "dfsdf",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 28,
-  "fields": {
-    "nombreLibro": "dddddddddddddddddd",
-    "autor": 2,
-    "genero": 4,
-    "editora": 2,
-    "precio": "3.00",
-    "fechaPublicacion": "2023-03-03",
-    "imagen": "",
-    "sinopsis": "ygu",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 29,
-  "fields": {
-    "nombreLibro": "prueba2",
-    "autor": 2,
-    "genero": 3,
-    "editora": 2,
-    "precio": "2.99",
-    "fechaPublicacion": "2025-03-03",
-    "imagen": "",
-    "sinopsis": "wwww",
-    "disponible": true
-  }
-},
-{
-  "model": "catalogo_libros.libros",
-  "pk": 30,
-  "fields": {
-    "nombreLibro": "ddd",
-    "autor": 5,
-    "genero": 4,
-    "editora": 3,
-    "precio": "3.00",
-    "fechaPublicacion": "2026-07-01",
-    "imagen": "",
-    "sinopsis": "fggfg",
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 1,
-  "fields": {
-    "nombre": "Laptop Dell 14",
-    "descripcion": "Laptop Dell 14 pulgadas 8GB RAM SSD 256GB Windows 11",
-    "precio": "680.00",
-    "existencia": 15,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 2,
-  "fields": {
-    "nombre": "Laptop HP 15",
-    "descripcion": "Laptop HP 15 pulgadas 16GB RAM SSD 512GB",
-    "precio": "850.00",
-    "existencia": 10,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 3,
-  "fields": {
-    "nombre": "MacBook Air M1",
-    "descripcion": "Laptop Apple M1 8GB RAM 256GB SSD",
-    "precio": "999.99",
-    "existencia": 5,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 4,
-  "fields": {
-    "nombre": "Asus VivoBook",
-    "descripcion": "Laptop Asus 14 pulgadas Ryzen 5 8GB RAM",
-    "precio": "720.00",
-    "existencia": 8,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 5,
-  "fields": {
-    "nombre": "Lenovo IdeaPad 3",
-    "descripcion": "Laptop Lenovo 15 pulgadas Intel i5 12GB RAM",
-    "precio": "790.00",
-    "existencia": 6,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 6,
-  "fields": {
-    "nombre": "Mouse Logitech M185",
-    "descripcion": "Mouse inal·mbrico Ûptico USB 2.4GHz",
-    "precio": "19.99",
-    "existencia": 60,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 7,
-  "fields": {
-    "nombre": "Mouse Gamer Redragon",
-    "descripcion": "Mouse gamer RGB 7200 DPI",
-    "precio": "39.99",
-    "existencia": 40,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 8,
-  "fields": {
-    "nombre": "Teclado Mec·nico RGB",
-    "descripcion": "Teclado mec·nico switches blue retroiluminado",
-    "precio": "89.99",
-    "existencia": 25,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 9,
-  "fields": {
-    "nombre": "Teclado Logitech K380",
-    "descripcion": "Teclado inal·mbrico bluetooth compacto",
-    "precio": "45.50",
-    "existencia": 30,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 10,
-  "fields": {
-    "nombre": "Combo Teclado Mouse",
-    "descripcion": "Combo inal·mbrico teclado y mouse",
-    "precio": "29.99",
-    "existencia": 35,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 11,
-  "fields": {
-    "nombre": "Monitor Samsung 24",
-    "descripcion": "Monitor 24 pulgadas Full HD HDMI",
-    "precio": "180.00",
-    "existencia": 18,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 12,
-  "fields": {
-    "nombre": "Monitor LG 27",
-    "descripcion": "Monitor 27 pulgadas IPS 75Hz",
-    "precio": "240.00",
-    "existencia": 12,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 13,
-  "fields": {
-    "nombre": "Monitor Curvo 32",
-    "descripcion": "Monitor curvo 32 pulgadas 165Hz gamer",
-    "precio": "399.99",
-    "existencia": 7,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 14,
-  "fields": {
-    "nombre": "Impresora Epson L3250",
-    "descripcion": "Impresora multifuncional WiFi tinta continua",
-    "precio": "220.00",
-    "existencia": 9,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 15,
-  "fields": {
-    "nombre": "Impresora HP 2775",
-    "descripcion": "Impresora HP inal·mbrica multifunciÛn",
-    "precio": "150.00",
-    "existencia": 11,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 16,
-  "fields": {
-    "nombre": "Disco SSD 240GB",
-    "descripcion": "Unidad SSD SATA 240GB alta velocidad",
-    "precio": "35.00",
-    "existencia": 50,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 17,
-  "fields": {
-    "nombre": "Disco SSD 1TB",
-    "descripcion": "Unidad SSD NVMe 1TB M.2",
-    "precio": "120.00",
-    "existencia": 22,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 18,
-  "fields": {
-    "nombre": "Disco Duro 2TB",
-    "descripcion": "Disco duro externo USB 3.0 2TB",
-    "precio": "95.00",
-    "existencia": 14,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 19,
-  "fields": {
-    "nombre": "Memoria USB 64GB",
-    "descripcion": "Memoria USB 3.1 64GB alta velocidad",
-    "precio": "15.99",
-    "existencia": 80,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 20,
-  "fields": {
-    "nombre": "Memoria USB 128GB",
-    "descripcion": "Memoria USB 3.1 128GB",
-    "precio": "24.99",
-    "existencia": 65,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 21,
-  "fields": {
-    "nombre": "RAM 8GB DDR4",
-    "descripcion": "Memoria RAM DDR4 8GB 3200MHz",
-    "precio": "28.00",
-    "existencia": 45,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 22,
-  "fields": {
-    "nombre": "RAM 16GB DDR4",
-    "descripcion": "Memoria RAM DDR4 16GB 3200MHz",
-    "precio": "55.00",
-    "existencia": 30,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 23,
-  "fields": {
-    "nombre": "Tarjeta Grafica GTX1650",
-    "descripcion": "GPU Nvidia GTX 1650 4GB GDDR6",
-    "precio": "210.00",
-    "existencia": 6,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 24,
-  "fields": {
-    "nombre": "Tarjeta Grafica RTX3060",
-    "descripcion": "GPU Nvidia RTX 3060 12GB",
-    "precio": "420.00",
-    "existencia": 4,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 25,
-  "fields": {
-    "nombre": "Fuente Poder 600W",
-    "descripcion": "Fuente de poder 600W certificaciÛn 80+",
-    "precio": "65.00",
-    "existencia": 20,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 26,
-  "fields": {
-    "nombre": "Gabinete Gamer",
-    "descripcion": "Gabinete ATX con panel de vidrio templado",
-    "precio": "75.00",
-    "existencia": 13,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 27,
-  "fields": {
-    "nombre": "Placa Base B550",
-    "descripcion": "Motherboard B550 compatible Ryzen",
-    "precio": "140.00",
-    "existencia": 9,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 28,
-  "fields": {
-    "nombre": "Procesador Ryzen 5",
-    "descripcion": "CPU AMD Ryzen 5 5600G 6 n˙cleos",
-    "precio": "190.00",
-    "existencia": 8,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 29,
-  "fields": {
-    "nombre": "Procesador i5 12400",
-    "descripcion": "CPU Intel Core i5 12va generaciÛn",
-    "precio": "230.00",
-    "existencia": 7,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 30,
-  "fields": {
-    "nombre": "Cooler CPU RGB",
-    "descripcion": "Disipador CPU con iluminaciÛn RGB",
-    "precio": "35.00",
-    "existencia": 25,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 31,
-  "fields": {
-    "nombre": "Webcam HD 1080p",
-    "descripcion": "C·mara web Full HD con micrÛfono",
-    "precio": "32.00",
-    "existencia": 40,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 32,
-  "fields": {
-    "nombre": "Audifonos Gamer",
-    "descripcion": "Headset gamer con micrÛfono 7.1",
-    "precio": "48.00",
-    "existencia": 33,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 33,
-  "fields": {
-    "nombre": "Silla Gamer Pro",
-    "descripcion": "Silla ergonÛmica reclinable gamer",
-    "precio": "180.00",
-    "existencia": 6,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 34,
-  "fields": {
-    "nombre": "Router TP-Link AC1200",
-    "descripcion": "Router doble banda WiFi 5",
-    "precio": "55.00",
-    "existencia": 27,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 35,
-  "fields": {
-    "nombre": "Switch 8 Puertos",
-    "descripcion": "Switch de red 8 puertos 10/100/1000",
-    "precio": "38.00",
-    "existencia": 19,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 36,
-  "fields": {
-    "nombre": "Tablet Lenovo M10",
-    "descripcion": "Tablet 10 pulgadas Android 4GB RAM",
-    "precio": "199.99",
-    "existencia": 10,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 37,
-  "fields": {
-    "nombre": "iPad 9na Gen",
-    "descripcion": "Tablet Apple 10.2 pulgadas 64GB",
-    "precio": "329.99",
-    "existencia": 5,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 38,
-  "fields": {
-    "nombre": "Laptop Acer Nitro 5",
-    "descripcion": "Laptop gamer i5 RTX3050 16GB RAM",
-    "precio": "1100.00",
-    "existencia": 3,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 39,
-  "fields": {
-    "nombre": "Laptop MSI GF63",
-    "descripcion": "Laptop gamer i7 RTX3050 16GB RAM",
-    "precio": "1250.00",
-    "existencia": 2,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 40,
-  "fields": {
-    "nombre": "Dock USB-C",
-    "descripcion": "Dock station USB-C m˙ltiples puertos",
-    "precio": "60.00",
-    "existencia": 22,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 41,
-  "fields": {
-    "nombre": "Adaptador HDMI",
-    "descripcion": "Adaptador HDMI a VGA",
-    "precio": "12.00",
-    "existencia": 70,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 42,
-  "fields": {
-    "nombre": "Cable HDMI 2m",
-    "descripcion": "Cable HDMI 2 metros alta velocidad",
-    "precio": "9.99",
-    "existencia": 90,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 43,
-  "fields": {
-    "nombre": "Power Bank 20000mAh",
-    "descripcion": "BaterÌa port·til 20000mAh USB-C",
-    "precio": "35.00",
-    "existencia": 30,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 44,
-  "fields": {
-    "nombre": "UPS 1000VA",
-    "descripcion": "UPS regulador de voltaje 1000VA",
-    "precio": "140.00",
-    "existencia": 12,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 45,
-  "fields": {
-    "nombre": "Escaner Canon Lide",
-    "descripcion": "Esc·ner port·til Canon USB",
-    "precio": "120.00",
-    "existencia": 4,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 46,
-  "fields": {
-    "nombre": "Microfono USB",
-    "descripcion": "MicrÛfono condensador USB para streaming",
-    "precio": "58.00",
-    "existencia": 18,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 47,
-  "fields": {
-    "nombre": "Camara Seguridad IP",
-    "descripcion": "C·mara IP WiFi interior HD",
-    "precio": "42.00",
-    "existencia": 25,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 48,
-  "fields": {
-    "nombre": "SSD Externo 500GB",
-    "descripcion": "Disco externo SSD 500GB USB-C",
-    "precio": "85.00",
-    "existencia": 16,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 49,
-  "fields": {
-    "nombre": "Hub USB 4 Puertos",
-    "descripcion": "Hub USB 3.0 4 puertos",
-    "precio": "18.00",
-    "existencia": 55,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 50,
-  "fields": {
-    "nombre": "Teclado Numerico USB",
-    "descripcion": "Teclado numÈrico externo USB",
-    "precio": "14.50",
-    "existencia": 40,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.producto",
-  "pk": 51,
-  "fields": {
-    "nombre": "ssss",
-    "descripcion": "sss",
-    "precio": "3.00",
-    "existencia": 4,
-    "disponible": true
-  }
-},
-{
-  "model": "productos.productoimagen",
-  "pk": 1,
-  "fields": {
-    "producto": 51,
-    "imagen": "productos/IMG_4370.JPG",
-    "orden": 0,
-    "creado": "2026-07-07T09:19:19.833Z"
-  }
-},
-{
-  "model": "productos.productoimagen",
-  "pk": 2,
-  "fields": {
-    "producto": 51,
-    "imagen": "productos/IMG_4366.JPG",
-    "orden": 1,
-    "creado": "2026-07-07T09:19:19.899Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 1,
-  "fields": {
-    "user": 1,
-    "session_key": null,
-    "creado": "2026-07-07T10:45:40.942Z",
-    "actualizado": "2026-07-07T10:45:40.943Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 2,
-  "fields": {
-    "user": null,
-    "session_key": "d1hf8mrf1u9js56dtaqj27sh7wu00yo9",
-    "creado": "2026-07-07T11:14:17.771Z",
-    "actualizado": "2026-07-07T11:14:17.771Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 3,
-  "fields": {
-    "user": null,
-    "session_key": "i8m4qgzol9436idek1g91az7fwt08zqe",
-    "creado": "2026-07-09T17:19:09.112Z",
-    "actualizado": "2026-07-09T17:19:09.112Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 4,
-  "fields": {
-    "user": null,
-    "session_key": "yvhb9ww4grgd9t81khevdni088di8mhh",
-    "creado": "2026-07-09T17:30:11.448Z",
-    "actualizado": "2026-07-09T17:30:11.448Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 5,
-  "fields": {
-    "user": 2,
-    "session_key": null,
-    "creado": "2026-07-09T17:30:27.961Z",
-    "actualizado": "2026-07-09T17:30:27.961Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 6,
-  "fields": {
-    "user": null,
-    "session_key": "eu7slhvcrb52rzrymyb77lh055w6jya2",
-    "creado": "2026-07-09T17:31:58.842Z",
-    "actualizado": "2026-07-09T17:31:58.842Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 7,
-  "fields": {
-    "user": 3,
-    "session_key": null,
-    "creado": "2026-07-09T17:32:05.465Z",
-    "actualizado": "2026-07-09T17:32:05.465Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 8,
-  "fields": {
-    "user": null,
-    "session_key": "uahfebkhb0kaw0n1ebm5jubshr0zj486",
-    "creado": "2026-07-09T17:32:56.481Z",
-    "actualizado": "2026-07-09T17:32:56.481Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 9,
-  "fields": {
-    "user": null,
-    "session_key": "pke94ymuan0ir0e7hyhwzkinsbwo4vpr",
-    "creado": "2026-07-09T17:40:15.109Z",
-    "actualizado": "2026-07-09T17:40:15.110Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 10,
-  "fields": {
-    "user": null,
-    "session_key": "562rgrhtdchlrfvcmqwlacpiwfxdt82m",
-    "creado": "2026-07-09T17:51:45.682Z",
-    "actualizado": "2026-07-09T17:51:45.682Z"
-  }
-},
-{
-  "model": "carrito.carrito",
-  "pk": 11,
-  "fields": {
-    "user": 4,
-    "session_key": null,
-    "creado": "2026-07-09T17:52:26.738Z",
-    "actualizado": "2026-07-09T17:52:26.738Z"
-  }
-}
-]
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$vK1uphH9z6EICbrHLNHyQ5$p1H3f5UA7f2j06rJico/PeEKrB7mXivfu1x/zcAv7M4=",
+    "last_login": "2026-07-09T17:50:36.096Z",
+    "is_superuser": true,
+    "username": "1000carlos",
+    "first_name": "",
+    "last_name": "",
+    "email": "1000carlos.pena@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-07-04T10:47:46.590Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$fWGtRD68uLpZ6vMn9ED9uU$lAJER8GZmuVAC/lcATFP/Mu9CFJ3bKlalz2L+Vdsyd8=",
+    "last_login": "2026-07-09T17:30:27.831Z",
+    "is_superuser": false,
+    "username": "v1111111",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-09T17:29:36.840Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$QsUh9LK7QI1j2JCJWik8VE$g/BrceeTK0FUN+hDZLtNAzrkf1MqZSUVnuVLW6fjtXI=",
+    "last_login": "2026-07-09T17:32:05.314Z",
+    "is_superuser": false,
+    "username": "v2222222",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-09T17:31:08.435Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$mOmYzSqhOOlYE1rWS8OG47$3wqhtjX/EYurdJyYkYqLCkgYm6d/fvB7cziQ0qD8faA=",
+    "last_login": "2026-07-09T17:52:26.579Z",
+    "is_superuser": false,
+    "username": "v3333333",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-07-09T17:52:25.525Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "usuarios.profile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "grado": "v00",
+    "subscription_active": false,
+    "subscription_end": null,
+    "creado": "2026-07-09T17:11:23.997Z",
+    "actualizado": "2026-07-09T17:11:31.218Z"
+  }
+},
+{
+  "model": "usuarios.profile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "grado": "v1",
+    "subscription_active": false,
+    "subscription_end": null,
+    "creado": "2026-07-09T17:29:38.277Z",
+    "actualizado": "2026-07-09T17:29:38.336Z"
+  }
+},
+{
+  "model": "usuarios.profile",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "grado": "v2",
+    "subscription_active": false,
+    "subscription_end": null,
+    "creado": "2026-07-09T17:31:09.173Z",
+    "actualizado": "2026-07-09T17:31:09.220Z"
+  }
+},
+{
+  "model": "usuarios.profile",
+  "pk": 4,
+  "fields": {
+    "user": 4,
+    "grado": "v3",
+    "subscription_active": true,
+    "subscription_end": "2026-08-08T17:53:07.225Z",
+    "creado": "2026-07-09T17:52:26.346Z",
+    "actualizado": "2026-07-09T17:53:07.226Z"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 1,
+  "fields": {
+    "nombre": "Gabriel",
+    "apellido": "Garcia"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 2,
+  "fields": {
+    "nombre": "Mario",
+    "apellido": "Vargas"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 3,
+  "fields": {
+    "nombre": "Julio",
+    "apellido": "Cortazar"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 4,
+  "fields": {
+    "nombre": "Isabel",
+    "apellido": "Allende"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 5,
+  "fields": {
+    "nombre": "Jorge",
+    "apellido": "Borges"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 6,
+  "fields": {
+    "nombre": "Carlos",
+    "apellido": "Fuentes"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 7,
+  "fields": {
+    "nombre": "Juan",
+    "apellido": "Rulfo"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 8,
+  "fields": {
+    "nombre": "Pablo",
+    "apellido": "Neruda"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 9,
+  "fields": {
+    "nombre": "Laura",
+    "apellido": "Esquivel"
+  }
+},
+{
+  "model": "catalogo_libros.autor",
+  "pk": 10,
+  "fields": {
+    "nombre": "Octavio",
+    "apellido": "Paz"
+  }
+},
+{
+  "model": "catalogo_libros.editora",
+  "pk": 1,
+  "fields": {
+    "nombreEditora": "Sudamericana",
+    "ciudad": "Buenos Aires"
+  }
+},
+{
+  "model": "catalogo_libros.editora",
+  "pk": 2,
+  "fields": {
+    "nombreEditora": "Planeta",
+    "ciudad": "Barcelona"
+  }
+},
+{
+  "model": "catalogo_libros.editora",
+  "pk": 3,
+  "fields": {
+    "nombreEditora": "Alfaguara",
+    "ciudad": "Madrid"
+  }
+},
+{
+  "model": "catalogo_libros.editora",
+  "pk": 4,
+  "fields": {
+    "nombreEditora": "Anagrama",
+    "ciudad": "Barcelona"
+  }
+},
+{
+  "model": "catalogo_libros.editora",
+  "pk": 5,
+  "fields": {
+    "nombreEditora": "Seix Barral",
+    "ciudad": "Barcelona"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 1,
+  "fields": {
+    "tipoGenero": "Realismo m√°gico"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 2,
+  "fields": {
+    "tipoGenero": "Novela"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 3,
+  "fields": {
+    "tipoGenero": "Novela pol√≠tica"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 4,
+  "fields": {
+    "tipoGenero": "Cuento"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 5,
+  "fields": {
+    "tipoGenero": "Ensayo"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 6,
+  "fields": {
+    "tipoGenero": "Poes√≠a"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 7,
+  "fields": {
+    "tipoGenero": "Novela autobiogr√°fica"
+  }
+},
+{
+  "model": "catalogo_libros.generos",
+  "pk": 8,
+  "fields": {
+    "tipoGenero": "Novela psicol√≥gica"
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 1,
+  "fields": {
+    "nombreLibro": "Cien a√±os de soledad",
+    "autor": 1,
+    "genero": 1,
+    "editora": 1,
+    "precio": "25.50",
+    "fechaPublicacion": "1967-05-30",
+    "imagen": "",
+    "sinopsis": "Cien a√±os de soledad narra la historia de la familia Buend√≠a a lo largo de varias generaciones en el m√≠tico pueblo de Macondo. Desde su fundaci√≥n por Jos√© Arcadio Buend√≠a y √örsula Iguar√°n, el relato muestra un ciclo constante de repeticiones, errores y destinos marcados por la soledad. El tiempo no avanza de forma lineal, sino circular, haciendo que los nombres, las pasiones y las tragedias se repitan una y otra vez. La novela mezcla hechos extraordinarios con la vida cotidiana mediante el realismo m√°gico, presentando fen√≥menos sobrenaturales como algo natural. M√°s all√° de la historia familiar, la obra retrata la historia de Am√©rica Latina, sus guerras, su violencia pol√≠tica y su incapacidad para aprender del pasado. Garc√≠a M√°rquez construye una reflexi√≥n profunda sobre la memoria, el olvido, el poder y la condici√≥n humana.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 2,
+  "fields": {
+    "nombreLibro": "La ciudad y los perros",
+    "autor": 2,
+    "genero": 2,
+    "editora": 2,
+    "precio": "22.00",
+    "fechaPublicacion": "1963-01-01",
+    "imagen": "",
+    "sinopsis": "La ciudad y los perros se desarrolla en el Colegio Militar Leoncio Prado, donde un grupo de adolescentes es sometido a una educaci√≥n violenta y autoritaria. A trav√©s de varios personajes, la novela muestra c√≥mo el sistema militar fomenta la brutalidad, la corrupci√≥n y el silencio c√≥mplice. El robo de un examen y la muerte de un cadete revelan la hipocres√≠a de las autoridades y la degradaci√≥n moral de la instituci√≥n. Vargas Llosa utiliza m√∫ltiples voces narrativas para profundizar en la psicolog√≠a de los personajes y denunciar un modelo educativo que reproduce la violencia social. La obra es una cr√≠tica directa al autoritarismo y al machismo presentes en la sociedad peruana.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 3,
+  "fields": {
+    "nombreLibro": "Rayuela",
+    "autor": 3,
+    "genero": 8,
+    "editora": 4,
+    "precio": "24.00",
+    "fechaPublicacion": "1963-06-28",
+    "imagen": "",
+    "sinopsis": "Rayuela es una novela experimental que rompe con la narrativa tradicional y propone distintas formas de lectura. La historia sigue a Horacio Oliveira, un intelectual que busca el sentido de la vida entre Par√≠s y Buenos Aires. Su relaci√≥n con la Maga refleja el conflicto entre raz√≥n e intuici√≥n. La obra invita al lector a participar activamente, cuestionando el lenguaje, el amor y la existencia. M√°s que una trama lineal, Rayuela es una reflexi√≥n filos√≥fica sobre la alienaci√≥n del hombre moderno y la necesidad de trascendencia.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 4,
+  "fields": {
+    "nombreLibro": "La casa de los esp√≠ritus",
+    "autor": 4,
+    "genero": 1,
+    "editora": 1,
+    "precio": "23.00",
+    "fechaPublicacion": "1982-01-01",
+    "imagen": "",
+    "sinopsis": "La casa de los esp√≠ritus relata la historia de la familia Trueba a lo largo de varias generaciones, combinando realismo m√°gico con hechos hist√≥ricos y pol√≠ticos. Clara, dotada de habilidades sobrenaturales, representa la memoria y la espiritualidad, mientras Esteban Trueba encarna el poder y la represi√≥n. La novela aborda temas como la injusticia social, la violencia pol√≠tica y la resistencia femenina. Isabel Allende construye una obra emotiva donde la memoria y la escritura se convierten en herramientas contra el olvido.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 5,
+  "fields": {
+    "nombreLibro": "Ficciones",
+    "autor": 5,
+    "genero": 4,
+    "editora": 3,
+    "precio": "20.00",
+    "fechaPublicacion": "1944-01-01",
+    "imagen": "",
+    "sinopsis": "Ficciones es una colecci√≥n de relatos donde Borges explora el tiempo, el infinito, la identidad y el conocimiento. A trav√©s de bibliotecas imposibles, laberintos y universos alternativos, el autor desaf√≠a la percepci√≥n de la realidad. Los cuentos combinan erudici√≥n y fantas√≠a, borrando los l√≠mites entre lo real y lo imaginario. La obra invita al lector a reflexionar sobre el lenguaje y el acto mismo de leer.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 6,
+  "fields": {
+    "nombreLibro": "Aura",
+    "autor": 6,
+    "genero": 8,
+    "editora": 5,
+    "precio": "18.50",
+    "fechaPublicacion": "1962-01-01",
+    "imagen": "",
+    "sinopsis": "Aura es una novela breve y envolvente que sigue a un joven historiador contratado para ordenar los escritos de un general fallecido. En una casa oscura y misteriosa, el protagonista se ve envuelto en una atm√≥sfera inquietante dominada por la enigm√°tica Aura y su t√≠a Consuelo. A trav√©s de un lenguaje hipn√≥tico, Carlos Fuentes explora la identidad, el deseo y la dualidad del tiempo.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 7,
+  "fields": {
+    "nombreLibro": "Pedro P√°ramo",
+    "autor": 7,
+    "genero": 1,
+    "editora": 4,
+    "precio": "19.00",
+    "fechaPublicacion": "1955-01-01",
+    "imagen": "",
+    "sinopsis": "Pedro P√°ramo narra el viaje de Juan Preciado al pueblo de Comala en busca de su padre. All√≠ descubre un lugar habitado por voces del pasado y almas en pena. La novela rompe la linealidad temporal y mezcla vivos y muertos para retratar la culpa, la soledad y la decadencia rural. Juan Rulfo construye una obra po√©tica y profunda sobre la memoria y el abandono.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 8,
+  "fields": {
+    "nombreLibro": "Veinte poemas de amor",
+    "autor": 8,
+    "genero": 6,
+    "editora": 2,
+    "precio": "17.00",
+    "fechaPublicacion": "1924-01-01",
+    "imagen": "",
+    "sinopsis": "Veinte poemas de amor y una canci√≥n desesperada es una colecci√≥n de poemas que exploran el amor, el deseo, la p√©rdida y la nostalgia. Pablo Neruda utiliza un lenguaje intenso y sensorial para expresar emociones profundas y universales. La obra captura la pasi√≥n juvenil y el dolor del desamor, convirti√©ndose en uno de los libros de poes√≠a m√°s influyentes en lengua espa√±ola.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 9,
+  "fields": {
+    "nombreLibro": "Como agua para chocolate",
+    "autor": 9,
+    "genero": 1,
+    "editora": 1,
+    "precio": "21.50",
+    "fechaPublicacion": "1989-01-01",
+    "imagen": "",
+    "sinopsis": "Como agua para chocolate cuenta la historia de Tita, una mujer condenada a reprimir su amor debido a las tradiciones familiares. A trav√©s de recetas culinarias, la novela mezcla realismo m√°gico y romance para mostrar c√≥mo las emociones influyen en la vida cotidiana. Laura Esquivel utiliza la cocina como met√°fora de la pasi√≥n, la rebeld√≠a y la liberaci√≥n personal.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 10,
+  "fields": {
+    "nombreLibro": "El laberinto de la soledad",
+    "autor": 10,
+    "genero": 5,
+    "editora": 3,
+    "precio": "20.00",
+    "fechaPublicacion": "1950-01-01",
+    "imagen": "",
+    "sinopsis": "El laberinto de la soledad es un ensayo fundamental donde Octavio Paz analiza la identidad del mexicano. A trav√©s de reflexiones hist√≥ricas, culturales y psicol√≥gicas, el autor explora el sentimiento de soledad, el machismo y las contradicciones sociales. La obra ofrece una profunda interpretaci√≥n de la cultura mexicana y su relaci√≥n con la historia y el mundo moderno.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 11,
+  "fields": {
+    "nombreLibro": "El oto√±o del patriarca",
+    "autor": 1,
+    "genero": 3,
+    "editora": 2,
+    "precio": "26.00",
+    "fechaPublicacion": "1975-01-01",
+    "imagen": "",
+    "sinopsis": "Novela pol√≠tica.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 12,
+  "fields": {
+    "nombreLibro": "Conversaci√≥n en La Catedral",
+    "autor": 2,
+    "genero": 3,
+    "editora": 5,
+    "precio": "28.00",
+    "fechaPublicacion": "1969-01-01",
+    "imagen": "",
+    "sinopsis": "Novela pol√≠tica peruana.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 13,
+  "fields": {
+    "nombreLibro": "Bestiario",
+    "autor": 3,
+    "genero": 4,
+    "editora": 4,
+    "precio": "19.50",
+    "fechaPublicacion": "1951-01-01",
+    "imagen": "",
+    "sinopsis": "Cuentos surrealistas.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 14,
+  "fields": {
+    "nombreLibro": "Paula",
+    "autor": 4,
+    "genero": 7,
+    "editora": 3,
+    "precio": "22.00",
+    "fechaPublicacion": "1994-01-01",
+    "imagen": "",
+    "sinopsis": "Memorias personales.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 15,
+  "fields": {
+    "nombreLibro": "El Aleph",
+    "autor": 5,
+    "genero": 4,
+    "editora": 3,
+    "precio": "21.00",
+    "fechaPublicacion": "1949-01-01",
+    "imagen": "",
+    "sinopsis": "Relatos metaf√≠sicos.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 16,
+  "fields": {
+    "nombreLibro": "La muerte de Artemio Cruz",
+    "autor": 6,
+    "genero": 2,
+    "editora": 2,
+    "precio": "24.50",
+    "fechaPublicacion": "1962-01-01",
+    "imagen": "",
+    "sinopsis": "Novela hist√≥rica.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 17,
+  "fields": {
+    "nombreLibro": "El llano en llamas",
+    "autor": 7,
+    "genero": 4,
+    "editora": 4,
+    "precio": "18.00",
+    "fechaPublicacion": "1953-01-01",
+    "imagen": "",
+    "sinopsis": "Cuentos rurales.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 18,
+  "fields": {
+    "nombreLibro": "Residencia en la tierra",
+    "autor": 8,
+    "genero": 6,
+    "editora": 5,
+    "precio": "20.50",
+    "fechaPublicacion": "1933-01-01",
+    "imagen": "",
+    "sinopsis": "Poes√≠a existencial.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 19,
+  "fields": {
+    "nombreLibro": "Malinche",
+    "autor": 9,
+    "genero": 2,
+    "editora": 1,
+    "precio": "23.00",
+    "fechaPublicacion": "2006-01-01",
+    "imagen": "",
+    "sinopsis": "Novela hist√≥rica.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 20,
+  "fields": {
+    "nombreLibro": "Piedra de sol",
+    "autor": 10,
+    "genero": 6,
+    "editora": 2,
+    "precio": "19.00",
+    "fechaPublicacion": "1957-01-01",
+    "imagen": "",
+    "sinopsis": "Poema largo.",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 21,
+  "fields": {
+    "nombreLibro": "dddd",
+    "autor": 1,
+    "genero": 1,
+    "editora": 1,
+    "precio": "23.00",
+    "fechaPublicacion": "2023-03-09",
+    "imagen": "media/IMG-20230114-WA0036.jpg",
+    "sinopsis": "sdsdsdsdsd",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 22,
+  "fields": {
+    "nombreLibro": "ddddd",
+    "autor": 1,
+    "genero": 1,
+    "editora": 1,
+    "precio": "22.99",
+    "fechaPublicacion": "2025-03-04",
+    "imagen": "media/IMG-20230114-WA0036_hyY3f0b.jpg",
+    "sinopsis": "sdsdsd",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 23,
+  "fields": {
+    "nombreLibro": "Carlosyyy",
+    "autor": 10,
+    "genero": 1,
+    "editora": 2,
+    "precio": "23.00",
+    "fechaPublicacion": "2023-04-03",
+    "imagen": "media/IMG-20230114-WA0036_EbLfqST.jpg",
+    "sinopsis": "muy bueno",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 24,
+  "fields": {
+    "nombreLibro": "canserbero",
+    "autor": 1,
+    "genero": 1,
+    "editora": 1,
+    "precio": "34.00",
+    "fechaPublicacion": "2020-03-04",
+    "imagen": "media/canserbero.jpg",
+    "sinopsis": "jjjjjjj",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 25,
+  "fields": {
+    "nombreLibro": "s",
+    "autor": 1,
+    "genero": 2,
+    "editora": 2,
+    "precio": "2.00",
+    "fechaPublicacion": "2022-02-03",
+    "imagen": "",
+    "sinopsis": "sssss",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 26,
+  "fields": {
+    "nombreLibro": "sssss",
+    "autor": 2,
+    "genero": 3,
+    "editora": 2,
+    "precio": "23.00",
+    "fechaPublicacion": "2022-03-04",
+    "imagen": "media/cien-anos-de-soledad.png",
+    "sinopsis": "dddd",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 27,
+  "fields": {
+    "nombreLibro": "gfh",
+    "autor": 2,
+    "genero": 2,
+    "editora": 3,
+    "precio": "0.01",
+    "fechaPublicacion": "2023-03-03",
+    "imagen": "",
+    "sinopsis": "dfsdf",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 28,
+  "fields": {
+    "nombreLibro": "dddddddddddddddddd",
+    "autor": 2,
+    "genero": 4,
+    "editora": 2,
+    "precio": "3.00",
+    "fechaPublicacion": "2023-03-03",
+    "imagen": "",
+    "sinopsis": "ygu",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 29,
+  "fields": {
+    "nombreLibro": "prueba2",
+    "autor": 2,
+    "genero": 3,
+    "editora": 2,
+    "precio": "2.99",
+    "fechaPublicacion": "2025-03-03",
+    "imagen": "",
+    "sinopsis": "wwww",
+    "disponible": true
+  }
+},
+{
+  "model": "catalogo_libros.libros",
+  "pk": 30,
+  "fields": {
+    "nombreLibro": "ddd",
+    "autor": 5,
+    "genero": 4,
+    "editora": 3,
+    "precio": "3.00",
+    "fechaPublicacion": "2026-07-01",
+    "imagen": "",
+    "sinopsis": "fggfg",
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 1,
+  "fields": {
+    "nombre": "Laptop Dell 14",
+    "descripcion": "Laptop Dell 14 pulgadas 8GB RAM SSD 256GB Windows 11",
+    "precio": "680.00",
+    "existencia": 15,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 2,
+  "fields": {
+    "nombre": "Laptop HP 15",
+    "descripcion": "Laptop HP 15 pulgadas 16GB RAM SSD 512GB",
+    "precio": "850.00",
+    "existencia": 10,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 3,
+  "fields": {
+    "nombre": "MacBook Air M1",
+    "descripcion": "Laptop Apple M1 8GB RAM 256GB SSD",
+    "precio": "999.99",
+    "existencia": 5,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 4,
+  "fields": {
+    "nombre": "Asus VivoBook",
+    "descripcion": "Laptop Asus 14 pulgadas Ryzen 5 8GB RAM",
+    "precio": "720.00",
+    "existencia": 8,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 5,
+  "fields": {
+    "nombre": "Lenovo IdeaPad 3",
+    "descripcion": "Laptop Lenovo 15 pulgadas Intel i5 12GB RAM",
+    "precio": "790.00",
+    "existencia": 6,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 6,
+  "fields": {
+    "nombre": "Mouse Logitech M185",
+    "descripcion": "Mouse inal√°mbrico √≥ptico USB 2.4GHz",
+    "precio": "19.99",
+    "existencia": 60,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 7,
+  "fields": {
+    "nombre": "Mouse Gamer Redragon",
+    "descripcion": "Mouse gamer RGB 7200 DPI",
+    "precio": "39.99",
+    "existencia": 40,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 8,
+  "fields": {
+    "nombre": "Teclado Mec√°nico RGB",
+    "descripcion": "Teclado mec√°nico switches blue retroiluminado",
+    "precio": "89.99",
+    "existencia": 25,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 9,
+  "fields": {
+    "nombre": "Teclado Logitech K380",
+    "descripcion": "Teclado inal√°mbrico bluetooth compacto",
+    "precio": "45.50",
+    "existencia": 30,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 10,
+  "fields": {
+    "nombre": "Combo Teclado Mouse",
+    "descripcion": "Combo inal√°mbrico teclado y mouse",
+    "precio": "29.99",
+    "existencia": 35,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 11,
+  "fields": {
+    "nombre": "Monitor Samsung 24",
+    "descripcion": "Monitor 24 pulgadas Full HD HDMI",
+    "precio": "180.00",
+    "existencia": 18,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 12,
+  "fields": {
+    "nombre": "Monitor LG 27",
+    "descripcion": "Monitor 27 pulgadas IPS 75Hz",
+    "precio": "240.00",
+    "existencia": 12,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 13,
+  "fields": {
+    "nombre": "Monitor Curvo 32",
+    "descripcion": "Monitor curvo 32 pulgadas 165Hz gamer",
+    "precio": "399.99",
+    "existencia": 7,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 14,
+  "fields": {
+    "nombre": "Impresora Epson L3250",
+    "descripcion": "Impresora multifuncional WiFi tinta continua",
+    "precio": "220.00",
+    "existencia": 9,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 15,
+  "fields": {
+    "nombre": "Impresora HP 2775",
+    "descripcion": "Impresora HP inal√°mbrica multifunci√≥n",
+    "precio": "150.00",
+    "existencia": 11,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 16,
+  "fields": {
+    "nombre": "Disco SSD 240GB",
+    "descripcion": "Unidad SSD SATA 240GB alta velocidad",
+    "precio": "35.00",
+    "existencia": 50,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 17,
+  "fields": {
+    "nombre": "Disco SSD 1TB",
+    "descripcion": "Unidad SSD NVMe 1TB M.2",
+    "precio": "120.00",
+    "existencia": 22,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 18,
+  "fields": {
+    "nombre": "Disco Duro 2TB",
+    "descripcion": "Disco duro externo USB 3.0 2TB",
+    "precio": "95.00",
+    "existencia": 14,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 19,
+  "fields": {
+    "nombre": "Memoria USB 64GB",
+    "descripcion": "Memoria USB 3.1 64GB alta velocidad",
+    "precio": "15.99",
+    "existencia": 80,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 20,
+  "fields": {
+    "nombre": "Memoria USB 128GB",
+    "descripcion": "Memoria USB 3.1 128GB",
+    "precio": "24.99",
+    "existencia": 65,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 21,
+  "fields": {
+    "nombre": "RAM 8GB DDR4",
+    "descripcion": "Memoria RAM DDR4 8GB 3200MHz",
+    "precio": "28.00",
+    "existencia": 45,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 22,
+  "fields": {
+    "nombre": "RAM 16GB DDR4",
+    "descripcion": "Memoria RAM DDR4 16GB 3200MHz",
+    "precio": "55.00",
+    "existencia": 30,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 23,
+  "fields": {
+    "nombre": "Tarjeta Grafica GTX1650",
+    "descripcion": "GPU Nvidia GTX 1650 4GB GDDR6",
+    "precio": "210.00",
+    "existencia": 6,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 24,
+  "fields": {
+    "nombre": "Tarjeta Grafica RTX3060",
+    "descripcion": "GPU Nvidia RTX 3060 12GB",
+    "precio": "420.00",
+    "existencia": 4,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 25,
+  "fields": {
+    "nombre": "Fuente Poder 600W",
+    "descripcion": "Fuente de poder 600W certificaci√≥n 80+",
+    "precio": "65.00",
+    "existencia": 20,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 26,
+  "fields": {
+    "nombre": "Gabinete Gamer",
+    "descripcion": "Gabinete ATX con panel de vidrio templado",
+    "precio": "75.00",
+    "existencia": 13,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 27,
+  "fields": {
+    "nombre": "Placa Base B550",
+    "descripcion": "Motherboard B550 compatible Ryzen",
+    "precio": "140.00",
+    "existencia": 9,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 28,
+  "fields": {
+    "nombre": "Procesador Ryzen 5",
+    "descripcion": "CPU AMD Ryzen 5 5600G 6 n√∫cleos",
+    "precio": "190.00",
+    "existencia": 8,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 29,
+  "fields": {
+    "nombre": "Procesador i5 12400",
+    "descripcion": "CPU Intel Core i5 12va generaci√≥n",
+    "precio": "230.00",
+    "existencia": 7,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 30,
+  "fields": {
+    "nombre": "Cooler CPU RGB",
+    "descripcion": "Disipador CPU con iluminaci√≥n RGB",
+    "precio": "35.00",
+    "existencia": 25,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 31,
+  "fields": {
+    "nombre": "Webcam HD 1080p",
+    "descripcion": "C√°mara web Full HD con micr√≥fono",
+    "precio": "32.00",
+    "existencia": 40,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 32,
+  "fields": {
+    "nombre": "Audifonos Gamer",
+    "descripcion": "Headset gamer con micr√≥fono 7.1",
+    "precio": "48.00",
+    "existencia": 33,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 33,
+  "fields": {
+    "nombre": "Silla Gamer Pro",
+    "descripcion": "Silla ergon√≥mica reclinable gamer",
+    "precio": "180.00",
+    "existencia": 6,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 34,
+  "fields": {
+    "nombre": "Router TP-Link AC1200",
+    "descripcion": "Router doble banda WiFi 5",
+    "precio": "55.00",
+    "existencia": 27,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 35,
+  "fields": {
+    "nombre": "Switch 8 Puertos",
+    "descripcion": "Switch de red 8 puertos 10/100/1000",
+    "precio": "38.00",
+    "existencia": 19,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 36,
+  "fields": {
+    "nombre": "Tablet Lenovo M10",
+    "descripcion": "Tablet 10 pulgadas Android 4GB RAM",
+    "precio": "199.99",
+    "existencia": 10,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 37,
+  "fields": {
+    "nombre": "iPad 9na Gen",
+    "descripcion": "Tablet Apple 10.2 pulgadas 64GB",
+    "precio": "329.99",
+    "existencia": 5,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 38,
+  "fields": {
+    "nombre": "Laptop Acer Nitro 5",
+    "descripcion": "Laptop gamer i5 RTX3050 16GB RAM",
+    "precio": "1100.00",
+    "existencia": 3,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 39,
+  "fields": {
+    "nombre": "Laptop MSI GF63",
+    "descripcion": "Laptop gamer i7 RTX3050 16GB RAM",
+    "precio": "1250.00",
+    "existencia": 2,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 40,
+  "fields": {
+    "nombre": "Dock USB-C",
+    "descripcion": "Dock station USB-C m√∫ltiples puertos",
+    "precio": "60.00",
+    "existencia": 22,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 41,
+  "fields": {
+    "nombre": "Adaptador HDMI",
+    "descripcion": "Adaptador HDMI a VGA",
+    "precio": "12.00",
+    "existencia": 70,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 42,
+  "fields": {
+    "nombre": "Cable HDMI 2m",
+    "descripcion": "Cable HDMI 2 metros alta velocidad",
+    "precio": "9.99",
+    "existencia": 90,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 43,
+  "fields": {
+    "nombre": "Power Bank 20000mAh",
+    "descripcion": "Bater√≠a port√°til 20000mAh USB-C",
+    "precio": "35.00",
+    "existencia": 30,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 44,
+  "fields": {
+    "nombre": "UPS 1000VA",
+    "descripcion": "UPS regulador de voltaje 1000VA",
+    "precio": "140.00",
+    "existencia": 12,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 45,
+  "fields": {
+    "nombre": "Escaner Canon Lide",
+    "descripcion": "Esc√°ner port√°til Canon USB",
+    "precio": "120.00",
+    "existencia": 4,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 46,
+  "fields": {
+    "nombre": "Microfono USB",
+    "descripcion": "Micr√≥fono condensador USB para streaming",
+    "precio": "58.00",
+    "existencia": 18,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 47,
+  "fields": {
+    "nombre": "Camara Seguridad IP",
+    "descripcion": "C√°mara IP WiFi interior HD",
+    "precio": "42.00",
+    "existencia": 25,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 48,
+  "fields": {
+    "nombre": "SSD Externo 500GB",
+    "descripcion": "Disco externo SSD 500GB USB-C",
+    "precio": "85.00",
+    "existencia": 16,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 49,
+  "fields": {
+    "nombre": "Hub USB 4 Puertos",
+    "descripcion": "Hub USB 3.0 4 puertos",
+    "precio": "18.00",
+    "existencia": 55,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 50,
+  "fields": {
+    "nombre": "Teclado Numerico USB",
+    "descripcion": "Teclado num√©rico externo USB",
+    "precio": "14.50",
+    "existencia": 40,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.producto",
+  "pk": 51,
+  "fields": {
+    "nombre": "ssss",
+    "descripcion": "sss",
+    "precio": "3.00",
+    "existencia": 4,
+    "disponible": true
+  }
+},
+{
+  "model": "productos.productoimagen",
+  "pk": 1,
+  "fields": {
+    "producto": 51,
+    "imagen": "productos/IMG_4370.JPG",
+    "orden": 0,
+    "creado": "2026-07-07T09:19:19.833Z"
+  }
+},
+{
+  "model": "productos.productoimagen",
+  "pk": 2,
+  "fields": {
+    "producto": 51,
+    "imagen": "productos/IMG_4366.JPG",
+    "orden": 1,
+    "creado": "2026-07-07T09:19:19.899Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "session_key": null,
+    "creado": "2026-07-07T10:45:40.942Z",
+    "actualizado": "2026-07-07T10:45:40.943Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 2,
+  "fields": {
+    "user": null,
+    "session_key": "d1hf8mrf1u9js56dtaqj27sh7wu00yo9",
+    "creado": "2026-07-07T11:14:17.771Z",
+    "actualizado": "2026-07-07T11:14:17.771Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 3,
+  "fields": {
+    "user": null,
+    "session_key": "i8m4qgzol9436idek1g91az7fwt08zqe",
+    "creado": "2026-07-09T17:19:09.112Z",
+    "actualizado": "2026-07-09T17:19:09.112Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 4,
+  "fields": {
+    "user": null,
+    "session_key": "yvhb9ww4grgd9t81khevdni088di8mhh",
+    "creado": "2026-07-09T17:30:11.448Z",
+    "actualizado": "2026-07-09T17:30:11.448Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 5,
+  "fields": {
+    "user": 2,
+    "session_key": null,
+    "creado": "2026-07-09T17:30:27.961Z",
+    "actualizado": "2026-07-09T17:30:27.961Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 6,
+  "fields": {
+    "user": null,
+    "session_key": "eu7slhvcrb52rzrymyb77lh055w6jya2",
+    "creado": "2026-07-09T17:31:58.842Z",
+    "actualizado": "2026-07-09T17:31:58.842Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 7,
+  "fields": {
+    "user": 3,
+    "session_key": null,
+    "creado": "2026-07-09T17:32:05.465Z",
+    "actualizado": "2026-07-09T17:32:05.465Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 8,
+  "fields": {
+    "user": null,
+    "session_key": "uahfebkhb0kaw0n1ebm5jubshr0zj486",
+    "creado": "2026-07-09T17:32:56.481Z",
+    "actualizado": "2026-07-09T17:32:56.481Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 9,
+  "fields": {
+    "user": null,
+    "session_key": "pke94ymuan0ir0e7hyhwzkinsbwo4vpr",
+    "creado": "2026-07-09T17:40:15.109Z",
+    "actualizado": "2026-07-09T17:40:15.110Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 10,
+  "fields": {
+    "user": null,
+    "session_key": "562rgrhtdchlrfvcmqwlacpiwfxdt82m",
+    "creado": "2026-07-09T17:51:45.682Z",
+    "actualizado": "2026-07-09T17:51:45.682Z"
+  }
+},
+{
+  "model": "carrito.carrito",
+  "pk": 11,
+  "fields": {
+    "user": 4,
+    "session_key": null,
+    "creado": "2026-07-09T17:52:26.738Z",
+    "actualizado": "2026-07-09T17:52:26.738Z"
+  }
+}
+]
