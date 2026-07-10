@@ -84,9 +84,10 @@ def registrarse(request):
 
         try:
             enviar_codigo_email(email, vc.code, 'register')
-        except Exception:
-            messages.error(request, 'Error al enviar el código. Verifica tu correo e intenta de nuevo.')
-            return redirect('registrarse')
+        except Exception as e:
+            logger.warning(f'Error enviando email a {email}: {e}')
+            messages.warning(request, f'No se pudo enviar el email. Tu código es: {vc.code}')
+            messages.info(request, 'Configura EMAIL_HOST_USER/PASSWORD en Render para envío automático.')
 
         hashed = make_password(password)
         request.session['registro_temp'] = {
@@ -198,9 +199,9 @@ def recuperar_contrasenia(request):
 
         try:
             enviar_codigo_email(email, vc.code, 'reset')
-        except Exception:
-            messages.error(request, 'Error al enviar el código. Intenta de nuevo.')
-            return redirect('recuperar_contrasenia')
+        except Exception as e:
+            logger.warning(f'Error enviando email reset a {email}: {e}')
+            messages.warning(request, f'No se pudo enviar el email. Tu código es: {vc.code}')
 
         request.session['reset_email'] = email
         request.session['reset_code_id'] = vc.id
