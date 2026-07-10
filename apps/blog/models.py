@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 class Post(models.Model):
@@ -31,3 +32,18 @@ class Post(models.Model):
                 n += 1
             self.slug = slug
         super().save(*args, **kwargs)
+
+
+class Comentario(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comentarios')
+    autor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comentarios')
+    texto = models.TextField()
+    creado = models.DateTimeField(default=timezone.now)
+    activo = models.BooleanField(default=True)
+    padre = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='respuestas')
+
+    class Meta:
+        ordering = ['-creado']
+
+    def __str__(self):
+        return f'Comentario de {self.autor.username} en {self.post.titulo}'

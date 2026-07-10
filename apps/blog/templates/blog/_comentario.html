@@ -1,0 +1,28 @@
+<div class="comment" id="comentario-{{ comentario.id }}">
+    <div class="meta">
+        <strong>{{ comentario.autor.username }}</strong> · {{ comentario.creado|date:"d/m/Y H:i" }}
+    </div>
+    <div class="text">{{ comentario.texto|linebreaks }}</div>
+    {% if user.is_authenticated %}
+        <button class="reply-link" onclick="toggleReplyForm({{ comentario.id }})">↩ Responder</button>
+        <div id="reply-form-{{ comentario.id }}" class="reply-form-box">
+            <form method="post" action="{% url 'blog:comentar' post.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="padre" value="{{ comentario.id }}">
+                <div class="form-group" style="margin-bottom:8px;">
+                    <textarea name="texto" rows="2" placeholder="Escribe tu respuesta..." style="width:100%;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:0.85rem;font-family:inherit;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding:6px 14px;font-size:0.82rem;">Responder</button>
+            </form>
+        </div>
+    {% endif %}
+    {% with respuestas=comentario.respuestas.all %}
+        {% if respuestas %}
+            <div class="replies">
+                {% for reply in respuestas %}
+                    {% include "blog/_comentario.html" with comentario=reply %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>

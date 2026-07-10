@@ -1,150 +1,37 @@
+{% extends "catalogo/base.html" %}
 {% load static %}
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Libro</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
+{% block sub_title %}Registrar Nuevo Libro - CMPF{% endblock %}
 
-        .container {
-            width: 600px;
-            margin: 40px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+{% block lib_content %}
+<div class="card" style="max-width: 720px; margin: 0 auto;">
+    <div class="card-header">
+        <h2 style="margin: 0;">Registrar Nuevo Libro</h2>
+    </div>
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
 
-        h2 {
-            margin-bottom: 20px;
-        }
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="field-error">
+                            {{ field.errors|striptags }}
+                        </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
 
-        .campo {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 4px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 80px;
-        }
-
-        input[type="date"] {
-            width: 180px;
-        }
-
-        .error input,
-        .error select,
-        .error textarea {
-            border: 1px solid red;
-        }
-
-        .error-text {
-            color: red;
-            font-size: 13px;
-        }
-
-        .help-text {
-            font-size: 12px;
-            color: #555;
-        }
-
-        .mensaje {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-        }
-
-        .mensaje.success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .mensaje.error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        button {
-            padding: 8px 15px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <img src="{% static 'img/logo.jpg' %}" alt="Logo" width="150" height="auto">
-    <h2>Registrar Nuevo Libro</h2>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="mensaje {{ message.tags }}">
-                {{ message }}
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 20px;">
+                <button type="submit" name="action" value="guardar" class="btn btn-success">💾 Guardar Libro</button>
+                <a href="{% url 'listalibros' %}" class="btn btn-secondary">↻ Volver al catálogo</a>
             </div>
-        {% endfor %}
-    {% endif %}
-
-    <form method="POST" enctype="multipart/form-data" novalidate>
-        {% csrf_token %}
-
-        {% for field in form %}
-            <div class="campo {% if field.errors %}error{% endif %}">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
-                {{ field }}
-
-                {% if field.errors %}
-                    <div class="error-text">
-                        {{ field.errors|striptags }}
-                    </div>
-                {% endif %}
-
-                {% if field.help_text %}
-                    <div class="help-text">
-                        {{ field.help_text }}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-
-        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <button type="submit" name="action" value="guardar" class="btn-guardar">💾 Guardar Libro</button>
-            
-            <a href="{% url 'home' %}" class="btn-volver" style="background: #0f3460; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
-                🏠 Inicio
-            </a>
-            
-            <!-- ✅ FORMULARIO POST para cerrar sesión -->
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                    🚪 Cerrar Sesión
-                </button>
-            </form>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

@@ -7,6 +7,14 @@
     .post-meta span { margin-right: 15px; }
     .post-content { font-size: 1.05rem; color: #1e293b; line-height: 1.8; }
     .post-content p { margin-bottom: 1.2em; }
+    .comment { border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+    .comment .meta { font-size: 0.82rem; color: #64748b; margin-bottom: 4px; }
+    .comment .text { color: #1e293b; font-size: 0.9rem; line-height: 1.5; }
+    .comment .reply-link { font-size: 0.82rem; color: #2563eb; cursor: pointer; border: none; background: none; font-family: inherit; padding: 4px 0; }
+    .comment .reply-link:hover { text-decoration: underline; }
+    .replies { margin-left: 28px; margin-top: 10px; padding-left: 16px; border-left: 2px solid #e2e8f0; }
+    .reply-form-box { display: none; margin-top: 10px; }
+    .comment-form-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-top: 20px; }
 </style>
 {% endblock %}
 {% block content %}
@@ -20,4 +28,42 @@
 <div class="post-content">
     {{ post.contenido|linebreaks }}
 </div>
+
+<h2 style="font-size:1.2rem;margin-top:40px;">Comentarios ({{ comentarios.count }})</h2>
+
+{% if comentarios %}
+    {% for comentario in comentarios %}
+        {% include "blog/_comentario.html" with comentario=comentario %}
+    {% endfor %}
+{% else %}
+    <p style="color:#94a3b8;">No hay comentarios todavía. Sé el primero en comentar.</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="comment-form-card">
+    <h3 style="font-size:1rem;margin-bottom:12px;">Deja tu comentario</h3>
+    <form method="post" action="{% url 'blog:comentar' post.slug %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.texto }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Publicar Comentario</button>
+    </form>
+</div>
+{% else %}
+<div class="comment-form-card" style="text-align:center;">
+    <p style="color:#64748b;">
+        <a href="{% url 'login' %}?next={% url 'blog:detalle' post.slug %}" style="color:#2563eb;font-weight:600;">Inicia sesión</a> para dejar un comentario.
+    </p>
+</div>
+{% endif %}
+
+<script>
+function toggleReplyForm(comentarioId) {
+    var box = document.getElementById('reply-form-' + comentarioId);
+    if (box) {
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+}
+</script>
 {% endblock %}
