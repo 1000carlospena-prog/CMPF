@@ -19,6 +19,7 @@ class Profile(models.Model):
     grado = models.CharField(max_length=3, choices=GRADO_CHOICES, default='v4')
     nombre_real = models.CharField(max_length=150, blank=True, default='')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    super_id = models.PositiveIntegerField(null=True, blank=True, unique=True, verbose_name='Super Admin ID')
     subscription_active = models.BooleanField(default=False)
     subscription_end = models.DateTimeField(null=True, blank=True)
     creado = models.DateTimeField(auto_now_add=True)

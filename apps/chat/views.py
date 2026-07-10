@@ -7,6 +7,16 @@ from django.contrib.auth.models import User
 from .models import Conversation, Message
 
 
+def _display_name(user, viewer=None):
+    if viewer and viewer.id == user.id:
+        return user.profile.nombre_real or user.username
+    if user.profile.grado == 'v1' or user.profile.grado == 'v00':
+        if viewer and viewer.profile.grado in ('v1', 'v00'):
+            return f'{user.username} (Super User #{user.profile.super_id})'
+        return f'Super User #{user.profile.super_id or "?"}'
+    return user.profile.nombre_real or user.username
+
+
 @login_required
 def inbox(request):
     conversations = request.user.conversations.annotate(
@@ -21,6 +31,7 @@ def inbox(request):
         ctx.append({
             'conversation': c,
             'other': other,
+            'other_display': _display_name(other, request.user),
             'last_message': last,
             'unread': unread,
         })
@@ -44,10 +55,22 @@ def conversation_detail(request, conversation_id):
     conv.messages.filter(~Q(sender=request.user), read=False).update(read=True)
 
     messages_qs = conv.messages.all()
+
+    sidebar_convos = []
+    for c in request.user.conversations.annotate(last_created=Max('messages__created')).order_by('-last_created'):
+        o = c.participants.exclude(id=request.user.id).first()
+        sidebar_convos.append({
+            'conversation': c,
+            'other': o,
+            'other_display': _display_name(o, request.user),
+        })
+
     return render(request, 'chat/conversation.html', {
         'conversation': conv,
         'other': other,
+        'other_display': _display_name(other, request.user),
         'messages': messages_qs,
+        'sidebar_convos': sidebar_convos,
     })
 
 
@@ -72,6 +95,10 @@ def search_users(request):
     grado = request.GET.get('grado', '')
     users = User.objects.exclude(id=request.user.id).select_related('profile')
 
+    is_super = request.user.profile.grado in ('v1', 'v00')
+    if not is_super:
+        users = users.exclude(profile__grado='v1').exclude(profile__grado='v00')
+
     if q:
         users = users.filter(
             Q(username__icontains=q) |
@@ -86,4 +113,5 @@ def search_users(request):
         'users': users,
         'q': q,
         'grado': grado,
+        'display_name': _display_name,
     })

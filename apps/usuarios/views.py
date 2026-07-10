@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
+from django.db import models as db_models
 
 from .decorators import grado_required
 from .models import Profile, GRADO_CHOICES, GRADO_NIVEL
@@ -90,6 +91,9 @@ def editar_usuario(request, user_id):
             if grado == 'v00' and usuario.profile.grado != 'v00' and User.objects.filter(profile__grado='v00').exists():
                 messages.error(request, 'Ya existe un usuario Desarrollador (v00). Solo puede haber uno.')
                 return redirect('usuarios:editar', user_id=usuario.id)
+            if grado == 'v1' and usuario.profile.grado != 'v1':
+                last_super = User.objects.filter(profile__grado='v1').aggregate(models.Max('profile__super_id'))
+                usuario.profile.super_id = (last_super['profile__super_id__max'] or 0) + 1
             usuario.profile.grado = grado
             usuario.profile.save()
 

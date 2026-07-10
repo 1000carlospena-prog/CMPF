@@ -19,6 +19,9 @@
           <option value="v2" {% if grado == 'v2' %}selected{% endif %}>v2 - Moderador</option>
           <option value="v3" {% if grado == 'v3' %}selected{% endif %}>v3 - Proveedor</option>
           <option value="v4" {% if grado == 'v4' %}selected{% endif %}>v4 - Comprador</option>
+          {% if user.profile.grado == 'v1' or user.profile.grado == 'v00' %}
+            <option value="v1" {% if grado == 'v1' %}selected{% endif %}>v1 - Super Admin</option>
+          {% endif %}
         </select>
       </div>
       <button type="submit" class="btn btn-primary">Buscar</button>
