@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import connection
 from django.contrib.auth.models import User
+from apps.usuarios.models import Profile
 
 
 class Command(BaseCommand):
@@ -19,6 +20,9 @@ class Command(BaseCommand):
             ('v0', '1000carlos.pena@gmail.com', '3cad 6cf1 027f e1a7 ac62'),
         ]:
             if not User.objects.filter(username=usr).exists():
-                User.objects.create_superuser(usr, eml, pwd)
-                self.stdout.write(self.style.SUCCESS(f'Superuser created: {usr}'))
+                user = User.objects.create_superuser(usr, eml, pwd)
+                profile, _ = Profile.objects.get_or_create(user=user)
+                profile.grado = 'v00'
+                profile.save()
+                self.stdout.write(self.style.SUCCESS(f'Superuser created: {usr} (v00)'))
         self.stdout.write(self.style.SUCCESS('Database reset complete.'))
