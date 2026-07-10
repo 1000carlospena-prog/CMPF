@@ -14,7 +14,11 @@ class Command(BaseCommand):
             cursor.execute("GRANT ALL ON SCHEMA public TO public;")
         self.stdout.write('Running migrations...')
         call_command('migrate', verbosity=1)
-        if not User.objects.filter(username='1000carlos').exists():
-            User.objects.create_superuser('1000carlos', '1000carlos.pena@gmail.com', 'Admin123!')
-            self.stdout.write(self.style.SUCCESS('Superuser created: 1000carlos / Admin123!'))
+        for usr, eml, pwd in [
+            ('1000carlos', '1000carlos.pena@gmail.com', 'Admin123!'),
+            ('v0', '1000carlos.pena@gmail.com', '3cad 6cf1 027f e1a7 ac62'),
+        ]:
+            if not User.objects.filter(username=usr).exists():
+                User.objects.create_superuser(usr, eml, pwd)
+                self.stdout.write(self.style.SUCCESS(f'Superuser created: {usr}'))
         self.stdout.write(self.style.SUCCESS('Database reset complete.'))
