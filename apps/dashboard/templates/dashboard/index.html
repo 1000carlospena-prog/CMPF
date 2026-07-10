@@ -8,10 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <style>
-        /* ============================================
-           DASHBOARD - ESTILOS
-           ============================================ */
-        
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -194,9 +190,6 @@
             text-decoration: none;
         }
         
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
         @media (max-width: 992px) {
             .row {
                 grid-template-columns: 1fr;
@@ -227,7 +220,6 @@
 </head>
 <body>
     <div class="contenedor">
-        <!-- HEADER -->
         <div class="dashboard-header">
             <h1>📊 Dashboard</h1>
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -237,9 +229,6 @@
             </div>
         </div>
 
-        <!-- ============================================
-        MÉTRICAS PRINCIPALES
-        ============================================ -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="icon">📦</span>
@@ -273,9 +262,6 @@
             </div>
         </div>
 
-        <!-- ============================================
-        PRODUCTOS - DETALLE
-        ============================================ -->
         <h2 class="section-title">📦 Detalle de Productos</h2>
         <div class="row">
             <div class="card-dashboard">
@@ -308,9 +294,6 @@
             </div>
         </div>
 
-        <!-- ============================================
-        LIBROS - DETALLE
-        ============================================ -->
         <h2 class="section-title">📚 Detalle de Libros</h2>
         <div class="grid-3">
             <div class="card-dashboard">
@@ -354,9 +337,6 @@
             </div>
         </div>
 
-        <!-- ============================================
-        CARRITO - ESTADÍSTICAS
-        ============================================ -->
         <h2 class="section-title">🛒 Actividad del Carrito</h2>
         <div class="row">
             <div class="card-dashboard">
@@ -393,9 +373,6 @@
             </div>
         </div>
 
-        <!-- ============================================
-        FOOTER
-        ============================================ -->
         <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--gray-200); color: var(--gray-500); font-size: 0.9rem;">
             <p>📊 Dashboard CMPF · Actualizado en tiempo real</p>
         </div>

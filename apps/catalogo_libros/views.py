@@ -1,3 +1,4 @@
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -52,9 +53,9 @@ def crearLibro(request):
         return redirect('upgrade')
     if request.method == 'POST':
         action = request.POST.get('action')
-        if action == 'logout':
-            logout(request)
-            return redirect('login')
+            if action == 'logout':
+                auth_logout(request)
+                return redirect('login')
         elif action == 'guardarLibro' or action == 'guardar':
             form = LibrosForm(request.POST, request.FILES)
             if form.is_valid():

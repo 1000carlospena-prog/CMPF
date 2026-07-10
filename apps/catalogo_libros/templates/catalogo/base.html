@@ -5,14 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}La Casa del Libro - CMPF{% endblock %}</title>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS Global CMPF -->
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    
-    <!-- CSS Librería -->
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     
     {% block extra_css %}{% endblock %}
@@ -37,7 +31,6 @@
                 </nav>
 
                 <div class="header-actions">
-                    <!-- ✅ ENLACE AL CARRITO -->
                     <a href="{% url 'carrito:ver' %}" style="color: white; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 50px;">
                         🛒 Carrito
                         {% if total_items_carrito > 0 %}

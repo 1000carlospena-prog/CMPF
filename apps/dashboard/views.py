@@ -9,11 +9,6 @@ from apps.carrito.models import CarritoItem
 
 @login_required
 def dashboard(request):
-    """Vista principal del dashboard con estadísticas"""
-    
-    # ============================================
-    # ESTADÍSTICAS DE PRODUCTOS
-    # ============================================
     total_productos = Producto.objects.count()
     productos_disponibles = Producto.objects.filter(disponible=True).count()
     productos_no_disponibles = Producto.objects.filter(disponible=False).count()
@@ -30,9 +25,6 @@ def dashboard(request):
     total_existencias = Producto.objects.aggregate(total=Sum('existencia'))['total'] or 0
     precio_promedio = Producto.objects.aggregate(promedio=Sum('precio') / Count('id'))['promedio'] or 0
     
-    # ============================================
-    # ESTADÍSTICAS DE LIBROS
-    # ============================================
     total_libros = Libros.objects.count()
     total_autores = Autor.objects.count()
     total_generos = Generos.objects.count()
@@ -51,18 +43,12 @@ def dashboard(request):
     # Últimos libros agregados
     ultimos_libros = Libros.objects.order_by('-id')[:5]
     
-    # ============================================
-    # ESTADÍSTICAS DEL CARRITO
-    # ============================================
     total_items_carrito = CarritoItem.objects.count()
     items_mas_vendidos = CarritoItem.objects.values(
         'content_type__app_label', 
         'content_type__model'
     ).annotate(total=Count('id')).order_by('-total')[:5]
     
-    # ============================================
-    # CONTEXTO PARA EL TEMPLATE
-    # ============================================
     context = {
         # Productos
         'total_productos': total_productos,
