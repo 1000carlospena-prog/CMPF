@@ -1,12 +1,16 @@
+import logging
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.utils import timezone
 from datetime import timedelta
 
-from apps.usuarios.models import VerificationCode
+from apps.usuarios.models import VerificationCode, LoginAttempt
 from apps.usuarios.utils import validar_contrasenia, enviar_codigo_email
+
+logger = logging.getLogger('cmpf.security')
 
 
 def home(request):
@@ -81,10 +85,11 @@ def registrarse(request):
             messages.error(request, 'Error al enviar el código. Verifica tu correo e intenta de nuevo.')
             return redirect('registrarse')
 
+        hashed = make_password(password)
         request.session['registro_temp'] = {
             'username': username,
             'email': email,
-            'password': password,
+            'password_hash': hashed,
             'tipo': tipo,
             'code_id': vc.id,
         }
@@ -107,24 +112,35 @@ def verificar_codigo(request):
 
         try:
             vc = VerificationCode.objects.get(id=temp['code_id'], email=email, code=codigo)
+            if not vc.is_valid():
+                messages.error(request, 'Código expirado o demasiados intentos. Solicita uno nuevo.')
+                logger.warning(f'Código inválido o bloqueado para {email}')
+                return redirect('registrarse')
         except VerificationCode.DoesNotExist:
-            messages.error(request, 'Código incorrecto.')
+            msg = 'Código incorrecto.'
+            if temp['code_id']:
+                try:
+                    vc2 = VerificationCode.objects.get(id=temp['code_id'])
+                    vc2.registrar_intento_fallido()
+                    if vc2.intentos_fallidos >= VerificationCode.MAX_INTENTOS:
+                        msg = 'Demasiados intentos. Solicita un nuevo código.'
+                        logger.warning(f'Código bloqueado por intentos: {email}')
+                except VerificationCode.DoesNotExist:
+                    pass
+            messages.error(request, msg)
             return redirect('verificar_codigo')
-
-        if not vc.is_valid():
-            messages.error(request, 'El código ha expirado. Solicita uno nuevo.')
-            return redirect('registrarse')
 
         vc.is_used = True
         vc.save()
 
-        user = User.objects.create_user(
-            username=temp['username'],
-            email=temp['email'],
-            password=temp['password']
-        )
+        user = User(username=temp['username'], email=temp['email'])
+        user.password = temp['password_hash']
+        user.save()
         user.profile.grado = temp['tipo']
         user.profile.save()
+
+        LoginAttempt.registrar(request.META.get('REMOTE_ADDR', ''), user.username, successful=True)
+        logger.info(f'Usuario registrado y verificado: {user.username}')
 
         del request.session['registro_temp']
         del request.session['email_para_verificar']
@@ -206,13 +222,23 @@ def verificar_codigo_reset(request):
 
         try:
             vc = VerificationCode.objects.get(id=code_id, email=email, code=codigo, proposito='reset')
+            if not vc.is_valid():
+                messages.error(request, 'Código expirado o bloqueado. Solicita uno nuevo.')
+                logger.warning(f'Reset code invalid/blocked for {email}')
+                return redirect('recuperar_contrasenia')
         except VerificationCode.DoesNotExist:
-            messages.error(request, 'Código incorrecto.')
+            msg = 'Código incorrecto.'
+            if code_id:
+                try:
+                    vc2 = VerificationCode.objects.get(id=code_id)
+                    vc2.registrar_intento_fallido()
+                    if vc2.intentos_fallidos >= VerificationCode.MAX_INTENTOS:
+                        msg = 'Código bloqueado por demasiados intentos.'
+                        logger.warning(f'Reset code brute-force blocked: {email}')
+                except VerificationCode.DoesNotExist:
+                    pass
+            messages.error(request, msg)
             return redirect('verificar_codigo_reset')
-
-        if not vc.is_valid():
-            messages.error(request, 'El código ha expirado. Solicita uno nuevo.')
-            return redirect('recuperar_contrasenia')
 
         if not password:
             messages.error(request, 'Ingresa una nueva contraseña.')
@@ -238,6 +264,9 @@ def verificar_codigo_reset(request):
         del request.session['reset_email']
         del request.session['reset_code_id']
 
+        LoginAttempt.registrar(request.META.get('REMOTE_ADDR', ''), user.username, successful=True)
+        logger.info(f'Password reset successful: {user.username}')
+
         login(request, user)
         messages.success(request, '✅ Contraseña restablecida correctamente.')
         return redirect('home')
@@ -254,3 +283,32 @@ def upgrade_solicitar(request):
         profile.save()
         messages.success(request, '🎉 ¡Suscripción activada! Ahora eres v3 - Proveedor. Puedes publicar productos.')
     return redirect('upgrade')
+
+
+def login_con_rate_limit(request):
+    ip = request.META.get('REMOTE_ADDR', '')
+
+    if LoginAttempt.excede_limite(ip):
+        logger.warning(f'Login bloqueado por rate-limit: {ip}')
+        messages.error(request, 'Demasiados intentos. Espera 15 minutos.')
+        return redirect('login')
+
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            LoginAttempt.registrar(ip, user.username, successful=True)
+            logger.info(f'Login exitoso: {user.username} desde {ip}')
+            login(request, user)
+            next_url = request.GET.get('next', 'home')
+            return redirect(next_url)
+        else:
+            LoginAttempt.registrar(ip, username, successful=False)
+            logger.warning(f'Login fallido: {username} desde {ip}')
+            messages.error(request, 'Usuario o contraseña incorrectos.')
+
+    from django.contrib.auth.forms import AuthenticationForm
+    form = AuthenticationForm()
+    return render(request, 'registration/login.html', {'form': form})

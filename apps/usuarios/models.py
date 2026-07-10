@@ -38,6 +38,7 @@ class Profile(models.Model):
 
 
 class VerificationCode(models.Model):
+    MAX_INTENTOS = 5
     PROPOSITOS = [
         ('register', 'Registro'),
         ('reset', 'Restablecer contraseña'),
@@ -49,6 +50,7 @@ class VerificationCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     is_used = models.BooleanField(default=False)
+    intentos_fallidos = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-created_at']
@@ -61,7 +63,11 @@ class VerificationCode(models.Model):
         return f'{random.randint(100000, 999999)}'
 
     def is_valid(self):
-        return not self.is_used and timezone.now() <= self.expires_at
+        return not self.is_used and timezone.now() <= self.expires_at and self.intentos_fallidos < self.MAX_INTENTOS
+
+    def registrar_intento_fallido(self):
+        self.intentos_fallidos += 1
+        self.save(update_fields=['intentos_fallidos'])
 
     @staticmethod
     def crear_codigo(email, proposito):
@@ -72,4 +78,35 @@ class VerificationCode(models.Model):
             code=codigo,
             proposito=proposito,
             expires_at=timezone.now() + timedelta(minutes=10)
+        )
+
+
+class LoginAttempt(models.Model):
+    ip_address = models.GenericIPAddressField()
+    username = models.CharField(max_length=150, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    successful = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['ip_address', 'created_at']),
+        ]
+
+    @staticmethod
+    def excede_limite(ip_address, max_intentos=5, ventana_minutos=15):
+        desde = timezone.now() - timedelta(minutes=ventana_minutos)
+        intentos = LoginAttempt.objects.filter(
+            ip_address=ip_address,
+            successful=False,
+            created_at__gte=desde
+        ).count()
+        return intentos >= max_intentos
+
+    @staticmethod
+    def registrar(ip_address, username='', successful=False):
+        return LoginAttempt.objects.create(
+            ip_address=ip_address,
+            username=username,
+            successful=successful
         )

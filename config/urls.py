@@ -13,6 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Autenticación
+    path('accounts/login/', views.login_con_rate_limit, name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     
     # Portal CMPF

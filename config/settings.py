@@ -9,7 +9,13 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-...')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+
+if not SECRET_KEY:
+    if os.environ.get('DJANGO_DEBUG', 'False') == 'True':
+        SECRET_KEY = 'django-insecure-dev-only-key-not-for-production'
+    else:
+        raise RuntimeError('DJANGO_SECRET_KEY no está configurada en producción')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
@@ -117,6 +123,31 @@ LOGIN_REDIRECT_URL = 'home'  # Redirige al portal después de login
 LOGOUT_REDIRECT_URL = 'login'  # Redirige al login después de logout
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'cmpf.security': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
