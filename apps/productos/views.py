@@ -11,44 +11,37 @@ from .serializers import ProductoSerializer
 from rest_framework import generics, viewsets
 from apps.usuarios.mixins import GradoRequiredMixin, PublicadorRequiredMixin
 from apps.usuarios.decorators import grado_required
+from apps.usuarios.models import Profile
 
 
 class ProductoVista(ListView):
     model = Producto
     template_name = 'productos/lista.html'
     context_object_name = 'productos'
-    paginate_by = 12  # ✅ Productos por página
+    paginate_by = 12
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
-        # ✅ BÚSQUEDA por nombre o descripción
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
                 Q(nombre__icontains=query) | 
                 Q(descripcion__icontains=query)
             )
-        
-        # ✅ FILTRO por disponibilidad
         disponible = self.request.GET.get('disponible')
         if disponible == 'si':
             queryset = queryset.filter(disponible=True)
         elif disponible == 'no':
             queryset = queryset.filter(disponible=False)
-        
-        # ✅ FILTRO por existencia (stock bajo)
         stock = self.request.GET.get('stock')
         if stock == 'bajo':
             queryset = queryset.filter(existencia__lt=5, existencia__gt=0)
         elif stock == 'agotado':
             queryset = queryset.filter(existencia=0)
-        
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # ✅ Mantener filtros en la paginación
         context['query'] = self.request.GET.get('q', '')
         context['filtro_disponible'] = self.request.GET.get('disponible', '')
         context['filtro_stock'] = self.request.GET.get('stock', '')
@@ -95,7 +88,6 @@ class ProductoCrear(PublicadorRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("❌ Errores del formulario:", form.errors)
         messages.error(self.request, '❌ Error al crear el producto. Revisa los campos.')
         return super().form_invalid(form)
 
@@ -143,7 +135,6 @@ class ProductoActualizar(PublicadorRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print("❌ Errores del formulario:", form.errors)
         messages.error(self.request, '❌ Error al actualizar el producto. Revisa los campos.')
         return super().form_invalid(form)
 
@@ -159,8 +150,6 @@ class ProductosEliminar(PublicadorRequiredMixin, DeleteView):
         messages.success(self.request, f'✅ Producto "{producto.nombre}" eliminado correctamente.')
         return super().delete(request, *args, **kwargs)
 
-
-from apps.usuarios.models import Profile
 
 @grado_required('v3')
 def eliminar_imagen(request, imagen_id):

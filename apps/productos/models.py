@@ -11,7 +11,6 @@ class Producto(models.Model):
         return self.nombre
 
 
-# ✅ NUEVO MODELO PARA IMÁGENES MÚLTIPLES
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(
         Producto,

@@ -1,8 +1,3 @@
-# config/settings.py
-"""
-Django settings for CMPF project.
-"""
-
 import os
 from pathlib import Path
 import dj_database_url
@@ -23,7 +18,6 @@ ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').sp
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', 'http://127.0.0.1,http://localhost').split(',')
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,14 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Apps CMPF
     'apps.productos.apps.ProductosConfig',
     'apps.catalogo_libros.apps.CatalogoLibrosConfig',
     'apps.carrito.apps.CarritoConfig',
-    'apps.dashboard.apps.DashboardConfig',  # ✅ AGREGAR
-    'apps.usuarios.apps.UsuariosConfig',   # ✅ Gestión de usuarios y grados
-    
+    'apps.dashboard.apps.DashboardConfig',
+    'apps.usuarios.apps.UsuariosConfig',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -52,7 +43,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# ✅ MODIFICAR: Agregar el nuevo middleware después de AuthenticationMiddleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -79,8 +69,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
-                'apps.carrito.context_processors.carrito',  # ✅ AGREGAR
-                'apps.usuarios.context_processors.usuario_grado',  # ✅ Grados de usuario
+                'apps.carrito.context_processors.carrito',
+                'apps.usuarios.context_processors.usuario_grado',
             ],
         },
     },
@@ -117,14 +107,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ✅ CONFIGURACIÓN DE AUTENTICACIÓN
-LOGIN_URL = 'login'  # Nombre de la URL de login
-LOGIN_REDIRECT_URL = 'home'  # Redirige al portal después de login
-LOGOUT_REDIRECT_URL = 'login'  # Redirige al login después de logout
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Logging
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

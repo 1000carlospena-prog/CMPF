@@ -1,27 +1,8 @@
-import time
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.conf import settings
-
-
-class TiempoRespuestaMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        inicio = time.time()
-        print(f'Petición recibida: {request.path}')
-
-        response = self.get_response(request)
-
-        fin = time.time()
-        duracion = fin - inicio
-        print(f'Tiempo de respuesta: {duracion:.2f} segundos')
-        return response
 
 
 class LoginRequiredMiddleware:
-    """Redirige a login SOLO si la ruta NO está en la lista de rutas públicas"""
 
     RUTAS_PUBLICAS = [
         '/accounts/',

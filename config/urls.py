@@ -22,8 +22,7 @@ urlpatterns = [
     path('upgrade/solicitar/', views.upgrade_solicitar, name='upgrade_solicitar'),
     path('registrarse/', views.registrarse, name='registrarse'),
     
-    # App: Dashboard
-    path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),  # ✅ AGREGAR
+    path('dashboard/', include('apps.dashboard.urls', namespace='dashboard')),
 
     # App: Usuarios
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
