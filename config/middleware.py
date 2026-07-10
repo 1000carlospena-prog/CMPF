@@ -17,6 +17,7 @@ class LoginRequiredMiddleware:
         '/reenviar-codigo/',
         '/recuperar-contrasenia/',
         '/verificar-codigo-reset/',
+        '/favicon.ico',
     ]
 
     def __init__(self, get_response):
