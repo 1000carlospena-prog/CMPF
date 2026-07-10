@@ -83,15 +83,12 @@ def registrarse(request):
 
         vc = VerificationCode.crear_codigo(email, 'register')
 
-        from django.conf import settings
-        es_console = 'console' in settings.EMAIL_BACKEND
         try:
             enviar_codigo_email(email, vc.code, 'register')
-            if es_console:
-                messages.info(request, f'📧 Entorno sin email configurado. Código: {vc.code}')
         except Exception as e:
-            logger.warning(f'Error enviando email a {email}: {e}')
-            messages.warning(request, f'⚠️ No se pudo enviar el email. Código: {vc.code}')
+            logger.error(f'Error enviando email a {email}: {e}')
+            messages.error(request, 'Error al enviar el código de verificación. Revisa la configuración de email.')
+            return redirect('registrarse')
 
         hashed = make_password(password)
         request.session['registro_temp'] = {
@@ -179,14 +176,9 @@ def reenviar_codigo(request):
     temp['code_id'] = vc.id
     request.session['registro_temp'] = temp
 
-    from django.conf import settings
-    es_console = 'console' in settings.EMAIL_BACKEND
     try:
         enviar_codigo_email(email, vc.code, 'register')
-        if es_console:
-            messages.info(request, f'📧 Nuevo código: {vc.code}')
-        else:
-            messages.success(request, 'Nuevo código enviado a tu correo.')
+        messages.success(request, 'Nuevo código enviado a tu correo.')
     except Exception:
         messages.error(request, 'Error al enviar el código.')
         return redirect('registrarse')
@@ -208,16 +200,12 @@ def recuperar_contrasenia(request):
 
         vc = VerificationCode.crear_codigo(email, 'reset')
 
-        from django.conf import settings
-        es_console = 'console' in settings.EMAIL_BACKEND
         try:
             enviar_codigo_email(email, vc.code, 'reset')
-            if es_console:
-                messages.info(request, f'📧 Código de recuperación: {vc.code}')
         except Exception as e:
-            logger.warning(f'Error enviando email reset a {email}: {e}')
-            msg = f'No se pudo enviar el email. Código: {vc.code}'
-            messages.warning(request, msg)
+            logger.error(f'Error enviando email reset a {email}: {e}')
+            messages.error(request, 'Error al enviar el código. Revisa la configuración de email.')
+            return redirect('recuperar_contrasenia')
 
         request.session['reset_email'] = email
         request.session['reset_code_id'] = vc.id
