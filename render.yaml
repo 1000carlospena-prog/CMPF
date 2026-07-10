@@ -25,8 +25,22 @@ services:
           property: connectionString
       - key: WEB_CONCURRENCY
         value: "4"
+      # Email con console backend: el codigo aparece en Render Logs
       - key: DJANGO_EMAIL_BACKEND
         value: console
+      # Para enviar emails reales, descomenta y configura SendGrid:
+      # - key: DJANGO_EMAIL_BACKEND
+      #   value: django.core.mail.backends.smtp.EmailBackend
+      # - key: EMAIL_HOST
+      #   value: smtp.sendgrid.net
+      # - key: EMAIL_PORT
+      #   value: "587"
+      # - key: EMAIL_HOST_USER
+      #   value: apikey
+      # - key: EMAIL_HOST_PASSWORD
+      #   sync: false    # Poner el API key de SendGrid en el dashboard
+      # - key: DEFAULT_FROM_EMAIL
+      #   value: tunombreverificado@ejemplo.com
       - key: EMAIL_HOST_USER
         sync: false
       - key: EMAIL_HOST_PASSWORD

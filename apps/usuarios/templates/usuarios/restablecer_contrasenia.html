@@ -13,6 +13,12 @@
             {% endfor %}
         {% endif %}
 
+        {% if codigo_visible %}
+        <div style="background:#fef9c3;border:1px solid #facc15;border-radius:8px;padding:16px;margin:16px 0;text-align:center;">
+            <p style="color:#92400e;font-size:0.85rem;margin:0 0 8px 0;">⚠️ El envío de email no está configurado. Usa este código:</p>
+            <p style="font-size:2rem;font-weight:700;letter-spacing:8px;font-family:monospace;color:#92400e;margin:0;">{{ codigo_visible }}</p>
+        </div>
+        {% endif %}
         <p style="color:#64748b;font-size:0.9rem;text-align:center;margin-bottom:16px;">Ingresa el código enviado a <strong>{{ email }}</strong> y tu nueva contraseña.</p>
 
         <form method="post">

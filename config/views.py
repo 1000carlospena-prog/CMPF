@@ -83,12 +83,12 @@ def registrarse(request):
 
         vc = VerificationCode.crear_codigo(email, 'register')
 
+        email_enviado = False
         try:
             enviar_codigo_email(email, vc.code, 'register')
+            email_enviado = True
         except Exception as e:
             logger.error(f'Error enviando email a {email}: {e}')
-            messages.error(request, 'Error al enviar el código de verificación. Revisa la configuración de email.')
-            return redirect('registrarse')
 
         hashed = make_password(password)
         request.session['registro_temp'] = {
@@ -100,6 +100,7 @@ def registrarse(request):
             'code_id': vc.id,
         }
         request.session['email_para_verificar'] = email
+        request.session['codigo_visible'] = vc.code if not email_enviado else None
         return redirect('verificar_codigo')
 
     return render(request, 'registration/registrarse.html')
@@ -161,7 +162,11 @@ def verificar_codigo(request):
             messages.success(request, f'✅ Cuenta verificada. ¡Bienvenido {temp["username"]}!')
             return redirect('home')
 
-    return render(request, 'usuarios/verificar_codigo.html', {'email': email})
+    codigo_visible = request.session.pop('codigo_visible', None)
+    return render(request, 'usuarios/verificar_codigo.html', {
+        'email': email,
+        'codigo_visible': codigo_visible,
+    })
 
 
 def reenviar_codigo(request):
@@ -200,16 +205,16 @@ def recuperar_contrasenia(request):
 
         vc = VerificationCode.crear_codigo(email, 'reset')
 
+        email_enviado = False
         try:
             enviar_codigo_email(email, vc.code, 'reset')
+            email_enviado = True
         except Exception as e:
             logger.error(f'Error enviando email reset a {email}: {e}')
-            messages.error(request, 'Error al enviar el código. Revisa la configuración de email.')
-            return redirect('recuperar_contrasenia')
 
         request.session['reset_email'] = email
         request.session['reset_code_id'] = vc.id
-        messages.success(request, 'Código enviado a tu correo.')
+        request.session['codigo_visible_reset'] = vc.code if not email_enviado else None
         return redirect('verificar_codigo_reset')
 
     return render(request, 'usuarios/recuperar_contrasenia.html')
@@ -279,7 +284,11 @@ def verificar_codigo_reset(request):
         messages.success(request, '✅ Contraseña restablecida correctamente.')
         return redirect('home')
 
-    return render(request, 'usuarios/restablecer_contrasenia.html', {'email': email})
+    codigo_visible = request.session.pop('codigo_visible_reset', None)
+    return render(request, 'usuarios/restablecer_contrasenia.html', {
+        'email': email,
+        'codigo_visible': codigo_visible,
+    })
 
 
 def upgrade_solicitar(request):
