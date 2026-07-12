@@ -8,19 +8,3 @@ admin.site.register(Libros)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

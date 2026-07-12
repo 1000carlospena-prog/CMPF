@@ -65,9 +65,10 @@ class Command(BaseCommand):
                 destacado=destacado,
             ))
             if created:
+                url_picsum = f'https://picsum.photos/seed/{slug}/400/400'
                 fname = f'producto_{slug}.jpg'
-                _download(f'https://picsum.photos/seed/{slug}/400/400', fname)
-                ProductoImagen.objects.create(producto=prod, imagen=fname, orden=0)
+                _download(url_picsum, fname)
+                ProductoImagen.objects.create(producto=prod, imagen=fname, url_externa=url_picsum, orden=0)
         self.stdout.write('20 productos creados')
 
     def _seed_libros(self):

@@ -1,7 +1,6 @@
 from django import forms
 from .models import Libros
-import datetime
-
+from datetime import datetime, date
 
 
 
@@ -22,8 +21,8 @@ class LibrosForm(forms.ModelForm):
             return None
 
         # Si ya es un objeto date, lo devolvemos tal cual
-        if isinstance(fecha, (datetime.date, datetime.datetime)):
-            if isinstance(fecha, datetime.datetime):
+        if isinstance(fecha, (date, datetime)):
+            if isinstance(fecha, datetime):
                 return fecha.date()
             return fecha
 

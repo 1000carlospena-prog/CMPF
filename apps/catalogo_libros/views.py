@@ -52,18 +52,13 @@ def crearLibro(request):
         messages.error(request, 'Tu suscripción como proveedor no está activa. Renueva para publicar.')
         return redirect('upgrade')
     if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'logout':
-            auth_logout(request)
-            return redirect('login')
-        elif action == 'guardarLibro' or action == 'guardar':
-            form = LibrosForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Libro creado correctamente')
-                return redirect('crearLibro')
-            else:
-                messages.error(request, 'Error al crear libro')
+        form = LibrosForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Libro creado correctamente')
+            return redirect('crearLibro')
+        else:
+            messages.error(request, 'Error al crear libro')
     else:
         form = LibrosForm()
 

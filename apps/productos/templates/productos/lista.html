@@ -130,7 +130,7 @@
                         <a href="{% url 'productos:detalle_producto' producto.pk %}" style="text-decoration:none;color:white;">
                             <div class="img-wrap">
                                 {% with primera=producto.imagenes.first %}
-                                    {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ producto.nombre }}">{% else %}📦{% endif %}
+                                    {% if primera %}<img src="{{ primera.display_url }}" alt="{{ producto.nombre }}">{% else %}📦{% endif %}
                                 {% endwith %}
                             </div>
                             <div class="info">

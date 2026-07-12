@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.views.decorators.http import require_POST
 
 from apps.productos.models import Producto
-from apps.catalogo_libros.models import Libros
 from .models import Carrito, CarritoItem
 
 
@@ -21,9 +19,8 @@ def obtener_carrito(request):
 
 
 @require_POST
-@login_required
 def agregar_al_carrito(request, content_type_id, object_id):
-    """Agrega un item al carrito (requiere autenticación)"""
+    """Agrega un item al carrito (funciona sin autenticación)"""
     carrito = obtener_carrito(request)
     
     content_type = get_object_or_404(ContentType, id=content_type_id)
@@ -55,7 +52,6 @@ def agregar_al_carrito(request, content_type_id, object_id):
 
 
 @require_POST
-@login_required
 def agregar_producto(request, producto_id):
     """Agrega un producto al carrito usando solo el ID del producto"""
     carrito = obtener_carrito(request)

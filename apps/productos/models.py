@@ -60,6 +60,7 @@ class Producto(models.Model):
 class ProductoImagen(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
     imagen = models.ImageField(upload_to='productos/')
+    url_externa = models.URLField(blank=True, verbose_name='URL externa (fallback para producción)')
     orden = models.PositiveSmallIntegerField(default=0)
     creado = models.DateTimeField(auto_now_add=True)
 
@@ -70,6 +71,10 @@ class ProductoImagen(models.Model):
 
     def __str__(self):
         return f'Imagen {self.orden + 1} - {self.producto.nombre}'
+
+    @property
+    def display_url(self):
+        return self.url_externa or self.imagen.url
 
 
 class Resena(models.Model):

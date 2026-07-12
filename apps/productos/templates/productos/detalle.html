@@ -41,14 +41,14 @@
             <div>
                 <div class="gallery">
                     {% with primera=producto.imagenes.first %}
-                        {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ producto.nombre }}" id="mainImage">{% else %}📦{% endif %}
+                        {% if primera %}<img src="{{ primera.display_url }}" alt="{{ producto.nombre }}" id="mainImage">{% else %}📦{% endif %}
                     {% endwith %}
                 </div>
                 {% with num_imagenes=producto.imagenes.count %}
                 {% if num_imagenes > 1 %}
                 <div class="gallery-thumbs">
                     {% for img in producto.imagenes.all %}
-                    <img src="{{ img.imagen.url }}" onclick="document.getElementById('mainImage').src=this.src">
+                    <img src="{{ img.display_url }}" onclick="document.getElementById('mainImage').src=this.src">
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -149,7 +149,7 @@
             <a href="{% url 'productos:detalle_producto' p.id %}" class="related-card">
                 <div class="img-wrap">
                     {% with primera=p.imagenes.first %}
-                        {% if primera %}<img src="{{ primera.imagen.url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
+                        {% if primera %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
                     {% endwith %}
                 </div>
                 <div class="info">

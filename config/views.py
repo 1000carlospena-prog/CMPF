@@ -1,4 +1,5 @@
 import logging
+import time
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
@@ -13,6 +14,7 @@ from apps.usuarios.models import VerificationCode, LoginAttempt
 from apps.usuarios.utils import validar_contrasenia, enviar_codigo_email
 from apps.productos.models import Producto, Categoria
 from apps.blog.models import Post
+from apps.catalogo_libros.models import Libros
 
 logger = logging.getLogger('cmpf.security')
 
@@ -23,8 +25,6 @@ def home(request):
     categorias = Categoria.objects.filter(activa=True, padre__isnull=True)[:6]
     posts_recientes = Post.objects.filter(publicado=True)[:3]
     ultimos_productos = Producto.objects.filter(disponible=True).order_by('-creado')[:4]
-
-    from apps.catalogo_libros.models import Libros
 
     context = {
         'productos_destacados': productos_destacados,
@@ -177,9 +177,15 @@ def reenviar_codigo(request):
         messages.error(request, 'Sesión expirada.')
         return redirect('registrarse')
 
+    last_resend = request.session.get('ultimo_reenvio', 0)
+    if time.time() - last_resend < 60:
+        messages.error(request, 'Espera al menos 60 segundos antes de solicitar un nuevo código.')
+        return redirect('verificar_codigo')
+
     vc = VerificationCode.crear_codigo(email, 'register')
     temp['code_id'] = vc.id
     request.session['registro_temp'] = temp
+    request.session['ultimo_reenvio'] = time.time()
 
     try:
         enviar_codigo_email(email, vc.code, 'register')
