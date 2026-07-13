@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Mi Inventario - CMPF{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+    <h1 style="margin:0;font-size:1.5rem;">Mi Inventario</h1>
+    <a href="{% url 'productos:crear_producto' %}" class="btn btn-primary btn-sm">+ Nuevo Producto</a>
+</div>
+
+{% if productos %}
+<div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">
+        <thead>
+            <tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0;">
+                <th style="padding:12px 16px;text-align:left;font-size:0.85rem;font-weight:600;color:#64748b;">Producto</th>
+                <th style="padding:12px 16px;text-align:left;font-size:0.85rem;font-weight:600;color:#64748b;">Precio</th>
+                <th style="padding:12px 16px;text-align:center;font-size:0.85rem;font-weight:600;color:#64748b;">Stock</th>
+                <th style="padding:12px 16px;text-align:center;font-size:0.85rem;font-weight:600;color:#64748b;">Estado</th>
+                <th style="padding:12px 16px;text-align:center;font-size:0.85rem;font-weight:600;color:#64748b;">Movimientos</th>
+                <th style="padding:12px 16px;text-align:center;font-size:0.85rem;font-weight:600;color:#64748b;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productos %}
+            <tr style="border-bottom:1px solid #f1f5f9;">
+                <td style="padding:12px 16px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:44px;height:44px;border-radius:8px;background:#f1f5f9;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">
+                            {% with primera=p.imagenes.first %}
+                                {% if primera %}<img src="{{ primera.display_url }}" alt="" style="width:100%;height:100%;object-fit:cover;">{% else %}📦{% endif %}
+                            {% endwith %}
+                        </div>
+                        <div>
+                            <div style="font-weight:600;font-size:0.9rem;">{{ p.nombre }}</div>
+                            <div style="font-size:0.78rem;color:#94a3b8;">{{ p.categoria.nombre|default:'—' }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td style="padding:12px 16px;">
+                    <div style="font-weight:600;color:#2563eb;">${{ p.precio_actual }}</div>
+                    {% if p.en_oferta %}<div style="font-size:0.75rem;color:#94a3b8;text-decoration:line-through;">${{ p.precio }}</div>{% endif %}
+                </td>
+                <td style="padding:12px 16px;text-align:center;">
+                    <span style="display:inline-block;padding:4px 12px;border-radius:50px;font-size:0.85rem;font-weight:700;{% if p.existencia <= 0 %}background:#fee2e2;color:#991b1b{% elif p.existencia < 10 %}background:#fef3c7;color:#92400e{% else %}background:#dcfce7;color:#166534{% endif %}">
+                        {{ p.existencia }}
+                    </span>
+                </td>
+                <td style="padding:12px 16px;text-align:center;">
+                    {% if p.disponible %}
+                        <span style="color:#166534;font-size:0.85rem;">Disponible</span>
+                    {% else %}
+                        <span style="color:#991b1b;font-size:0.85rem;">No disponible</span>
+                    {% endif %}
+                </td>
+                <td style="padding:12px 16px;text-align:center;">
+                    <details style="font-size:0.85rem;">
+                        <summary style="cursor:pointer;color:#2563eb;font-weight:500;">Ver {{ p.movimientos_stock.count }}</summary>
+                        <div style="margin-top:8px;text-align:left;max-height:200px;overflow-y:auto;background:#f8fafc;border-radius:8px;padding:8px;">
+                            {% for m in p.movimientos_stock.all|slice:":10" %}
+                                <div style="padding:4px 0;border-bottom:1px solid #e2e8f0;font-size:0.78rem;">
+                                    <span style="font-weight:600;{% if m.tipo == 'entrada' %}color:#166534{% else %}color:#991b1b{% endif %}">
+                                        {{ m.tipo|title }}
+                                    </span>
+                                    {{ m.cantidad }} uds
+                                    <span style="color:#94a3b8;">({{ m.saldo_anterior }}→{{ m.saldo_posterior }})</span>
+                                    <div style="color:#94a3b8;">{{ m.creado|date:"d/m/Y H:i" }}{% if m.nota %} - {{ m.nota }}{% endif %}</div>
+                                </div>
+                            {% empty %}
+                                <div style="color:#94a3b8;padding:4px 0;">Sin movimientos</div>
+                            {% endfor %}
+                        </div>
+                    </details>
+                </td>
+                <td style="padding:12px 16px;text-align:center;">
+                    <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
+                        <form method="post" action="{% url 'productos:ajustar_stock' p.id %}" style="display:flex;gap:4px;align-items:center;">
+                            {% csrf_token %}
+                            <input type="number" name="cantidad" min="1" value="1" style="width:60px;padding:4px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:0.85rem;">
+                            <button type="submit" name="tipo" value="entrada" class="btn btn-success btn-sm" style="padding:4px 10px;">+</button>
+                            <button type="submit" name="tipo" value="salida" class="btn btn-danger btn-sm" style="padding:4px 10px;">-</button>
+                        </form>
+                    </div>
+                    <div style="margin-top:4px;">
+                        <a href="{% url 'productos:actualizar_producto' p.id %}" class="btn btn-secondary btn-sm" style="padding:2px 8px;font-size:0.75rem;">Editar</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div style="text-align:center;padding:60px 20px;background:white;border-radius:12px;border:1px solid #e2e8f0;">
+    <div style="font-size:3rem;margin-bottom:12px;">📦</div>
+    <h3 style="margin-bottom:8px;">No tienes productos en tu inventario</h3>
+    <p style="color:#64748b;margin-bottom:20px;">Crea tu primer producto para empezar a vender.</p>
+    <a href="{% url 'productos:crear_producto' %}" class="btn btn-primary">Crear Producto</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from django.conf import settings
+from django.contrib.auth.models import User
 from apps.productos.models import Categoria, Producto, ProductoImagen
 from apps.catalogo_libros.models import Autor, Editora, Generos, Libros
 from datetime import date
@@ -33,6 +34,7 @@ class Command(BaseCommand):
         self.stdout.write('8 categorias creadas')
 
     def _seed_productos(self):
+        vendedor = User.objects.filter(is_superuser=True).first()
         data = [
             ('Audífonos Bluetooth', 'Electrónica', 29.99, 24.99, 50, True),
             ('Cargador USB-C 65W', 'Electrónica', 19.99, None, 100, True),
@@ -59,7 +61,7 @@ class Command(BaseCommand):
             cat = Categoria.objects.get(nombre=cat_nombre)
             slug = slugify(nombre)
             prod, created = Producto.objects.get_or_create(slug=slug, defaults=dict(
-                categoria=cat, nombre=nombre,
+                categoria=cat, nombre=nombre, vendedor=vendedor,
                 descripcion=f'{nombre} de alta calidad al mejor precio.',
                 precio=precio, precio_oferta=oferta, existencia=existencia,
                 destacado=destacado,

@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     ProductoDetalle, ProductoActualizar, ProductoVista,
     ProductosEliminar, ProductoCrear, eliminar_imagen,
-    agregar_resena, toggle_deseo, lista_deseos
+    agregar_resena, toggle_deseo, lista_deseos,
+    mi_inventario, ajustar_stock,
 )
 
 app_name = 'productos'
@@ -17,4 +18,6 @@ urlpatterns = [
     path('<int:producto_id>/resena/', agregar_resena, name='agregar_resena'),
     path('<int:producto_id>/deseo/', toggle_deseo, name='toggle_deseo'),
     path('lista-deseos/', lista_deseos, name='lista_deseos'),
+    path('inventario/', mi_inventario, name='mi_inventario'),
+    path('inventario/<int:producto_id>/ajustar/', ajustar_stock, name='ajustar_stock'),
 ]

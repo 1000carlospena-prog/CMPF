@@ -23,12 +23,13 @@ class Categoria(models.Model):
 
 class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True, related_name='productos')
+    vendedor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='productos')
     nombre = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True, null=True)
     descripcion = models.TextField(max_length=500)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     precio_oferta = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    existencia = models.IntegerField()
+    existencia = models.IntegerField(default=0)
     disponible = models.BooleanField(default=True)
     destacado = models.BooleanField(default=False)
     creado = models.DateTimeField(auto_now_add=True, null=True)
@@ -44,6 +45,12 @@ class Producto(models.Model):
     @property
     def en_oferta(self):
         return self.precio_oferta is not None
+
+    @property
+    def descuento_porcentaje(self):
+        if self.precio_oferta:
+            return int((1 - float(self.precio_oferta) / float(self.precio)) * 100)
+        return 0
 
     @property
     def rating_promedio(self):
@@ -75,6 +82,29 @@ class ProductoImagen(models.Model):
     @property
     def display_url(self):
         return self.url_externa or self.imagen.url
+
+
+class MovimientoStock(models.Model):
+    TIPO_CHOICES = [
+        ('entrada', 'Entrada'),
+        ('salida', 'Salida'),
+        ('ajuste', 'Ajuste'),
+    ]
+
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='movimientos_stock')
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='movimientos_stock')
+    tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
+    cantidad = models.PositiveIntegerField()
+    saldo_anterior = models.IntegerField()
+    saldo_posterior = models.IntegerField()
+    nota = models.CharField(max_length=255, blank=True)
+    creado = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-creado']
+
+    def __str__(self):
+        return f'{self.tipo} {self.cantidad} - {self.producto.nombre}'
 
 
 class Resena(models.Model):

@@ -136,6 +136,7 @@
                     <a href="{% url 'dashboard:index' %}">Dashboard</a>
                     <a href="{% url 'carrito:ver' %}">Carrito{% if total_items_carrito > 0 %} ({{ total_items_carrito }}){% endif %}</a>
                     <a href="{% url 'productos:lista_deseos' %}">Favoritos</a>
+                    {% if user.profile.puede_publicar %}<a href="{% url 'productos:mi_inventario' %}">Inventario</a>{% endif %}
                     <a href="{% url 'chat:inbox' %}">Mensajes</a>
                     <form action="{% url 'logout' %}" method="post">{% csrf_token %}<button type="submit">Salir</button></form>
                 {% else %}

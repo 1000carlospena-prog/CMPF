@@ -135,7 +135,9 @@ class ProductoCrear(PublicadorRequiredMixin, CreateView):
     success_url = reverse_lazy('productos:lista_productos')
 
     def form_valid(self, form):
-        producto = form.save()
+        producto = form.save(commit=False)
+        producto.vendedor = self.request.user
+        producto.save()
         imagenes = [
             form.cleaned_data.get(f'imagen{i}')
             for i in range(1, 5)
@@ -197,6 +199,59 @@ def eliminar_imagen(request, imagen_id):
     imagen.delete()
     messages.success(request, 'Imagen eliminada.')
     return redirect('productos:actualizar_producto', pk=pid)
+
+
+@login_required
+def mi_inventario(request):
+    productos = Producto.objects.filter(vendedor=request.user).order_by('-creado')
+    return render(request, 'productos/inventario.html', {'productos': productos})
+
+
+@login_required
+@require_POST
+def ajustar_stock(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id, vendedor=request.user)
+    try:
+        cantidad = int(request.POST.get('cantidad', 0))
+        tipo = request.POST.get('tipo', 'entrada')
+    except (ValueError, TypeError):
+        messages.error(request, 'Cantidad inválida.')
+        return redirect('productos:mi_inventario')
+
+    if cantidad <= 0:
+        messages.error(request, 'La cantidad debe ser mayor a cero.')
+        return redirect('productos:mi_inventario')
+
+    saldo_anterior = producto.existencia
+    if tipo == 'entrada':
+        producto.existencia += cantidad
+        nota = request.POST.get('nota', '')
+    elif tipo == 'salida':
+        if cantidad > producto.existencia:
+            messages.error(request, 'Stock insuficiente para esa salida.')
+            return redirect('productos:mi_inventario')
+        producto.existencia -= cantidad
+        nota = request.POST.get('nota', '')
+    else:
+        messages.error(request, 'Tipo de movimiento inválido.')
+        return redirect('productos:mi_inventario')
+
+    producto.save()
+
+    from .models import MovimientoStock
+    MovimientoStock.objects.create(
+        producto=producto,
+        usuario=request.user,
+        tipo=tipo,
+        cantidad=cantidad,
+        saldo_anterior=saldo_anterior,
+        saldo_posterior=producto.existencia,
+        nota=nota,
+    )
+
+    action = 'entrada' if tipo == 'entrada' else 'salida'
+    messages.success(request, f'Stock ajustado: +{cantidad if tipo == "entrada" else f"-{cantidad}"} ({action}). Nuevo stock: {producto.existencia}')
+    return redirect('productos:mi_inventario')
 
 
 class ProductoViewset(viewsets.ModelViewSet):
