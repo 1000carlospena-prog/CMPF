@@ -1,7 +1,7 @@
 import hashlib
 import os
 
-_AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.v00_auth')
+_AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.cauth')
 _XOR_KEY = 'CMPF'
 
 
@@ -42,3 +42,7 @@ def get_decoded(key):
     if not hex_val:
         return None
     return _xor_decode(hex_val)
+
+
+def get(key):
+    return get_decoded(key)

@@ -7,6 +7,7 @@ from django.db import models as db_models
 
 from .decorators import grado_required
 from .models import Profile, GRADO_CHOICES, GRADO_NIVEL
+from config.grados import DEV_GRADO
 
 
 def _usuarios_visibles(request):
@@ -15,14 +16,14 @@ def _usuarios_visibles(request):
     if grado == 'v2':
         usuarios = usuarios.filter(profile__grado__in=['v3', 'v4'])
     elif grado == 'v1':
-        usuarios = usuarios.exclude(profile__grado__in=['v00'])
+        usuarios = usuarios.exclude(profile__grado__in=[DEV_GRADO])
     return usuarios
 
 
 def _puede_modificar(request, usuario):
     grado_actual = request.user.profile.grado
     grado_target = usuario.profile.grado
-    if grado_actual == 'v00':
+    if grado_actual == DEV_GRADO:
         return True
     if grado_actual == 'v1' and grado_target in ('v1', 'v2', 'v3', 'v4'):
         return True
@@ -33,7 +34,7 @@ def _puede_modificar(request, usuario):
 
 def _grados_permitidos(request):
     grado = request.user.profile.grado
-    if grado == 'v00':
+    if grado == DEV_GRADO:
         return GRADO_CHOICES
     if grado == 'v1':
         return [g for g in GRADO_CHOICES if g[0] in ('v1', 'v2', 'v3', 'v4')]
@@ -88,8 +89,8 @@ def editar_usuario(request, user_id):
             if not any(g[0] == grado for g in grados_ok):
                 messages.error(request, 'No tienes permiso para asignar ese grado.')
                 return redirect('usuarios:editar', user_id=usuario.id)
-            if grado == 'v00' and usuario.profile.grado != 'v00' and User.objects.filter(profile__grado='v00').exists():
-                messages.error(request, 'Ya existe un usuario Desarrollador (v00). Solo puede haber uno.')
+            if grado == DEV_GRADO and usuario.profile.grado != DEV_GRADO and User.objects.filter(profile__grado=DEV_GRADO).exists():
+                messages.error(request, 'Ya existe un usuario con ese grado de desarrollo. Solo puede haber uno.')
                 return redirect('usuarios:editar', user_id=usuario.id)
             if grado == 'v1' and usuario.profile.grado != 'v1':
                 last_super = User.objects.filter(profile__grado='v1').aggregate(models.Max('profile__super_id'))
@@ -105,7 +106,7 @@ def editar_usuario(request, user_id):
             usuario.password = make_password(password)
         usuario.save()
 
-        messages.success(request, f'✅ Usuario "{usuario.username}" actualizado.')
+        messages.success(request, f'Usuario "{usuario.username}" actualizado.')
         return redirect('usuarios:detalle', user_id=usuario.id)
 
     return render(request, 'usuarios/editar.html', {
@@ -142,8 +143,8 @@ def crear_usuario(request):
             messages.error(request, 'El email ya está registrado.')
             return redirect('usuarios:crear')
 
-        if grado == 'v00' and User.objects.filter(profile__grado='v00').exists():
-            messages.error(request, 'Ya existe un usuario Desarrollador (v00). Solo puede haber uno.')
+        if grado == DEV_GRADO and User.objects.filter(profile__grado=DEV_GRADO).exists():
+            messages.error(request, 'Ya existe un usuario con ese grado de desarrollo. Solo puede haber uno.')
             return redirect('usuarios:crear')
 
         if not any(g[0] == grado for g in grados_ok):
@@ -154,7 +155,7 @@ def crear_usuario(request):
         user.profile.grado = grado
         user.profile.nombre_real = nombre_real
         user.profile.save()
-        messages.success(request, f'✅ Usuario "{username}" creado con grado {grado}.')
+        messages.success(request, f'Usuario "{username}" creado con grado {grado}.')
         return redirect('usuarios:lista')
 
     return render(request, 'usuarios/crear.html', {'grados': grados_ok})
@@ -191,5 +192,5 @@ def eliminar_usuario(request, user_id):
         return redirect('usuarios:lista')
     username = usuario.username
     usuario.delete()
-    messages.success(request, f'🗑️ Usuario "{username}" eliminado.')
+    messages.success(request, f'Usuario "{username}" eliminado.')
     return redirect('usuarios:lista')

@@ -3,20 +3,32 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+from config.grados import DEV_GRADO
 
-GRADO_CHOICES = [
-    ('v00', 'v00 - Desarrollador'),
-    ('v1', 'v1 - Super Admin'),
-    ('v2', 'v2 - Moderador'),
-    ('v3', 'v3 - Proveedor'),
-    ('v4', 'v4 - Comprador'),
-]
 
-GRADO_NIVEL = {'v00': 0, 'v1': 1, 'v2': 2, 'v3': 3, 'v4': 4}
+def _grado_choices():
+    return [
+        (DEV_GRADO, f'{DEV_GRADO} - Desarrollador'),
+        ('v1', 'v1 - Super Admin'),
+        ('v2', 'v2 - Moderador'),
+        ('v3', 'v3 - Proveedor'),
+        ('v4', 'v4 - Comprador'),
+    ]
+
+
+GRADO_CHOICES = _grado_choices()
+
+
+def _grado_nivel():
+    return {DEV_GRADO: 0, 'v1': 1, 'v2': 2, 'v3': 3, 'v4': 4}
+
+
+GRADO_NIVEL = _grado_nivel()
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    grado = models.CharField(max_length=3, choices=GRADO_CHOICES, default='v4')
+    grado = models.CharField(max_length=3, choices=_grado_choices, default='v4')
     nombre_real = models.CharField(max_length=150, blank=True, default='')
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     super_id = models.PositiveIntegerField(null=True, blank=True, unique=True, verbose_name='Super Admin ID')
@@ -34,7 +46,7 @@ class Profile(models.Model):
 
     @property
     def puede_publicar(self):
-        return self.grado in ('v00', 'v1', 'v2') or (self.grado == 'v3' and self.subscription_active)
+        return self.grado in (DEV_GRADO, 'v1', 'v2') or (self.grado == 'v3' and self.subscription_active)
 
     def tiene_acceso(self, grado_minimo):
         return self.nivel <= GRADO_NIVEL.get(grado_minimo, 4)

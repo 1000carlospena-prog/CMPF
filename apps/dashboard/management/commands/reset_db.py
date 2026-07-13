@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import connection
 from django.contrib.auth.models import User
-from config.v00_auth import get_decoded
+from config.cauth import get_decoded
 
 
 class Command(BaseCommand):
