@@ -5,14 +5,14 @@ from django.utils import timezone
 from datetime import timedelta
 
 GRADO_CHOICES = [
-    ('g0', 'g0 - Desarrollador'),
+    ('v00', 'v00 - Desarrollador'),
     ('v1', 'v1 - Super Admin'),
     ('v2', 'v2 - Moderador'),
     ('v3', 'v3 - Proveedor'),
     ('v4', 'v4 - Comprador'),
 ]
 
-GRADO_NIVEL = {'g0': 0, 'v1': 1, 'v2': 2, 'v3': 3, 'v4': 4}
+GRADO_NIVEL = {'v00': 0, 'v1': 1, 'v2': 2, 'v3': 3, 'v4': 4}
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
@@ -34,7 +34,7 @@ class Profile(models.Model):
 
     @property
     def puede_publicar(self):
-        return self.grado in ('g0', 'v1', 'v2') or (self.grado == 'v3' and self.subscription_active)
+        return self.grado in ('v00', 'v1', 'v2') or (self.grado == 'v3' and self.subscription_active)
 
     def tiene_acceso(self, grado_minimo):
         return self.nivel <= GRADO_NIVEL.get(grado_minimo, 4)

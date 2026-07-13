@@ -2,7 +2,7 @@ def usuario_grado(request):
     ctx = {
         'user_grado': 'v4',
         'user_nivel': 4,
-        'es_g0': False,
+        'es_v00': False,
         'es_v1': False,
         'es_v2': False,
         'es_v3': False,
@@ -15,7 +15,7 @@ def usuario_grado(request):
             profile = request.user.profile
             ctx['user_grado'] = profile.grado
             ctx['user_nivel'] = profile.nivel
-            ctx['es_g0'] = profile.grado == 'g0'
+            ctx['es_v00'] = profile.grado == 'v00'
             ctx['es_v1'] = profile.grado == 'v1'
             ctx['es_v2'] = profile.grado == 'v2'
             ctx['es_v3'] = profile.grado == 'v3'

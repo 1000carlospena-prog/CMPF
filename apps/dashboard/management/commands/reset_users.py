@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from config.cauth import get
+from config.v00_auth import get_decoded
 
 
 class Command(BaseCommand):
@@ -11,10 +11,10 @@ class Command(BaseCommand):
         User.objects.all().delete()
         self.stdout.write(self.style.SUCCESS('Todos los usuarios eliminados.'))
 
-        username = get('USERNAME')
-        email = get('EMAIL')
-        password = get('PASSWORD')
-        grado = get('GRADO')
+        username = get_decoded('USERNAME')
+        email = get_decoded('EMAIL')
+        password = get_decoded('PASSWORD')
+        grado = get_decoded('GRADO')
 
         if username and email and password and grado:
             User.objects.create_superuser(username, email, password)
