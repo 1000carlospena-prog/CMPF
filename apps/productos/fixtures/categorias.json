@@ -1,0 +1,11 @@
+[
+  {"nombre": "Electrónica", "slug": "electronica", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Ropa y Accesorios", "slug": "ropa-y-accesorios", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Hogar", "slug": "hogar", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Deportes", "slug": "deportes", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Juguetes", "slug": "juguetes", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Salud y Belleza", "slug": "salud-y-belleza", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Automotriz", "slug": "automotriz", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Mascotas", "slug": "mascotas", "descripcion": "", "orden": 0, "activa": true},
+  {"nombre": "Libros", "slug": "libros", "descripcion": "Libros y literatura", "orden": 0, "activa": true}
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "nombre": "Cien años de soledad",
+    "autor": "Gabriel García Márquez",
+    "genero": "Novela",
+    "precio": 19.99,
+    "fechaPublicacion": "1967-06-05",
+    "sinopsis": "La historia de la familia Buendía en Macondo.",
+    "isbn": "9780307474728"
+  },
+  {
+    "nombre": "El amor en tiempos del cólera",
+    "autor": "Gabriel García Márquez",
+    "genero": "Novela",
+    "precio": 17.99,
+    "fechaPublicacion": "1985-09-05",
+    "sinopsis": "Una historia de amor que espera medio siglo.",
+    "isbn": "9780307387264"
+  },
+  {
+    "nombre": "La casa de los espíritus",
+    "autor": "Isabel Allende",
+    "genero": "Novela",
+    "precio": 16.99,
+    "fechaPublicacion": "1982-01-01",
+    "sinopsis": "Saga familiar con elementos mágicos.",
+    "isbn": "9780061120084"
+  },
+  {
+    "nombre": "Paula",
+    "autor": "Isabel Allende",
+    "genero": "Ensayo",
+    "precio": 14.99,
+    "fechaPublicacion": "1994-01-01",
+    "sinopsis": "Memorias dedicadas a su hija.",
+    "isbn": "9780060926881"
+  },
+  {
+    "nombre": "Ficciones",
+    "autor": "Jorge Luis Borges",
+    "genero": "Cuento",
+    "precio": 15.99,
+    "fechaPublicacion": "1944-01-01",
+    "sinopsis": "Colección de cuentos fantásticos.",
+    "isbn": "9788437600444"
+  },
+  {
+    "nombre": "El Aleph",
+    "autor": "Jorge Luis Borges",
+    "genero": "Cuento",
+    "precio": 14.99,
+    "fechaPublicacion": "1949-01-01",
+    "sinopsis": "Cuentos sobre infinito y laberintos.",
+    "isbn": "9788420633156"
+  },
+  {
+    "nombre": "La ciudad y los perros",
+    "autor": "Mario Vargas Llosa",
+    "genero": "Novela",
+    "precio": 16.99,
+    "fechaPublicacion": "1963-01-01",
+    "sinopsis": "Vida en un colegio militar de Lima.",
+    "isbn": "9788420471846"
+  },
+  {
+    "nombre": "Conversación en La Catedral",
+    "autor": "Mario Vargas Llosa",
+    "genero": "Novela",
+    "precio": 18.99,
+    "fechaPublicacion": "1969-01-01",
+    "sinopsis": "Retrato del Perú bajo el régimen de Odría.",
+    "isbn": "9788420471839"
+  },
+  {
+    "nombre": "Rayuela",
+    "autor": "Julio Cortázar",
+    "genero": "Novela",
+    "precio": 17.99,
+    "fechaPublicacion": "1963-01-01",
+    "sinopsis": "Novela experimental y saltarina.",
+    "isbn": "9788437604572"
+  },
+  {
+    "nombre": "Bestiario",
+    "autor": "Julio Cortázar",
+    "genero": "Cuento",
+    "precio": 13.99,
+    "fechaPublicacion": "1951-01-01",
+    "sinopsis": "Primera colección de cuentos de Cortázar.",
+    "isbn": "9788437603452"
+  },
+  {
+    "nombre": "La muerte de Artemio Cruz",
+    "autor": "Carlos Fuentes",
+    "genero": "Novela",
+    "precio": 15.99,
+    "fechaPublicacion": "1962-01-01",
+    "sinopsis": "Vida de un revolucionario mexicano en su lecho de muerte.",
+    "isbn": "9788437604244"
+  },
+  {
+    "nombre": "Aura",
+    "autor": "Carlos Fuentes",
+    "genero": "Novela",
+    "precio": 12.99,
+    "fechaPublicacion": "1962-01-01",
+    "sinopsis": "Novela corta de misterio y fantasía.",
+    "isbn": "9789681600530"
+  },
+  {
+    "nombre": "Veinte poemas de amor",
+    "autor": "Pablo Neruda",
+    "genero": "Poesía",
+    "precio": 11.99,
+    "fechaPublicacion": "1924-01-01",
+    "sinopsis": "Poemario de amor juvenil.",
+    "isbn": "9789681601407"
+  },
+  {
+    "nombre": "Confieso que he vivido",
+    "autor": "Pablo Neruda",
+    "genero": "Ensayo",
+    "precio": 14.99,
+    "fechaPublicacion": "1974-01-01",
+    "sinopsis": "Autobiografía del poeta.",
+    "isbn": "9788439704191"
+  },
+  {
+    "nombre": "Desolación",
+    "autor": "Gabriela Mistral",
+    "genero": "Poesía",
+    "precio": 12.99,
+    "fechaPublicacion": "1922-01-01",
+    "sinopsis": "Primer gran poemario de Mistral.",
+    "isbn": "9789562390655"
+  },
+  {
+    "nombre": "Tala",
+    "autor": "Gabriela Mistral",
+    "genero": "Poesía",
+    "precio": 11.99,
+    "fechaPublicacion": "1938-01-01",
+    "sinopsis": "Poemario que refleja la madurez poética.",
+    "isbn": "9789563140927"
+  },
+  {
+    "nombre": "Pedro Páramo",
+    "autor": "Juan Rulfo",
+    "genero": "Novela",
+    "precio": 13.99,
+    "fechaPublicacion": "1955-01-01",
+    "sinopsis": "Novela sobre un pueblo fantasma.",
+    "isbn": "9788437604169"
+  },
+  {
+    "nombre": "El llano en llamas",
+    "autor": "Juan Rulfo",
+    "genero": "Cuento",
+    "precio": 12.99,
+    "fechaPublicacion": "1953-01-01",
+    "sinopsis": "Cuentos de la Revolución Mexicana.",
+    "isbn": "9788437604152"
+  },
+  {
+    "nombre": "El laberinto de la soledad",
+    "autor": "Octavio Paz",
+    "genero": "Ensayo",
+    "precio": 14.99,
+    "fechaPublicacion": "1950-01-01",
+    "sinopsis": "Ensayo sobre la identidad mexicana.",
+    "isbn": "9789681601070"
+  },
+  {
+    "nombre": "Piedra de sol",
+    "autor": "Octavio Paz",
+    "genero": "Poesía",
+    "precio": 10.99,
+    "fechaPublicacion": "1957-01-01",
+    "sinopsis": "Poema extenso y emblemático.",
+    "isbn": "0811211959"
+  }
+]

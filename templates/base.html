@@ -131,7 +131,7 @@
             <div class="nav-links">
                 <a href="{% url 'productos:lista_productos' %}">Tienda</a>
                 <a href="{% url 'usuarios:explorar' %}">Usuarios</a>
-                <a href="{% url 'listalibros' %}">Librería</a>
+                <a href="{% url 'productos:lista_productos' %}?tipo=libro">Libros</a>
                 <a href="{% url 'blog:lista' %}">Blog</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard:index' %}">Dashboard</a>
@@ -193,7 +193,7 @@
             <div>
                 <h4>Tienda</h4>
                 <a href="{% url 'productos:lista_productos' %}">Productos</a>
-                <a href="{% url 'listalibros' %}">Librería</a>
+                <a href="{% url 'productos:lista_productos' %}?tipo=libro">Libros</a>
                 <a href="{% url 'carrito:ver' %}">Carrito</a>
                 <a href="{% url 'ordenes:historial' %}">Mis Órdenes</a>
             </div>

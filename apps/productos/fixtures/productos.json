@@ -1,0 +1,102 @@
+[
+  {
+    "nombre": "Audífonos Bluetooth", "categoria": "Electrónica", "tipo": "digital",
+    "precio": 29.99, "precio_oferta": 24.99, "existencia": 50, "destacado": true,
+    "descripcion": "Audífonos Bluetooth de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Cargador USB-C 65W", "categoria": "Electrónica", "tipo": "digital",
+    "precio": 19.99, "precio_oferta": null, "existencia": 100, "destacado": true,
+    "descripcion": "Cargador USB-C 65W de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Camiseta Algodón", "categoria": "Ropa y Accesorios", "tipo": "general",
+    "precio": 14.99, "precio_oferta": 9.99, "existencia": 80, "destacado": true,
+    "descripcion": "Camiseta Algodón de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Mochila Impermeable", "categoria": "Ropa y Accesorios", "tipo": "general",
+    "precio": 39.99, "precio_oferta": null, "existencia": 30, "destacado": true,
+    "descripcion": "Mochila Impermeable de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Lámpara LED Escritorio", "categoria": "Hogar", "tipo": "domestico",
+    "precio": 34.99, "precio_oferta": 29.99, "existencia": 45, "destacado": true,
+    "descripcion": "Lámpara LED Escritorio de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Set Sartenes Antiadherentes", "categoria": "Hogar", "tipo": "domestico",
+    "precio": 49.99, "precio_oferta": null, "existencia": 20, "destacado": false,
+    "descripcion": "Set Sartenes Antiadherentes de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Balón Fútbol", "categoria": "Deportes", "tipo": "general",
+    "precio": 24.99, "precio_oferta": 19.99, "existencia": 60, "destacado": true,
+    "descripcion": "Balón Fútbol de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Pesa Rusa 16kg", "categoria": "Deportes", "tipo": "general",
+    "precio": 44.99, "precio_oferta": null, "existencia": 25, "destacado": true,
+    "descripcion": "Pesa Rusa 16kg de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Rompecabezas 1000 piezas", "categoria": "Juguetes", "tipo": "general",
+    "precio": 18.99, "precio_oferta": 14.99, "existencia": 90, "destacado": true,
+    "descripcion": "Rompecabezas 1000 piezas de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Muñeca Articulada", "categoria": "Juguetes", "tipo": "general",
+    "precio": 22.99, "precio_oferta": null, "existencia": 40, "destacado": true,
+    "descripcion": "Muñeca Articulada de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Crema Hidratante Facial", "categoria": "Salud y Belleza", "tipo": "general",
+    "precio": 15.99, "precio_oferta": 12.99, "existencia": 70, "destacado": true,
+    "descripcion": "Crema Hidratante Facial de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Set Cepillos Maquillaje", "categoria": "Salud y Belleza", "tipo": "general",
+    "precio": 12.99, "precio_oferta": null, "existencia": 55, "destacado": false,
+    "descripcion": "Set Cepillos Maquillaje de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Organizador Automotriz", "categoria": "Automotriz", "tipo": "vehiculo",
+    "precio": 16.99, "precio_oferta": 13.99, "existencia": 35, "destacado": true,
+    "descripcion": "Organizador Automotriz de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Limpiador Aire Acondicionado", "categoria": "Automotriz", "tipo": "vehiculo",
+    "precio": 8.99, "precio_oferta": null, "existencia": 65, "destacado": true,
+    "descripcion": "Limpiador Aire Acondicionado de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Cama Perro Mediana", "categoria": "Mascotas", "tipo": "domestico",
+    "precio": 32.99, "precio_oferta": 27.99, "existencia": 15, "destacado": true,
+    "descripcion": "Cama Perro Mediana de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Juguete Interactivo Gato", "categoria": "Mascotas", "tipo": "domestico",
+    "precio": 11.99, "precio_oferta": null, "existencia": 50, "destacado": true,
+    "descripcion": "Juguete Interactivo Gato de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Reloj Inteligente", "categoria": "Electrónica", "tipo": "digital",
+    "precio": 89.99, "precio_oferta": 69.99, "existencia": 10, "destacado": true,
+    "descripcion": "Reloj Inteligente de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Pantalón Deportivo", "categoria": "Ropa y Accesorios", "tipo": "general",
+    "precio": 29.99, "precio_oferta": null, "existencia": 35, "destacado": false,
+    "descripcion": "Pantalón Deportivo de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Cojín Ergonómico", "categoria": "Hogar", "tipo": "domestico",
+    "precio": 27.99, "precio_oferta": 22.99, "existencia": 28, "destacado": true,
+    "descripcion": "Cojín Ergonómico de alta calidad al mejor precio."
+  },
+  {
+    "nombre": "Raqueta Tenis", "categoria": "Deportes", "tipo": "general",
+    "precio": 54.99, "precio_oferta": null, "existencia": 12, "destacado": true,
+    "descripcion": "Raqueta Tenis de alta calidad al mejor precio."
+  }
+]

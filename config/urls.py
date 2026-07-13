@@ -45,9 +45,6 @@ urlpatterns = [
     # App: Productos
     path('productos/', include('apps.productos.urls', namespace='productos')),
     
-    # App: Librería
-    path('libros/', include('apps.catalogo_libros.urls')),
-    
     # API REST
     path('api/', include('apps.productos.api_urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
