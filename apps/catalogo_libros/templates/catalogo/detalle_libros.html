@@ -9,7 +9,7 @@
     <article class="libro-detalle">
 
       {% with primera=libro.imagenes.first %}
-        {% if primera %}
+        {% if primera and primera.display_url %}
             <img src="{{ primera.display_url }}" alt="{{ libro.nombre }}">
         {% elif libro.nombre == "Veinte poemas de amor" %}
                 <img src="{% static 'img/20poemas.jpg' %}" alt="{{ libro.nombre }}">

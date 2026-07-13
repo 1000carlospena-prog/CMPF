@@ -139,7 +139,7 @@
     <a href="{% url 'productos:detalle_producto' p.id %}" class="prod-card">
         <div class="img-wrap">
             {% with primera=p.imagenes.first %}
-                {% if primera %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
+                {% if primera and primera.display_url %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
             {% endwith %}
         </div>
         <div class="info">
@@ -166,7 +166,7 @@
     <a href="{% url 'productos:detalle_producto' p.id %}" class="prod-card">
         <div class="img-wrap">
             {% with primera=p.imagenes.first %}
-                {% if primera %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
+                {% if primera and primera.display_url %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
             {% endwith %}
         </div>
         <div class="info">

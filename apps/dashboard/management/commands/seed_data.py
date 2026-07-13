@@ -8,9 +8,10 @@ import os
 import urllib.request
 
 
-def _download(url, filename):
-    os.makedirs(settings.MEDIA_ROOT, exist_ok=True)
-    path = os.path.join(settings.MEDIA_ROOT, filename)
+def _download(url, subdir, filename):
+    dest = os.path.join(settings.MEDIA_ROOT, subdir)
+    os.makedirs(dest, exist_ok=True)
+    path = os.path.join(dest, filename)
     try:
         urllib.request.urlretrieve(url, path)
     except Exception:
@@ -80,8 +81,9 @@ class Command(BaseCommand):
             if created:
                 url_picsum = f'https://picsum.photos/seed/{slug}/400/400'
                 fname = f'producto_{slug}.jpg'
-                _download(url_picsum, fname)
-                ProductoImagen.objects.create(producto=prod, imagen=fname, url_externa=url_picsum, orden=0)
+                _download(url_picsum, 'productos', fname)
+                ProductoImagen.objects.create(producto=prod, orden=0,
+                    url_externa=url_picsum)
         self.stdout.write('20 productos creados')
 
     def _seed_libros(self):
@@ -131,8 +133,8 @@ class Command(BaseCommand):
                 metadata=metadata,
             ))
             if created:
-                fname = f'libro_{slug}.jpg'
-                _download(f'https://covers.openlibrary.org/b/ISBN/{isbns[i]}-L.jpg', fname)
-                ProductoImagen.objects.create(producto=prod, imagen=fname, orden=0,
-                    url_externa=f'https://covers.openlibrary.org/b/ISBN/{isbns[i]}-L.jpg')
+                url = f'https://covers.openlibrary.org/b/ISBN/{isbns[i]}-L.jpg'
+                _download(url, 'productos', f'libro_{slug}.jpg')
+                ProductoImagen.objects.create(producto=prod, orden=0,
+                    url_externa=url)
         self.stdout.write('20 libros creados')
