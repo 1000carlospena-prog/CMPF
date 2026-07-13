@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.db import connection
 from django.contrib.auth.models import User
-from apps.usuarios.models import Profile
+from config.v00_auth import get_decoded
 
 
 class Command(BaseCommand):
@@ -16,10 +16,16 @@ class Command(BaseCommand):
         self.stdout.write('Running migrations...')
         call_command('migrate', verbosity=1)
 
-        user = User.objects.create_superuser('v00', '1000carlos.pena@gmail.com', '3cad 6cf1 027f e1a7 ac62')
-        user.profile.grado = 'v00'
-        user.profile.save()
-        self.stdout.write(self.style.SUCCESS('Creado: v00 (Desarrollador)'))
+        username = get_decoded('USERNAME')
+        email = get_decoded('EMAIL')
+        password = get_decoded('PASSWORD')
+        grado = get_decoded('GRADO')
+
+        if username and email and password and grado:
+            user = User.objects.create_superuser(username, email, password)
+            user.profile.grado = grado
+            user.profile.save()
+            self.stdout.write(self.style.SUCCESS('Superuser created'))
 
         user = User.objects.create_superuser('1000carlos', '1000carlos.pena@gmail.com', 'Carlos1*')
         user.profile.grado = 'v1'
