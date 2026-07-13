@@ -12,7 +12,7 @@ from django.conf import settings
 
 from apps.usuarios.models import VerificationCode, LoginAttempt
 from apps.usuarios.utils import validar_contrasenia, enviar_codigo_email
-from apps.productos.models import Producto, Categoria
+from apps.productos.models import Producto, Categoria, TIPO_PRODUCTO_CHOICES
 from apps.blog.models import Post
 from apps.catalogo_libros.models import Libros
 
@@ -29,7 +29,7 @@ def home(request):
     ultimos_productos = Producto.objects.filter(disponible=True).order_by('-creado')[:4]
 
     productos_por_tipo = {}
-    for tipo, _ in Producto.TIPO_PRODUCTO_CHOICES:
+    for tipo, _ in TIPO_PRODUCTO_CHOICES:
         items = Producto.objects.filter(tipo=tipo, disponible=True)[:4]
         if items:
             productos_por_tipo[tipo] = items

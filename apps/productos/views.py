@@ -8,7 +8,7 @@ from django.db.models import Q, Avg
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
-from .models import Producto, ProductoImagen, Categoria, Resena, ListaDeseos
+from .models import Producto, ProductoImagen, Categoria, Resena, ListaDeseos, TIPO_PRODUCTO_CHOICES
 from .forms import ProductoConImagenesForm, ResenaForm
 from .serializers import ProductoSerializer
 from rest_framework import viewsets
@@ -68,7 +68,7 @@ class ProductoVista(ListView):
         context['orden_actual'] = self.request.GET.get('orden', '')
         context['categorias'] = Categoria.objects.filter(activa=True, padre__isnull=True)
         context['tipo_actual'] = self.request.GET.get('tipo', '')
-        context['TIPOS_PRODUCTO'] = Producto.TIPO_PRODUCTO_CHOICES
+        context['TIPOS_PRODUCTO'] = TIPO_PRODUCTO_CHOICES
         return context
 
 
