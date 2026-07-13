@@ -4,26 +4,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.text import slugify
 
-from apps.catalogo_libros.models import Libros, Generos
-from apps.catalogo_libros.forms import LibrosForm
+from apps.productos.models import Producto, ProductoImagen
 from apps.usuarios.decorators import grado_required
 
+
 def listaLibros(request):
-    libros_list = Libros.objects.all().order_by('nombreLibro')
+    libros_list = Producto.objects.filter(tipo='libro').order_by('nombre')
     query = request.GET.get('q')
     if query:
         libros_list = libros_list.filter(
-            Q(nombreLibro__icontains=query) |
-            Q(autor__nombre__icontains=query) |
-            Q(autor__apellido__icontains=query)
+            Q(nombre__icontains=query) |
+            Q(metadata__autor__icontains=query)
         )
-    genero_id = request.GET.get('genero')
-    if genero_id:
-        libros_list = libros_list.filter(genero_id=genero_id)
-    editora_id = request.GET.get('editora')
-    if editora_id:
-        libros_list = libros_list.filter(editora_id=editora_id)
+    genero = request.GET.get('genero')
+    if genero:
+        libros_list = libros_list.filter(metadata__genero=genero)
     paginator = Paginator(libros_list, 12)
     page = request.GET.get('page')
     try:
@@ -32,18 +29,21 @@ def listaLibros(request):
         libros = paginator.page(1)
     except EmptyPage:
         libros = paginator.page(paginator.num_pages)
-    generos = Generos.objects.all().order_by('tipoGenero')
+    generos = Producto.objects.filter(tipo='libro').values_list('metadata__genero', flat=True).distinct().order_by('metadata__genero')
+    generos = [g for g in generos if g]
     context = {
         'libros': libros,
         'query': query,
-        'genero_seleccionado': genero_id,
+        'genero_seleccionado': genero,
         'generos': generos,
     }
     return render(request, 'catalogo/lista_libros.html', context)
 
+
 def detalle_libro(request, id):
-    libro = get_object_or_404(Libros, id=id)
+    libro = get_object_or_404(Producto, tipo='libro', id=id)
     return render(request, 'catalogo/detalle_libros.html', {'libro': libro})
+
 
 @login_required
 @grado_required('v3')
@@ -52,15 +52,28 @@ def crearLibro(request):
         messages.error(request, 'Tu suscripción como proveedor no está activa. Renueva para publicar.')
         return redirect('upgrade')
     if request.method == 'POST':
-        form = LibrosForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Libro creado correctamente')
+        nombre = request.POST.get('nombre', '').strip()
+        autor = request.POST.get('autor', '').strip()
+        genero = request.POST.get('genero', '').strip()
+        precio = request.POST.get('precio', '').strip()
+        sinopsis = request.POST.get('sinopsis', '').strip()
+        if not all([nombre, autor, precio]):
+            messages.error(request, 'Nombre, autor y precio son obligatorios.')
             return redirect('crearLibro')
-        else:
-            messages.error(request, 'Error al crear libro')
-    else:
-        form = LibrosForm()
-
-    return render(request, 'catalogo/crearLibro.html', {'form': form})
-
+        slug = slugify(nombre)
+        if Producto.objects.filter(slug=slug).exists():
+            slug = f'{slug}-{Producto.objects.filter(slug__startswith=slug).count()}'
+        metadata = {'autor': autor, 'genero': genero, 'sinopsis': sinopsis}
+        descripcion = sinopsis or f'Libro de {autor}.'
+        if len(descripcion) > 500:
+            descripcion = descripcion[:500]
+        prod = Producto.objects.create(
+            tipo='libro', nombre=nombre, slug=slug,
+            descripcion=descripcion, precio=precio,
+            existencia=1, disponible=True, metadata=metadata,
+        )
+        if 'imagen' in request.FILES:
+            ProductoImagen.objects.create(producto=prod, imagen=request.FILES['imagen'], orden=0)
+        messages.success(request, 'Libro creado correctamente')
+        return redirect('detalle_libro', id=prod.id)
+    return render(request, 'catalogo/crearLibro.html')

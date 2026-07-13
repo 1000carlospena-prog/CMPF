@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Sum, Q
 
 from apps.productos.models import Producto
-from apps.catalogo_libros.models import Libros, Autor, Generos, Editora
 from apps.carrito.models import CarritoItem
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -15,33 +15,26 @@ def dashboard(request):
     productos_stock_bajo = Producto.objects.filter(existencia__lt=5, existencia__gt=0).count()
     productos_agotados = Producto.objects.filter(existencia=0).count()
     
-    # Productos con más existencia
     productos_mas_stock = Producto.objects.order_by('-existencia')[:5]
-    
-    # Productos con menos existencia
     productos_menos_stock = Producto.objects.filter(existencia__gt=0).order_by('existencia')[:5]
     
-    # Total de existencias
     total_existencias = Producto.objects.aggregate(total=Sum('existencia'))['total'] or 0
     precio_promedio = Producto.objects.aggregate(promedio=Sum('precio') / Count('id'))['promedio'] or 0
     
-    total_libros = Libros.objects.count()
-    total_autores = Autor.objects.count()
-    total_generos = Generos.objects.count()
-    total_editoras = Editora.objects.count()
+    libros_qs = Producto.objects.filter(tipo='libro')
+    total_libros = libros_qs.count()
+    total_autores = libros_qs.values('metadata__autor').distinct().count()
+    total_generos = libros_qs.values('metadata__genero').distinct().count()
     
-    # Libros por género
-    libros_por_genero = Generos.objects.annotate(
-        total=Count('libros')
+    libros_por_genero = libros_qs.values('metadata__genero').annotate(
+        total=Count('id')
     ).filter(total__gt=0).order_by('-total')
     
-    # Libros por autor
-    libros_por_autor = Autor.objects.annotate(
-        total=Count('libros')
+    libros_por_autor = libros_qs.values('metadata__autor').annotate(
+        total=Count('id')
     ).filter(total__gt=0).order_by('-total')[:10]
     
-    # Últimos libros agregados
-    ultimos_libros = Libros.objects.order_by('-id')[:5]
+    ultimos_libros = libros_qs.order_by('-creado')[:5]
     
     total_items_carrito = CarritoItem.objects.count()
     items_mas_vendidos = CarritoItem.objects.values(
@@ -50,7 +43,6 @@ def dashboard(request):
     ).annotate(total=Count('id')).order_by('-total')[:5]
     
     context = {
-        # Productos
         'total_productos': total_productos,
         'productos_disponibles': productos_disponibles,
         'productos_no_disponibles': productos_no_disponibles,
@@ -61,16 +53,14 @@ def dashboard(request):
         'total_existencias': total_existencias,
         'precio_promedio': precio_promedio,
         
-        # Libros
         'total_libros': total_libros,
         'total_autores': total_autores,
         'total_generos': total_generos,
-        'total_editoras': total_editoras,
+        'total_editoras': 0,
         'libros_por_genero': libros_por_genero,
         'libros_por_autor': libros_por_autor[:5],
         'ultimos_libros': ultimos_libros,
         
-        # Carrito
         'total_items_carrito': total_items_carrito,
         'items_mas_vendidos': items_mas_vendidos,
     }

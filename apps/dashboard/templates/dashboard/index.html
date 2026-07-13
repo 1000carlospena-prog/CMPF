@@ -91,7 +91,7 @@
                 <h3>Por Género</h3>
                 <ul>
                     {% for genero in libros_por_genero %}
-                        <li><span>{{ genero.tipoGenero }}</span><span class="badge-count secondary">{{ genero.total }}</span></li>
+                        <li><span>{{ genero.metadata__genero|default:"Sin género" }}</span><span class="badge-count secondary">{{ genero.total }}</span></li>
                     {% empty %}<li>No hay géneros.</li>{% endfor %}
                 </ul>
             </div>
@@ -99,7 +99,7 @@
                 <h3>Por Autor</h3>
                 <ul>
                     {% for autor in libros_por_autor %}
-                        <li><span>{{ autor.nombre }} {{ autor.apellido }}</span><span class="badge-count secondary">{{ autor.total }}</span></li>
+                        <li><span>{{ autor.metadata__autor|default:"Desconocido" }}</span><span class="badge-count secondary">{{ autor.total }}</span></li>
                     {% empty %}<li>No hay autores.</li>{% endfor %}
                 </ul>
             </div>
@@ -107,7 +107,7 @@
                 <h3>Últimos Libros</h3>
                 <ul>
                     {% for libro in ultimos_libros %}
-                        <li><span>{{ libro.nombreLibro }}</span><span class="badge-count secondary">#{{ libro.id }}</span></li>
+                        <li><span>{{ libro.nombre }}</span><span class="badge-count secondary">#{{ libro.id }}</span></li>
                     {% empty %}<li>No hay libros.</li>{% endfor %}
                 </ul>
             </div>

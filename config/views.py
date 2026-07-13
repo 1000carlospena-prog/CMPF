@@ -14,7 +14,6 @@ from apps.usuarios.models import VerificationCode, LoginAttempt
 from apps.usuarios.utils import validar_contrasenia, enviar_codigo_email
 from apps.productos.models import Producto, Categoria, TIPO_PRODUCTO_CHOICES
 from apps.blog.models import Post
-from apps.catalogo_libros.models import Libros
 
 logger = logging.getLogger('cmpf.security')
 
@@ -44,7 +43,7 @@ def home(request):
         'productos_por_tipo': productos_por_tipo,
         'usuarios_recientes': usuarios_recientes,
         'total_productos': Producto.objects.count(),
-        'total_libros': Libros.objects.count(),
+        'total_libros': Producto.objects.filter(tipo='libro').count(),
         'total_categorias': Categoria.objects.filter(activa=True).count(),
         'total_usuarios': User.objects.count(),
     }

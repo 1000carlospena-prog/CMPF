@@ -1,96 +1,78 @@
 {% extends 'catalogo/base.html' %}
 {% load static %}
 
-
-{% block sub_title %}{{ libro.nombreLibro }}{% endblock %}
-
+{% block sub_title %}{{ libro.nombre }}{% endblock %}
 
 {% block lib_content %}
 <section id="detalle-libro">
 
     <article class="libro-detalle">
 
-      {% if libro.nombreLibro == "Veinte poemas de amor" %}
-                <img src="{% static 'img/20poemas.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Como agua para chocolate" %}
-                <img src="{% static 'img/aguachocolate.jpeg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Aura" %}
-                <img src="{% static 'img/aura.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Bestiario" %}
-                <img src="{% static 'img/bestiario.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "La casa de los espíritus" %}
-                <img src="{% static 'img/casaespiritus.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Cien años de soledad" %}
-                <img src="{% static 'img/cien-anos-de-soledad.png' %}" alt="{{ libro.nombreLibro }}">
-
-              {% elif libro.nombreLibro == "Conversación en La Catedral" %}
-            <img src="{% static 'img/conversacatedral.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "El Aleph" %}
-                <img src="{% static 'img/el-aleph.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Ficciones" %}
-            <img src="{% static 'img/ficciones.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "La ciudad y los perros" %}
-                <img src="{% static 'img/la-ciudad-y-los-perros.png' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "El laberinto de la soledad" %}
-                <img src="{% static 'img/laberintosoledad.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "El llano en llamas" %}
-                <img src="{% static 'img/llanoenllamas.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Malinche" %}
-                <img src="{% static 'img/malinche.webp' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "La muerte de Artemio Cruz" %}
-                <img src="{% static 'img/muerteartemio.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "El otoño del patriarca" %}
-                <img src="{% static 'img/otoñopatriarca.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Paula" %}
-                <img src="{% static 'img/paula.jpeg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Pedro Páramo" %}
-                <img src="{% static 'img/pedroparamo.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Piedra de sol" %}
-                <img src="{% static 'img/piedrasol.jpg' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Rayuela" %}
-                <img src="{% static 'img/rayuela.png' %}" alt="{{ libro.nombreLibro }}">
-
-            {% elif libro.nombreLibro == "Residencia en la tierra" %}
-                <img src="{% static 'img/residenciatierra.jpg' %}" alt="{{ libro.nombreLibro }}">
-
+      {% with primera=libro.imagenes.first %}
+        {% if primera %}
+            <img src="{{ primera.display_url }}" alt="{{ libro.nombre }}">
+        {% elif libro.nombre == "Veinte poemas de amor" %}
+                <img src="{% static 'img/20poemas.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Como agua para chocolate" %}
+                <img src="{% static 'img/aguachocolate.jpeg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Aura" %}
+                <img src="{% static 'img/aura.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Bestiario" %}
+                <img src="{% static 'img/bestiario.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "La casa de los espíritus" %}
+                <img src="{% static 'img/casaespiritus.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Cien años de soledad" %}
+                <img src="{% static 'img/cien-anos-de-soledad.png' %}" alt="{{ libro.nombre }}">
+              {% elif libro.nombre == "Conversación en La Catedral" %}
+            <img src="{% static 'img/conversacatedral.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "El Aleph" %}
+                <img src="{% static 'img/el-aleph.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Ficciones" %}
+            <img src="{% static 'img/ficciones.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "La ciudad y los perros" %}
+                <img src="{% static 'img/la-ciudad-y-los-perros.png' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "El laberinto de la soledad" %}
+                <img src="{% static 'img/laberintosoledad.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "El llano en llamas" %}
+                <img src="{% static 'img/llanoenllamas.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Malinche" %}
+                <img src="{% static 'img/malinche.webp' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "La muerte de Artemio Cruz" %}
+                <img src="{% static 'img/muerteartemio.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "El otoño del patriarca" %}
+                <img src="{% static 'img/otoñopatriarca.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Paula" %}
+                <img src="{% static 'img/paula.jpeg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Pedro Páramo" %}
+                <img src="{% static 'img/pedroparamo.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Piedra de sol" %}
+                <img src="{% static 'img/piedrasol.jpg' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Rayuela" %}
+                <img src="{% static 'img/rayuela.png' %}" alt="{{ libro.nombre }}">
+            {% elif libro.nombre == "Residencia en la tierra" %}
+                <img src="{% static 'img/residenciatierra.jpg' %}" alt="{{ libro.nombre }}">
            {% else %}
     <img src="{% static 'img/logo.jpg' %}" alt="Portada no disponible">
-{% endif %}
+        {% endif %}
+      {% endwith %}
 
         <div class="titulo-detalle">
             <div class="titulo">
-                 <h2>{{ libro.nombreLibro }}</h2>
+                 <h2>{{ libro.nombre }}</h2>
             </div>
                 <div class="autor">
-                      <p><strong>Autor:</strong> {{ libro.autor.nombre }} {{ libro.autor.apellido }}</p>
+                      <p><strong>Autor:</strong> {{ libro.metadata.autor|default:"Desconocido" }}</p>
                 </div>
                    
                 <p class="genero-libro">
-                <strong>Genero:</strong>{{ libro.genero.tipoGenero}}
+                <strong>Genero:</strong> {{ libro.metadata.genero|default:"General" }}
             </p>
             
             <div class="precio-detalle">
             <p><strong>Precio:</strong> $ {{ libro.precio }}</p>
                 </div>
 <div class="fechadetalle">
-            <p><strong>Fecha de publicación:</strong> {{ libro.fechaPublicacion }}</p>
+            <p><strong>Fecha de publicación:</strong> {{ libro.metadata.fechaPublicacion|default:"Desconocida" }}</p>
                 </div>
 
      </div>
@@ -98,7 +80,7 @@
         <hr>
             <h3>Sinopsis</h3>
             <p class="sinopsis-texto">
-                {{ libro.sinopsis }}
+                {{ libro.metadata.sinopsis|default:libro.descripcion }}
             </p>
             <hr>
            <button class="btn-añadir-carrito">

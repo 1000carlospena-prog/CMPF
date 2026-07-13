@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+import json
 
 
 TIPO_PRODUCTO_CHOICES = [
@@ -48,6 +49,7 @@ class Producto(models.Model):
     existencia = models.IntegerField(default=0)
     disponible = models.BooleanField(default=True)
     destacado = models.BooleanField(default=False)
+    metadata = models.JSONField(default=dict, blank=True, verbose_name='Metadatos extra (autor, género, etc.)')
     creado = models.DateTimeField(auto_now_add=True, null=True)
     actualizado = models.DateTimeField(auto_now=True, null=True)
 

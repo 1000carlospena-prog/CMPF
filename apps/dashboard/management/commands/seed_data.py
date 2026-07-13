@@ -3,7 +3,6 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.contrib.auth.models import User
 from apps.productos.models import Categoria, Producto, ProductoImagen
-from apps.catalogo_libros.models import Autor, Editora, Generos, Libros
 from datetime import date
 import os
 import urllib.request
@@ -29,9 +28,9 @@ class Command(BaseCommand):
 
     def _seed_categorias(self):
         for nombre in ['Electrónica', 'Ropa y Accesorios', 'Hogar', 'Deportes',
-                        'Juguetes', 'Salud y Belleza', 'Automotriz', 'Mascotas']:
+                        'Juguetes', 'Salud y Belleza', 'Automotriz', 'Mascotas', 'Libros']:
             Categoria.objects.get_or_create(nombre=nombre, slug=slugify(nombre))
-        self.stdout.write('8 categorias creadas')
+        self.stdout.write('9 categorias creadas')
 
     _TIPO_POR_CATEGORIA = {
         'Electrónica': 'digital',
@@ -86,27 +85,7 @@ class Command(BaseCommand):
         self.stdout.write('20 productos creados')
 
     def _seed_libros(self):
-        a1, _ = Autor.objects.get_or_create(nombre='Gabriel', apellido='García Márquez')
-        a2, _ = Autor.objects.get_or_create(nombre='Isabel', apellido='Allende')
-        a3, _ = Autor.objects.get_or_create(nombre='Jorge Luis', apellido='Borges')
-        a4, _ = Autor.objects.get_or_create(nombre='Mario', apellido='Vargas Llosa')
-        a5, _ = Autor.objects.get_or_create(nombre='Julio', apellido='Cortázar')
-        a6, _ = Autor.objects.get_or_create(nombre='Carlos', apellido='Fuentes')
-        a7, _ = Autor.objects.get_or_create(nombre='Pablo', apellido='Neruda')
-        a8, _ = Autor.objects.get_or_create(nombre='Gabriela', apellido='Mistral')
-        a9, _ = Autor.objects.get_or_create(nombre='Juan', apellido='Rulfo')
-        a10, _ = Autor.objects.get_or_create(nombre='Octavio', apellido='Paz')
-
-        e1, _ = Editora.objects.get_or_create(nombreEditora='Alfaguara', ciudad='Madrid')
-        e2, _ = Editora.objects.get_or_create(nombreEditora='Planeta', ciudad='Barcelona')
-        e3, _ = Editora.objects.get_or_create(nombreEditora='Anagrama', ciudad='Barcelona')
-        e4, _ = Editora.objects.get_or_create(nombreEditora='Sudamericana', ciudad='Buenos Aires')
-        e5, _ = Editora.objects.get_or_create(nombreEditora='Fondo Cultura', ciudad='Ciudad de México')
-
-        gens = {}
-        for g in ['Novela', 'Poesía', 'Cuento', 'Ensayo', 'Ficción']:
-            gens[g], _ = Generos.objects.get_or_create(tipoGenero=g)
-
+        cat_libros = Categoria.objects.get_or_create(nombre='Libros', slug='libros', defaults=dict(activa=True))[0]
         isbns = [
             '9780307474728', '9780307387264', '9780061120084', '9780060926881',
             '9788437600444', '9788420633156', '9788420471846', '9788420471839',
@@ -116,36 +95,44 @@ class Command(BaseCommand):
         ]
 
         libros = [
-            ('Cien años de soledad', a1, gens['Novela'], e4, 19.99, date(1967, 6, 5), 'La historia de la familia Buendía en Macondo.'),
-            ('El amor en tiempos del cólera', a1, gens['Novela'], e4, 17.99, date(1985, 9, 5), 'Una historia de amor que espera medio siglo.'),
-            ('La casa de los espíritus', a2, gens['Novela'], e1, 16.99, date(1982, 1, 1), 'Saga familiar con elementos mágicos.'),
-            ('Paula', a2, gens['Ensayo'], e1, 14.99, date(1994, 1, 1), 'Memorias dedicadas a su hija.'),
-            ('Ficciones', a3, gens['Cuento'], e3, 15.99, date(1944, 1, 1), 'Colección de cuentos fantásticos.'),
-            ('El Aleph', a3, gens['Cuento'], e3, 14.99, date(1949, 1, 1), 'Cuentos sobre infinito y laberintos.'),
-            ('La ciudad y los perros', a4, gens['Novela'], e1, 16.99, date(1963, 1, 1), 'Vida en un colegio militar de Lima.'),
-            ('Conversación en La Catedral', a4, gens['Novela'], e1, 18.99, date(1969, 1, 1), 'Retrato del Perú bajo el régimen de Odría.'),
-            ('Rayuela', a5, gens['Novela'], e3, 17.99, date(1963, 1, 1), 'Novela experimental y saltarina.'),
-            ('Bestiario', a5, gens['Cuento'], e3, 13.99, date(1951, 1, 1), 'Primera colección de cuentos de Cortázar.'),
-            ('La muerte de Artemio Cruz', a6, gens['Novela'], e5, 15.99, date(1962, 1, 1), 'Vida de un revolucionario mexicano en su lecho de muerte.'),
-            ('Aura', a6, gens['Novela'], e5, 12.99, date(1962, 1, 1), 'Novela corta de misterio y fantasía.'),
-            ('Veinte poemas de amor', a7, gens['Poesía'], e4, 11.99, date(1924, 1, 1), 'Poemario de amor juvenil.'),
-            ('Confieso que he vivido', a7, gens['Ensayo'], e4, 14.99, date(1974, 1, 1), 'Autobiografía del poeta.'),
-            ('Desolación', a8, gens['Poesía'], e4, 12.99, date(1922, 1, 1), 'Primer gran poemario de Mistral.'),
-            ('Tala', a8, gens['Poesía'], e4, 11.99, date(1938, 1, 1), 'Poemario que refleja la madurez poética.'),
-            ('Pedro Páramo', a9, gens['Novela'], e5, 13.99, date(1955, 1, 1), 'Novela sobre un pueblo fantasma.'),
-            ('El llano en llamas', a9, gens['Cuento'], e5, 12.99, date(1953, 1, 1), 'Cuentos de la Revolución Mexicana.'),
-            ('El laberinto de la soledad', a10, gens['Ensayo'], e5, 14.99, date(1950, 1, 1), 'Ensayo sobre la identidad mexicana.'),
-            ('Piedra de sol', a10, gens['Poesía'], e5, 10.99, date(1957, 1, 1), 'Poema extenso y emblemático.'),
+            ('Cien años de soledad', 'Gabriel García Márquez', 'Novela', 19.99, date(1967, 6, 5), 'La historia de la familia Buendía en Macondo.'),
+            ('El amor en tiempos del cólera', 'Gabriel García Márquez', 'Novela', 17.99, date(1985, 9, 5), 'Una historia de amor que espera medio siglo.'),
+            ('La casa de los espíritus', 'Isabel Allende', 'Novela', 16.99, date(1982, 1, 1), 'Saga familiar con elementos mágicos.'),
+            ('Paula', 'Isabel Allende', 'Ensayo', 14.99, date(1994, 1, 1), 'Memorias dedicadas a su hija.'),
+            ('Ficciones', 'Jorge Luis Borges', 'Cuento', 15.99, date(1944, 1, 1), 'Colección de cuentos fantásticos.'),
+            ('El Aleph', 'Jorge Luis Borges', 'Cuento', 14.99, date(1949, 1, 1), 'Cuentos sobre infinito y laberintos.'),
+            ('La ciudad y los perros', 'Mario Vargas Llosa', 'Novela', 16.99, date(1963, 1, 1), 'Vida en un colegio militar de Lima.'),
+            ('Conversación en La Catedral', 'Mario Vargas Llosa', 'Novela', 18.99, date(1969, 1, 1), 'Retrato del Perú bajo el régimen de Odría.'),
+            ('Rayuela', 'Julio Cortázar', 'Novela', 17.99, date(1963, 1, 1), 'Novela experimental y saltarina.'),
+            ('Bestiario', 'Julio Cortázar', 'Cuento', 13.99, date(1951, 1, 1), 'Primera colección de cuentos de Cortázar.'),
+            ('La muerte de Artemio Cruz', 'Carlos Fuentes', 'Novela', 15.99, date(1962, 1, 1), 'Vida de un revolucionario mexicano en su lecho de muerte.'),
+            ('Aura', 'Carlos Fuentes', 'Novela', 12.99, date(1962, 1, 1), 'Novela corta de misterio y fantasía.'),
+            ('Veinte poemas de amor', 'Pablo Neruda', 'Poesía', 11.99, date(1924, 1, 1), 'Poemario de amor juvenil.'),
+            ('Confieso que he vivido', 'Pablo Neruda', 'Ensayo', 14.99, date(1974, 1, 1), 'Autobiografía del poeta.'),
+            ('Desolación', 'Gabriela Mistral', 'Poesía', 12.99, date(1922, 1, 1), 'Primer gran poemario de Mistral.'),
+            ('Tala', 'Gabriela Mistral', 'Poesía', 11.99, date(1938, 1, 1), 'Poemario que refleja la madurez poética.'),
+            ('Pedro Páramo', 'Juan Rulfo', 'Novela', 13.99, date(1955, 1, 1), 'Novela sobre un pueblo fantasma.'),
+            ('El llano en llamas', 'Juan Rulfo', 'Cuento', 12.99, date(1953, 1, 1), 'Cuentos de la Revolución Mexicana.'),
+            ('El laberinto de la soledad', 'Octavio Paz', 'Ensayo', 14.99, date(1950, 1, 1), 'Ensayo sobre la identidad mexicana.'),
+            ('Piedra de sol', 'Octavio Paz', 'Poesía', 10.99, date(1957, 1, 1), 'Poema extenso y emblemático.'),
         ]
-        for i, (nombre, autor, genero, editora, precio, fecha, sinopsis) in enumerate(libros):
+        for i, (nombre, autor, genero, precio, fecha, sinopsis) in enumerate(libros):
             slug = slugify(nombre)
-            libro, created = Libros.objects.get_or_create(nombreLibro=nombre, defaults=dict(
-                autor=autor, genero=genero, editora=editora, precio=precio,
-                fechaPublicacion=fecha, sinopsis=sinopsis,
+            metadata = {
+                'autor': autor,
+                'genero': genero,
+                'fechaPublicacion': str(fecha),
+                'sinopsis': sinopsis,
+            }
+            prod, created = Producto.objects.get_or_create(slug=slug, tipo='libro', defaults=dict(
+                categoria=cat_libros, nombre=nombre,
+                descripcion=sinopsis[:500] if len(sinopsis) > 500 else sinopsis,
+                precio=precio, existencia=1, disponible=True,
+                metadata=metadata,
             ))
             if created:
                 fname = f'libro_{slug}.jpg'
                 _download(f'https://covers.openlibrary.org/b/ISBN/{isbns[i]}-L.jpg', fname)
-                libro.imagen = fname
-                libro.save()
+                ProductoImagen.objects.create(producto=prod, imagen=fname, orden=0,
+                    url_externa=f'https://covers.openlibrary.org/b/ISBN/{isbns[i]}-L.jpg')
         self.stdout.write('20 libros creados')
