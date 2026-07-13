@@ -23,88 +23,106 @@
     .hero-stats .stat { text-align: center; }
     .hero-stats .stat .number { font-size: 1.8rem; font-weight: 800; color: #fcd34d; }
     .hero-stats .stat .label { font-size: 0.8rem; opacity: 0.7; margin-top: 4px; }
-    .section-title {
-        font-size: 1.3rem; font-weight: 700; margin-bottom: 20px;
+    .seccion-titulo {
+        font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;
         display: flex; align-items: center; gap: 8px;
     }
-    .section-title a { font-size: 0.85rem; font-weight: 500; color: #2563eb; text-decoration: none; margin-left: auto; }
-    .section-title a:hover { text-decoration: underline; }
-    .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 36px; }
+    .seccion-titulo a { font-size: 0.82rem; font-weight: 500; color: #2563eb; text-decoration: none; margin-left: auto; }
+    .seccion-titulo a:hover { text-decoration: underline; }
+    .seccion-titulo .icono { font-size: 1.3rem; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 32px; }
     .cat-card {
         background: white; border: 1px solid #e2e8f0; border-radius: 12px;
-        padding: 16px; text-align: center; text-decoration: none; color: #1e293b; transition: all 0.2s;
+        padding: 14px; text-align: center; text-decoration: none; color: #1e293b; transition: all 0.2s;
     }
     .cat-card:hover { border-color: #2563eb; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.1); }
-    .cat-card .icon { font-size: 1.5rem; margin-bottom: 6px; display: block; }
-    .cat-card .name { font-weight: 600; font-size: 0.8rem; }
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 36px; }
-    .product-card {
+    .cat-card .icon { font-size: 1.3rem; margin-bottom: 4px; display: block; }
+    .cat-card .name { font-weight: 600; font-size: 0.78rem; }
+    .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .prod-card {
         background: white; border: 1px solid #e2e8f0; border-radius: 12px;
         overflow: hidden; transition: all 0.2s; text-decoration: none; color: #1e293b;
         position: relative;
     }
-    .product-card:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 8px 24px rgba(37,99,235,0.1); }
-    .product-card .img-wrap { height: 160px; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-size: 2rem; overflow: hidden; }
-    .product-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .product-card .info { padding: 12px; }
-    .product-card .info h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .product-card .info .price { font-size: 1.05rem; font-weight: 700; color: #2563eb; }
-    .product-card .info .price .old { font-size: 0.75rem; color: #94a3b8; text-decoration: line-through; margin-left: 6px; font-weight: 400; }
-    .product-card .info .stock { font-size: 0.75rem; color: #94a3b8; margin-top: 4px; }
-    .product-card .badge-oferta {
-        position: absolute; top: 8px; left: 8px; background: #ef4444;
-        color: white; padding: 3px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: 700;
+    .prod-card:hover { transform: translateY(-3px); border-color: #2563eb; box-shadow: 0 8px 24px rgba(37,99,235,0.1); }
+    .prod-card .img-wrap { height: 140px; background: #f8fafc; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; overflow: hidden; }
+    .prod-card .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-card .info { padding: 10px; }
+    .prod-card .info h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .prod-card .info .price { font-size: 1rem; font-weight: 700; color: #2563eb; }
+    .prod-card .info .price .old { font-size: 0.7rem; color: #94a3b8; text-decoration: line-through; margin-left: 4px; font-weight: 400; }
+    .prod-card .badge-oferta {
+        position: absolute; top: 6px; left: 6px; background: #ef4444;
+        color: white; padding: 2px 8px; border-radius: 50px; font-size: 0.65rem; font-weight: 700;
     }
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 36px; }
+    .prod-card .badge-tipo {
+        position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6);
+        color: white; padding: 2px 8px; border-radius: 50px; font-size: 0.6rem; font-weight: 600;
+    }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 32px; }
     .blog-card {
         background: white; border: 1px solid #e2e8f0; border-radius: 12px;
-        padding: 20px; text-decoration: none; color: #1e293b; transition: all 0.2s;
+        padding: 18px; text-decoration: none; color: #1e293b; transition: all 0.2s;
     }
     .blog-card:hover { border-color: #2563eb; transform: translateY(-2px); }
-    .blog-card .date { font-size: 0.78rem; color: #94a3b8; margin-bottom: 6px; }
-    .blog-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-    .blog-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .blog-card .date { font-size: 0.75rem; color: #94a3b8; margin-bottom: 4px; }
+    .blog-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .blog-card p { font-size: 0.82rem; color: #64748b; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 32px; }
+    .user-card {
+        background: white; border: 1px solid #e2e8f0; border-radius: 12px;
+        padding: 16px; text-align: center; text-decoration: none; color: #1e293b; transition: all 0.2s;
+    }
+    .user-card:hover { border-color: #2563eb; transform: translateY(-2px); }
+    .user-card .avatar {
+        width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 8px;
+        background: #2563eb; color: white; display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 1.2rem;
+    }
+    .user-card .avatar img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .user-card .name { font-weight: 600; font-size: 0.85rem; }
+    .user-card .meta { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
     .newsletter {
         background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white;
-        border-radius: 16px; padding: 40px; text-align: center; margin-bottom: 36px;
+        border-radius: 16px; padding: 36px; text-align: center; margin-bottom: 32px;
     }
-    .newsletter h2 { font-size: 1.5rem; margin-bottom: 8px; }
-    .newsletter p { opacity: 0.85; margin-bottom: 20px; font-size: 0.9rem; }
-    .newsletter form { display: flex; max-width: 460px; margin: 0 auto; gap: 8px; }
-    .newsletter input { flex: 1; padding: 12px 18px; border-radius: 10px; border: none; font-size: 0.9rem; }
+    .newsletter h2 { font-size: 1.4rem; margin-bottom: 6px; }
+    .newsletter p { opacity: 0.85; margin-bottom: 16px; font-size: 0.85rem; }
+    .newsletter form { display: flex; max-width: 420px; margin: 0 auto; gap: 8px; }
+    .newsletter input { flex: 1; padding: 10px 16px; border-radius: 10px; border: none; font-size: 0.85rem; }
     .newsletter button {
-        padding: 12px 24px; border-radius: 10px; border: none; background: #fcd34d;
+        padding: 10px 20px; border-radius: 10px; border: none; background: #fcd34d;
         color: #1e293b; font-weight: 600; cursor: pointer; transition: 0.2s;
     }
     .newsletter button:hover { background: #fbbf24; }
-    .empty-section { text-align: center; padding: 40px 20px; color: #94a3b8; }
-    .empty-section .icon { font-size: 2.5rem; margin-bottom: 8px; }
     @media (max-width: 768px) {
-        .hero h1 { font-size: 1.6rem; }
-        .hero-stats { gap: 20px; }
+        .hero h1 { font-size: 1.5rem; }
+        .hero-stats { gap: 16px; }
         .newsletter form { flex-direction: column; }
-        .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        .prod-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
     }
 </style>
 {% endblock %}
 {% block content %}
 <div class="hero">
     <h1>Centro de Gestión <span>Comercial</span></h1>
-    <p>Gestiona productos, libros, inventario y ventas. Una plataforma todo-en-uno para tu negocio.</p>
+    <p>Conecta, vende, compra y socializa. Una plataforma todo-en-uno para tu negocio y comunidad.</p>
     <div class="hero-actions">
-        <a href="{% url 'productos:lista_productos' %}" class="btn-primary">Explorar Productos</a>
-        <a href="{% url 'listalibros' %}" class="btn-secondary">Catálogo de Libros</a>
+        <a href="{% url 'productos:lista_productos' %}" class="btn-primary">Explorar Tienda</a>
+        <a href="{% url 'usuarios:explorar' %}" class="btn-secondary">Conectar con Usuarios</a>
+        <a href="{% url 'chat:inbox' %}" class="btn-secondary">Mensajes</a>
     </div>
     <div class="hero-stats">
         <div class="stat"><div class="number">{{ total_productos|default:"0" }}</div><div class="label">Productos</div></div>
         <div class="stat"><div class="number">{{ total_libros|default:"0" }}</div><div class="label">Libros</div></div>
+        <div class="stat"><div class="number">{{ total_usuarios|default:"0" }}</div><div class="label">Usuarios</div></div>
         <div class="stat"><div class="number">{{ total_categorias|default:"0" }}</div><div class="label">Categorías</div></div>
     </div>
 </div>
 
 {% if categorias_home %}
-<h2 class="section-title">Categorías <a href="{% url 'productos:lista_productos' %}">Ver todas →</a></h2>
-<div class="categories-grid">
+<div class="seccion-titulo"><span class="icono">📂</span> Categorías <a href="{% url 'productos:lista_productos' %}">Ver todas →</a></div>
+<div class="cat-grid">
     {% for cat in categorias_home %}
     <a href="{% url 'productos:lista_productos' %}?categoria={{ cat.slug }}" class="cat-card">
         <span class="icon">{{ cat.icono|default:"📁" }}</span>
@@ -115,10 +133,10 @@
 {% endif %}
 
 {% if productos_destacados %}
-<h2 class="section-title">Productos Destacados <a href="{% url 'productos:lista_productos' %}">Ver todos →</a></h2>
-<div class="products-grid">
+<div class="seccion-titulo"><span class="icono">⭐</span> Productos Destacados <a href="{% url 'productos:lista_productos' %}">Ver todos →</a></div>
+<div class="prod-grid">
     {% for p in productos_destacados %}
-    <a href="{% url 'productos:detalle_producto' p.id %}" class="product-card">
+    <a href="{% url 'productos:detalle_producto' p.id %}" class="prod-card">
         <div class="img-wrap">
             {% with primera=p.imagenes.first %}
                 {% if primera %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
@@ -126,23 +144,26 @@
         </div>
         <div class="info">
             <h3>{{ p.nombre }}</h3>
-            <div class="price">
-                ${{ p.precio_actual }}
-                {% if p.en_oferta %}<span class="old">${{ p.precio }}</span>{% endif %}
-            </div>
-            <div class="stock">{% if p.existencia > 0 %}{{ p.existencia }} en stock{% else %}Agotado{% endif %}</div>
+            <div class="price">${{ p.precio_actual }}{% if p.en_oferta %}<span class="old">${{ p.precio }}</span>{% endif %}</div>
         </div>
         {% if p.en_oferta %}<span class="badge-oferta">-{{ p.descuento_porcentaje }}%</span>{% endif %}
+        <span class="badge-tipo">{{ p.get_tipo_display|slice:":8" }}</span>
     </a>
     {% endfor %}
 </div>
 {% endif %}
 
-{% if ultimos_productos %}
-<h2 class="section-title">Recién Llegados <a href="{% url 'productos:lista_productos' %}?orden=-creado">Ver todos →</a></h2>
-<div class="products-grid">
-    {% for p in ultimos_productos %}
-    <a href="{% url 'productos:detalle_producto' p.id %}" class="product-card">
+{% for tipo, items in productos_por_tipo.items %}
+<div class="seccion-titulo">
+    <span class="icono">
+        {% if tipo == 'gastronomico' %}🍽️{% elif tipo == 'digital' %}💻{% elif tipo == 'libro' %}📚{% elif tipo == 'domestico' %}🏠{% elif tipo == 'servicio' %}🔧{% elif tipo == 'inmueble' %}🏢{% elif tipo == 'vehiculo' %}🚗{% elif tipo == 'evento' %}🎫{% elif tipo == 'empleo' %}💼{% elif tipo == 'arte' %}🎨{% else %}📦{% endif %}
+    </span>
+    {{ items.0.get_tipo_display|title }}
+    <a href="{% url 'productos:lista_productos' %}?tipo={{ tipo }}">Ver →</a>
+</div>
+<div class="prod-grid">
+    {% for p in items %}
+    <a href="{% url 'productos:detalle_producto' p.id %}" class="prod-card">
         <div class="img-wrap">
             {% with primera=p.imagenes.first %}
                 {% if primera %}<img src="{{ primera.display_url }}" alt="{{ p.nombre }}">{% else %}📦{% endif %}
@@ -150,26 +171,37 @@
         </div>
         <div class="info">
             <h3>{{ p.nombre }}</h3>
-            <div class="price">
-                ${{ p.precio_actual }}
-                {% if p.en_oferta %}<span class="old">${{ p.precio }}</span>{% endif %}
-            </div>
-            <div class="stock">{% if p.existencia > 0 %}{{ p.existencia }} en stock{% else %}Agotado{% endif %}</div>
+            <div class="price">${{ p.precio_actual }}{% if p.en_oferta %}<span class="old">${{ p.precio }}</span>{% endif %}</div>
         </div>
         {% if p.en_oferta %}<span class="badge-oferta">-{{ p.descuento_porcentaje }}%</span>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% if usuarios_recientes %}
+<div class="seccion-titulo"><span class="icono">👥</span> Últimos Usuarios <a href="{% url 'usuarios:explorar' %}">Ver todos →</a></div>
+<div class="user-grid">
+    {% for u in usuarios_recientes %}
+    <a href="{% url 'perfil_usuario' u.id %}" class="user-card">
+        <div class="avatar">
+            {% if u.profile.avatar %}<img src="{{ u.profile.avatar.url }}" alt="">{% else %}{{ u.username|first|upper }}{% endif %}
+        </div>
+        <div class="name">{{ u.profile.nombre_real|default:u.username }}</div>
+        <div class="meta">{{ u.profile.seguidores_count }} seguidores · <span class="badge {{ u.profile.grado }}">{{ u.profile.grado }}</span></div>
     </a>
     {% endfor %}
 </div>
 {% endif %}
 
 {% if posts_recientes %}
-<h2 class="section-title">Últimas del Blog <a href="{% url 'blog:lista' %}">Ver todas →</a></h2>
+<div class="seccion-titulo"><span class="icono">📝</span> Últimas del Blog <a href="{% url 'blog:lista' %}">Ver todas →</a></div>
 <div class="blog-grid">
     {% for post in posts_recientes %}
     <a href="{% url 'blog:detalle' post.slug %}" class="blog-card">
         <div class="date">{{ post.creado|date:"d/m/Y" }}</div>
         <h3>{{ post.titulo }}</h3>
-        <p>{{ post.resumen|default:post.contenido|truncatewords:25 }}</p>
+        <p>{{ post.resumen|default:post.contenido|truncatewords:22 }}</p>
     </a>
     {% endfor %}
 </div>

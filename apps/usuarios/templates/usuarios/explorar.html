@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Explorar Usuarios - CMPF{% endblock %}
+{% block content %}
+<div style="max-width:700px;margin:0 auto;">
+  <h1 style="font-size:1.5rem;margin-bottom:20px;">Explorar Usuarios</h1>
+
+  <form method="get" style="display:flex;gap:8px;margin-bottom:24px;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Buscar por nombre, usuario o bio..." style="flex:1;">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    {% for u in usuarios %}
+      <div class="card" style="display:flex;align-items:center;gap:16px;padding:16px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;flex-shrink:0;">
+          {% if u.profile.avatar %}
+            <img src="{{ u.profile.avatar.url }}" alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
+          {% else %}
+            {{ u.username|first|upper }}
+          {% endif %}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:600;">{{ u.profile.nombre_real|default:u.username }}</div>
+          <div style="font-size:0.8rem;color:#64748b;">
+            @{{ u.username }} · <span class="badge {{ u.profile.grado }}">{{ u.profile.grado }}</span>
+            · <strong>{{ u.profile.seguidores_count }}</strong> seguidores
+          </div>
+          {% if u.profile.bio %}
+            <div style="font-size:0.82rem;color:#64748b;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ u.profile.bio }}</div>
+          {% endif %}
+        </div>
+        <div style="display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;">
+          <a href="{% url 'perfil_usuario' u.id %}" class="btn btn-sm btn-secondary">Ver</a>
+          <a href="{% url 'chat:start' u.id %}" class="btn btn-sm btn-primary">💬</a>
+          {% if user.is_authenticated %}
+            {% if u.siguiendo %}
+              <form method="post" action="{% url 'usuarios:dejar_seguir' u.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-secondary">Dejar seguir</button></form>
+            {% else %}
+              <form method="post" action="{% url 'usuarios:seguir' u.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-primary">Seguir</button></form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div style="text-align:center;padding:40px;color:#94a3b8;">
+        <div style="font-size:2.5rem;margin-bottom:8px;">🔍</div>
+        {% if q %}
+          No se encontraron usuarios para "{{ q }}".
+        {% else %}
+          No hay usuarios para mostrar.
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

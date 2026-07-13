@@ -20,21 +20,33 @@ logger = logging.getLogger('cmpf.security')
 
 
 def home(request):
+    from django.contrib.auth.models import User
+    from apps.usuarios.models import Follow
+
     productos_destacados = Producto.objects.filter(destacado=True, disponible=True)[:8]
-    productos_oferta = Producto.objects.exclude(precio_oferta__isnull=True)[:4]
     categorias = Categoria.objects.filter(activa=True, padre__isnull=True)[:6]
     posts_recientes = Post.objects.filter(publicado=True)[:3]
     ultimos_productos = Producto.objects.filter(disponible=True).order_by('-creado')[:4]
 
+    productos_por_tipo = {}
+    for tipo, _ in Producto.TIPO_PRODUCTO_CHOICES:
+        items = Producto.objects.filter(tipo=tipo, disponible=True)[:4]
+        if items:
+            productos_por_tipo[tipo] = items
+
+    usuarios_recientes = User.objects.order_by('-date_joined')[:6].select_related('profile')
+
     context = {
         'productos_destacados': productos_destacados,
-        'productos_oferta': productos_oferta,
         'categorias_home': categorias,
         'posts_recientes': posts_recientes,
         'ultimos_productos': ultimos_productos,
+        'productos_por_tipo': productos_por_tipo,
+        'usuarios_recientes': usuarios_recientes,
         'total_productos': Producto.objects.count(),
         'total_libros': Libros.objects.count(),
         'total_categorias': Categoria.objects.filter(activa=True).count(),
+        'total_usuarios': User.objects.count(),
     }
     return render(request, 'home.html', context)
 

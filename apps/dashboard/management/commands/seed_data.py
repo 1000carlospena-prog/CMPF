@@ -33,6 +33,17 @@ class Command(BaseCommand):
             Categoria.objects.get_or_create(nombre=nombre, slug=slugify(nombre))
         self.stdout.write('8 categorias creadas')
 
+    _TIPO_POR_CATEGORIA = {
+        'Electrónica': 'digital',
+        'Ropa y Accesorios': 'general',
+        'Hogar': 'domestico',
+        'Deportes': 'general',
+        'Juguetes': 'general',
+        'Salud y Belleza': 'general',
+        'Automotriz': 'vehiculo',
+        'Mascotas': 'domestico',
+    }
+
     def _seed_productos(self):
         vendedor = User.objects.filter(is_superuser=True).first()
         data = [
@@ -62,6 +73,7 @@ class Command(BaseCommand):
             slug = slugify(nombre)
             prod, created = Producto.objects.get_or_create(slug=slug, defaults=dict(
                 categoria=cat, nombre=nombre, vendedor=vendedor,
+                tipo=self._TIPO_POR_CATEGORIA.get(cat_nombre, 'general'),
                 descripcion=f'{nombre} de alta calidad al mejor precio.',
                 precio=precio, precio_oferta=oferta, existencia=existencia,
                 destacado=destacado,

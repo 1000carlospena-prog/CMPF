@@ -16,6 +16,19 @@
     <h2 style="margin-bottom: 4px;">Super User #{{ profile_user.profile.super_id }}</h2>
     <div><span class="badge dev-badge" style="font-size: 0.9rem; padding: 4px 16px;">{{ profile_user.profile.get_grado_display }}</span></div>
     <div style="margin-top: 8px; font-size: 0.85rem; color: #94a3b8;">Miembro desde {{ profile_user.date_joined|date:"F Y" }}</div>
+    <div style="margin-top:8px;display:flex;gap:16px;justify-content:center;font-size:0.85rem;">
+      <span><strong>{{ profile_user.profile.seguidores_count }}</strong> seguidores</span>
+      <span><strong>{{ profile_user.profile.siguiendo_count }}</strong> siguiendo</span>
+    </div>
+    {% if user.is_authenticated and profile_user != user %}
+      <div style="margin-top:12px;">
+        {% if yo_sigo %}
+          <form method="post" action="{% url 'usuarios:dejar_seguir' profile_user.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-secondary">Dejar de seguir</button></form>
+        {% else %}
+          <form method="post" action="{% url 'usuarios:seguir' profile_user.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-primary">Seguir</button></form>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 </div>
   {% else %}
@@ -53,11 +66,23 @@
     <div style="margin-top: 8px; font-size: 0.85rem; color: #94a3b8;">
       Miembro desde {{ profile_user.date_joined|date:"F Y" }}
     </div>
+    <div style="margin-top:8px;display:flex;gap:16px;justify-content:center;font-size:0.85rem;">
+      <span><strong>{{ profile_user.profile.seguidores_count }}</strong> seguidores</span>
+      <span><strong>{{ profile_user.profile.siguiendo_count }}</strong> siguiendo</span>
+    </div>
+    {% if profile_user.profile.bio %}
+      <div style="margin-top:8px;font-size:0.85rem;color:#64748b;max-width:400px;margin-left:auto;margin-right:auto;">{{ profile_user.profile.bio }}</div>
+    {% endif %}
   </div>
 
   {% if user.is_authenticated and user != profile_user %}
-    <div style="text-align: center; margin-top: 16px;">
-      <a href="{% url 'chat:start' profile_user.id %}" class="btn btn-primary">💬 Enviar mensaje</a>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;">
+      <a href="{% url 'chat:start' profile_user.id %}" class="btn btn-primary btn-sm">💬 Mensaje</a>
+      {% if yo_sigo %}
+        <form method="post" action="{% url 'usuarios:dejar_seguir' profile_user.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-secondary">Dejar de seguir</button></form>
+      {% else %}
+        <form method="post" action="{% url 'usuarios:seguir' profile_user.id %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-primary">Seguir</button></form>
+      {% endif %}
     </div>
   {% endif %}
 </div>

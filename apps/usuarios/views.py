@@ -4,20 +4,28 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.db import models as db_models
+from django.views.decorators.http import require_POST
 
 from .decorators import grado_required
-from .models import Profile, GRADO_CHOICES, GRADO_NIVEL
+from .models import Profile, Follow, GRADO_CHOICES, GRADO_NIVEL
 from config.grados import DEV_GRADO
+
+
+def grados_visibles(grado):
+    nivel = GRADO_NIVEL.get(grado, 4)
+    return [g for g, n in GRADO_NIVEL.items() if n >= nivel]
+
+
+def usuarios_visibles(request):
+    usuarios = User.objects.all()
+    vg = grados_visibles(request.user.profile.grado)
+    return usuarios.filter(profile__grado__in=vg)
 
 
 def _usuarios_visibles(request):
     usuarios = User.objects.all().order_by('username')
-    grado = request.user.profile.grado
-    if grado == 'v2':
-        usuarios = usuarios.filter(profile__grado__in=['v3', 'v4'])
-    elif grado == 'v1':
-        usuarios = usuarios.exclude(profile__grado__in=[DEV_GRADO])
-    return usuarios
+    vg = grados_visibles(request.user.profile.grado)
+    return usuarios.filter(profile__grado__in=vg)
 
 
 def _puede_modificar(request, usuario):
@@ -163,7 +171,10 @@ def crear_usuario(request):
 
 def perfil_usuario(request, user_id):
     usuario = get_object_or_404(User, id=user_id)
-    return render(request, 'usuarios/perfil.html', {'profile_user': usuario})
+    ctx = {'profile_user': usuario}
+    if request.user.is_authenticated:
+        ctx['yo_sigo'] = Follow.objects.filter(usuario=request.user, objetivo=usuario).exists()
+    return render(request, 'usuarios/perfil.html', ctx)
 
 
 @login_required
@@ -194,3 +205,46 @@ def eliminar_usuario(request, user_id):
     usuario.delete()
     messages.success(request, f'Usuario "{username}" eliminado.')
     return redirect('usuarios:lista')
+
+
+@login_required
+def explorar_usuarios(request):
+    usuarios = usuarios_visibles(request).select_related('profile')
+    q = request.GET.get('q', '').strip()
+    if q:
+        usuarios = usuarios.filter(
+            db_models.Q(username__icontains=q) |
+            db_models.Q(profile__nombre_real__icontains=q) |
+            db_models.Q(profile__bio__icontains=q)
+        )
+    for u in usuarios:
+        u.siguiendo = Follow.objects.filter(usuario=request.user, objetivo=u).exists()
+    return render(request, 'usuarios/explorar.html', {
+        'usuarios': usuarios,
+        'q': q,
+    })
+
+
+@login_required
+@require_POST
+def seguir_usuario(request, user_id):
+    objetivo = get_object_or_404(User, id=user_id)
+    if objetivo == request.user:
+        messages.error(request, 'No puedes seguirte a ti mismo.')
+        return redirect('usuarios:explorar')
+    _, created = Follow.objects.get_or_create(usuario=request.user, objetivo=objetivo)
+    if created:
+        messages.success(request, f'Ahora sigues a {objetivo.username}.')
+    else:
+        messages.info(request, f'Ya sigues a {objetivo.username}.')
+    return redirect(request.META.get('HTTP_REFERER', 'usuarios:explorar'))
+
+
+@login_required
+@require_POST
+def dejar_de_seguir(request, user_id):
+    objetivo = get_object_or_404(User, id=user_id)
+    deleted, _ = Follow.objects.filter(usuario=request.user, objetivo=objetivo).delete()
+    if deleted:
+        messages.success(request, f'Dejaste de seguir a {objetivo.username}.')
+    return redirect(request.META.get('HTTP_REFERER', 'usuarios:explorar'))

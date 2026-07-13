@@ -3,6 +3,21 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
+TIPO_PRODUCTO_CHOICES = [
+    ('general', 'General'),
+    ('gastronomico', 'Gastronómico'),
+    ('digital', 'Digital'),
+    ('libro', 'Libro'),
+    ('domestico', 'Doméstico'),
+    ('servicio', 'Servicio'),
+    ('inmueble', 'Inmueble'),
+    ('vehiculo', 'Vehículo'),
+    ('evento', 'Evento'),
+    ('empleo', 'Empleo'),
+    ('arte', 'Arte / Música'),
+]
+
+
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
@@ -24,6 +39,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True, related_name='productos')
     vendedor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='productos')
+    tipo = models.CharField(max_length=20, choices=TIPO_PRODUCTO_CHOICES, default='general')
     nombre = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True, null=True)
     descripcion = models.TextField(max_length=500)
@@ -36,7 +52,7 @@ class Producto(models.Model):
     actualizado = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return self.nombre
+        return f'[{self.get_tipo_display()}] {self.nombre}'
 
     @property
     def precio_actual(self):
@@ -81,7 +97,12 @@ class ProductoImagen(models.Model):
 
     @property
     def display_url(self):
-        return self.url_externa or self.imagen.url
+        try:
+            if self.imagen and self.imagen.storage.exists(self.imagen.name):
+                return self.imagen.url
+        except Exception:
+            pass
+        return self.url_externa or ''
 
 
 class MovimientoStock(models.Model):

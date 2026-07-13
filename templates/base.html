@@ -129,7 +129,8 @@
         <div class="nav-inner">
             <a href="/" class="logo">🏠 <span>CMPF</span></a>
             <div class="nav-links">
-                <a href="{% url 'productos:lista_productos' %}">Productos</a>
+                <a href="{% url 'productos:lista_productos' %}">Tienda</a>
+                <a href="{% url 'usuarios:explorar' %}">Usuarios</a>
                 <a href="{% url 'listalibros' %}">Librería</a>
                 <a href="{% url 'blog:lista' %}">Blog</a>
                 {% if user.is_authenticated %}

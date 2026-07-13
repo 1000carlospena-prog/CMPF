@@ -40,6 +40,9 @@ class ProductoVista(ListView):
             queryset = queryset.filter(disponible=True)
         elif disponible == 'no':
             queryset = queryset.filter(disponible=False)
+        tipo = self.request.GET.get('tipo')
+        if tipo:
+            queryset = queryset.filter(tipo=tipo)
         stock = self.request.GET.get('stock')
         if stock == 'bajo':
             queryset = queryset.filter(existencia__lt=5, existencia__gt=0)
@@ -64,6 +67,8 @@ class ProductoVista(ListView):
         context['categoria_actual'] = self.request.GET.get('categoria', '')
         context['orden_actual'] = self.request.GET.get('orden', '')
         context['categorias'] = Categoria.objects.filter(activa=True, padre__isnull=True)
+        context['tipo_actual'] = self.request.GET.get('tipo', '')
+        context['TIPOS_PRODUCTO'] = Producto.TIPO_PRODUCTO_CHOICES
         return context
 
 

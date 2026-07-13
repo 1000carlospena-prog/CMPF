@@ -34,6 +34,7 @@ class Profile(models.Model):
     super_id = models.PositiveIntegerField(null=True, blank=True, unique=True, verbose_name='Super Admin ID')
     subscription_active = models.BooleanField(default=False)
     subscription_end = models.DateTimeField(null=True, blank=True)
+    bio = models.TextField(max_length=500, blank=True, default='')
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
 
@@ -50,6 +51,14 @@ class Profile(models.Model):
 
     def tiene_acceso(self, grado_minimo):
         return self.nivel <= GRADO_NIVEL.get(grado_minimo, 4)
+
+    @property
+    def seguidores_count(self):
+        return self.user.seguidores.count()
+
+    @property
+    def siguiendo_count(self):
+        return self.user.siguiendo.count()
 
 
 class VerificationCode(models.Model):
@@ -125,3 +134,16 @@ class LoginAttempt(models.Model):
             username=username,
             successful=successful
         )
+
+
+class Follow(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='siguiendo')
+    objetivo = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seguidores')
+    creado = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['usuario', 'objetivo']
+        ordering = ['-creado']
+
+    def __str__(self):
+        return f'{self.usuario.username} sigue a {self.objetivo.username}'
