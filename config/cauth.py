@@ -1,7 +1,7 @@
 import hashlib
 import os
 
-_AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.v00_auth')
+_AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '.cauth')
 _XOR_KEY = 'CMPF'
 
 
@@ -14,7 +14,7 @@ def _xor_decode(hex_data):
     return decoded.decode('utf-8')
 
 
-def _parse_file():
+def _parse():
     if not os.path.exists(_AUTH_FILE):
         return {}
     with open(_AUTH_FILE, 'r') as f:
@@ -28,7 +28,7 @@ def _parse_file():
 
 
 def verify_password(password):
-    data = _parse_file()
+    data = _parse()
     stored_hash = data.get('SHA256_PASSWORD')
     if not stored_hash:
         return False
@@ -36,8 +36,8 @@ def verify_password(password):
     return input_hash == stored_hash
 
 
-def get_decoded(key):
-    data = _parse_file()
+def get(key):
+    data = _parse()
     hex_val = data.get(key)
     if not hex_val:
         return None

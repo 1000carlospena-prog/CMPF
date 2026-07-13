@@ -12,7 +12,7 @@
       {% for item in conversations %}
         <a href="{% url 'chat:conversation' item.conversation.id %}" class="chat-conv-item">
           <div class="chat-conv-avatar">
-            {% if item.other.profile.grado == 'v1' or item.other.profile.grado == 'v00' %}
+            {% if item.other.profile.grado == 'v1' or item.other.profile.grado == 'g0' %}
               <span class="avatar-letter" style="background:#8b5cf6;">S</span>
             {% elif item.other.profile.avatar %}
               <img src="{{ item.other.profile.avatar.url }}" alt="">

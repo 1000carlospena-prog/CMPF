@@ -12,7 +12,7 @@
       {% for item in sidebar_convos %}
         <a href="{% url 'chat:conversation' item.conversation.id %}" class="chat-conv-item {% if item.conversation.id == conversation.id %}active{% endif %}">
           <div class="chat-conv-avatar">
-            {% if item.other.profile.grado == 'v1' or item.other.profile.grado == 'v00' %}
+            {% if item.other.profile.grado == 'v1' or item.other.profile.grado == 'g0' %}
               <span class="avatar-letter" style="background:#8b5cf6;">S</span>
             {% elif item.other.profile.avatar %}
               <img src="{{ item.other.profile.avatar.url }}" alt="">
@@ -34,7 +34,7 @@
   <main class="chat-main" style="flex-direction:column;">
     <div class="chat-conv-header">
       <div class="chat-conv-avatar">
-        {% if other.profile.grado == 'v1' or other.profile.grado == 'v00' %}
+        {% if other.profile.grado == 'v1' or other.profile.grado == 'g0' %}
           <span class="avatar-letter" style="background:#8b5cf6;">S</span>
         {% elif other.profile.avatar %}
           <img src="{{ other.profile.avatar.url }}" alt="">
@@ -45,13 +45,13 @@
       <div>
         <div style="font-weight:600;">{{ other_display }}</div>
         <div style="font-size:0.8rem; color:#64748b;">
-          {% if other.profile.grado != 'v1' and other.profile.grado != 'v00' %}
+          {% if other.profile.grado != 'v1' and other.profile.grado != 'g0' %}
             @{{ other.username }}
           {% endif %}
           <span class="badge {{ other.profile.grado }}">{{ other.profile.grado }}</span>
         </div>
       </div>
-      {% if other.profile.grado != 'v1' and other.profile.grado != 'v00' %}
+      {% if other.profile.grado != 'v1' and other.profile.grado != 'g0' %}
         <a href="{% url 'perfil_usuario' other.id %}" class="btn btn-sm btn-secondary" style="margin-left:auto;">Ver perfil</a>
       {% endif %}
     </div>
@@ -59,7 +59,7 @@
     <div class="chat-messages" id="chat-messages">
       {% for msg in messages %}
         <div class="chat-msg {% if msg.sender == user %}chat-msg-self{% else %}chat-msg-other{% endif %}">
-          {% if msg.sender != user and msg.sender.profile.grado == 'v1' or msg.sender != user and msg.sender.profile.grado == 'v00' %}
+          {% if msg.sender != user and msg.sender.profile.grado == 'v1' or msg.sender != user and msg.sender.profile.grado == 'g0' %}
             <div style="font-size:0.75rem;color:#8b5cf6;font-weight:600;margin-bottom:2px;margin-left:4px;">Super User #{{ msg.sender.profile.super_id }}</div>
           {% endif %}
           <div class="chat-msg-bubble">

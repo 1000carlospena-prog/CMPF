@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-  {% if profile_user.profile.grado == 'v1' or profile_user.profile.grado == 'v00' %}
+  {% if profile_user.profile.grado == 'v1' or profile_user.profile.grado == 'g0' %}
     Perfil de Super User
   {% else %}
     {{ profile_user.profile.nombre_real|default:profile_user.username }} - Perfil
   {% endif %}
 {% endblock %}
 {% block content %}
-{% if profile_user.profile.grado == 'v1' or profile_user.profile.grado == 'v00' %}
-  {% if not user.is_authenticated or user.profile.grado not in 'v1 v00' %}
+{% if profile_user.profile.grado == 'v1' or profile_user.profile.grado == 'g0' %}
+  {% if not user.is_authenticated or user.profile.grado not in 'v1 g0' %}
 <div style="max-width: 500px; margin: 0 auto;">
   <div class="card" style="text-align: center; padding: 40px;">
     <div style="width:100px;height:100px;border-radius:50%;background:#8b5cf6;color:white;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:700;margin:0 auto 16px;border:4px solid #e2e8f0;">S</div>

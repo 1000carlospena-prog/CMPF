@@ -10,8 +10,8 @@ from .models import Conversation, Message
 def _display_name(user, viewer=None):
     if viewer and viewer.id == user.id:
         return user.profile.nombre_real or user.username
-    if user.profile.grado == 'v1' or user.profile.grado == 'v00':
-        if viewer and viewer.profile.grado in ('v1', 'v00'):
+    if user.profile.grado == 'v1' or user.profile.grado == 'g0':
+        if viewer and viewer.profile.grado in ('v1', 'g0'):
             return f'{user.username} (Super User #{user.profile.super_id})'
         return f'Super User #{user.profile.super_id or "?"}'
     return user.profile.nombre_real or user.username
@@ -95,9 +95,9 @@ def search_users(request):
     grado = request.GET.get('grado', '')
     users = User.objects.exclude(id=request.user.id).select_related('profile')
 
-    is_super = request.user.profile.grado in ('v1', 'v00')
+    is_super = request.user.profile.grado in ('v1', 'g0')
     if not is_super:
-        users = users.exclude(profile__grado='v1').exclude(profile__grado='v00')
+        users = users.exclude(profile__grado='v1').exclude(profile__grado='g0')
 
     if q:
         users = users.filter(
