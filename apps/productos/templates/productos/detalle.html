@@ -79,6 +79,14 @@
                 <div class="stock {% if producto.existencia > 0 %}in-stock{% else %}out-of-stock{% endif %}">
                     {% if producto.existencia > 0 %}✅ {{ producto.existencia }} unidades disponibles{% else %}❌ Agotado{% endif %}
                 </div>
+                {% if producto.vendedor %}
+                <p style="font-size:0.85rem;color:#64748b;margin-bottom:12px;">
+                    Publicado por
+                    <a href="{% url 'perfil_usuario' producto.vendedor.id %}" style="color:#2563eb;font-weight:600;text-decoration:none;">
+                        {{ producto.vendedor.profile.nombre_real|default:producto.vendedor.username }}
+                    </a>
+                </p>
+                {% endif %}
                 <div class="description">{{ producto.descripcion }}</div>
 
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">

@@ -32,9 +32,46 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self._seed_categorias()
+        self._seed_test_users()
         self._seed_productos()
         self._seed_libros()
+        self._assign_vendedores()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully'))
+
+    def _seed_test_users(self):
+        v3_names = ['Proveedor Uno', 'Proveedor Dos', 'Proveedor Tres', 'Proveedor Cuatro']
+        v4_names = ['Comprador Uno', 'Comprador Dos', 'Comprador Tres']
+        for i, nombre in enumerate(v3_names):
+            username = f'v3_test_{i+1}'
+            user, created = User.objects.get_or_create(username=username, defaults=dict(email=f'{username}@test.com'))
+            if created:
+                user.set_password('testpass123')
+                user.save()
+                user.profile.grado = 'v3'
+                user.profile.nombre_real = nombre
+                user.profile.save()
+                self.stdout.write(f'  Creado v3: {username} ({nombre})')
+        for i, nombre in enumerate(v4_names):
+            username = f'v4_test_{i+1}'
+            user, created = User.objects.get_or_create(username=username, defaults=dict(email=f'{username}@test.com'))
+            if created:
+                user.set_password('testpass123')
+                user.save()
+                user.profile.grado = 'v4'
+                user.profile.nombre_real = nombre
+                user.profile.save()
+                self.stdout.write(f'  Creado v4: {username} ({nombre})')
+
+    def _assign_vendedores(self):
+        v3_users = User.objects.filter(profile__grado='v3').order_by('id')
+        if not v3_users:
+            self.stdout.write(self.style.WARNING('  No hay usuarios v3 para asignar como vendedores'))
+            return
+        productos = Producto.objects.all().order_by('id')
+        for i, prod in enumerate(productos):
+            prod.vendedor = v3_users[i % len(v3_users)]
+            prod.save()
+        self.stdout.write(f'  {productos.count()} productos asignados a {len(v3_users)} vendedores v3')
 
     def _seed_categorias(self):
         for data in _load_json('categorias.json'):
@@ -42,12 +79,11 @@ class Command(BaseCommand):
         self.stdout.write('9 categorias creadas')
 
     def _seed_productos(self):
-        vendedor = User.objects.filter(is_superuser=True).first()
         for data in _load_json('productos.json'):
             cat = Categoria.objects.get(nombre=data['categoria'])
             slug = slugify(data['nombre'])
             prod, created = Producto.objects.get_or_create(slug=slug, defaults=dict(
-                categoria=cat, nombre=data['nombre'], vendedor=vendedor,
+                categoria=cat, nombre=data['nombre'],
                 tipo=data['tipo'],
                 descripcion=data['descripcion'],
                 precio=data['precio'], precio_oferta=data.get('precio_oferta'),
