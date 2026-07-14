@@ -171,6 +171,9 @@ def crear_usuario(request):
 
 def perfil_usuario(request, user_id):
     usuario = get_object_or_404(User, id=user_id)
+    if request.user.is_authenticated and usuario.profile.grado not in grados_visibles(request.user.profile.grado):
+        messages.error(request, 'No tienes permiso para ver este perfil.')
+        return redirect('home')
     ctx = {'profile_user': usuario}
     if request.user.is_authenticated:
         ctx['yo_sigo'] = Follow.objects.filter(usuario=request.user, objetivo=usuario).exists()

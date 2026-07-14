@@ -6,16 +6,22 @@ from django.contrib.auth.models import User
 
 from .models import Conversation, Message
 from config.grados import DEV_GRADO
+from apps.usuarios.models import GRADO_NIVEL
 
 
 def _display_name(user, viewer=None):
     if viewer and viewer.id == user.id:
         return user.profile.nombre_real or user.username
-    if user.profile.grado == 'v1' or user.profile.grado == DEV_GRADO:
-        if viewer and viewer.profile.grado in ('v1', DEV_GRADO):
-            return f'{user.username} (Super User #{user.profile.super_id})'
-        return f'Super User #{user.profile.super_id or "?"}'
+    if user.profile.grado in ('v1', DEV_GRADO):
+        return 'Desarrollador'
+    if user.profile.grado == 'v2':
+        return 'Moderador'
     return user.profile.nombre_real or user.username
+
+
+def _grados_visibles_chat(grado):
+    nivel = GRADO_NIVEL.get(grado, 4)
+    return [g for g, n in GRADO_NIVEL.items() if n >= nivel]
 
 
 @login_required
@@ -47,13 +53,13 @@ def conversation_detail(request, conversation_id):
     conv = get_object_or_404(Conversation, id=conversation_id, participants=request.user)
     other = conv.participants.exclude(id=request.user.id).first()
 
+    conv.messages.filter(~Q(sender=request.user), read=False).update(read=True)
+
     if request.method == 'POST':
         content = request.POST.get('content', '').strip()
         if content:
             Message.objects.create(conversation=conv, sender=request.user, content=content)
         return redirect('chat:conversation', conversation_id=conv.id)
-
-    conv.messages.filter(~Q(sender=request.user), read=False).update(read=True)
 
     messages_qs = conv.messages.all()
 
@@ -96,9 +102,8 @@ def search_users(request):
     grado = request.GET.get('grado', '')
     users = User.objects.exclude(id=request.user.id).select_related('profile')
 
-    is_super = request.user.profile.grado in ('v1', DEV_GRADO)
-    if not is_super:
-        users = users.exclude(profile__grado='v1').exclude(profile__grado=DEV_GRADO)
+    grados_ok = _grados_visibles_chat(request.user.profile.grado)
+    users = users.filter(profile__grado__in=grados_ok)
 
     if q:
         users = users.filter(
