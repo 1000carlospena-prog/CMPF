@@ -12,7 +12,9 @@ from apps.usuarios.models import GRADO_NIVEL
 def _display_name(user, viewer=None):
     if viewer and viewer.id == user.id:
         return user.profile.nombre_real or user.username
-    if user.profile.grado in ('v1', DEV_GRADO):
+    if user.profile.grado == DEV_GRADO:
+        return 'Anónimo'
+    if user.profile.grado == 'v1':
         return 'Desarrollador'
     if user.profile.grado == 'v2':
         return 'Moderador'
