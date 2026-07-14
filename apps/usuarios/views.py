@@ -13,6 +13,8 @@ from config.grados import DEV_GRADO
 
 def grados_visibles(grado):
     nivel = GRADO_NIVEL.get(grado, 4)
+    if grado == 'v4':
+        nivel = GRADO_NIVEL['v3']
     return [g for g, n in GRADO_NIVEL.items() if n >= nivel]
 
 
